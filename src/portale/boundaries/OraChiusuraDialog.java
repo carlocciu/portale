@@ -8,6 +8,7 @@ public class OraChiusuraDialog {
     private TextField oraTF;
 
     private Button chiudiButton;
+    private Button cancelButton;
 
     public void clickChiudi() {
 

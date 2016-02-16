@@ -13,9 +13,9 @@ public class StampaElencoIscrittiForm {
 
     private ComboBox<String> scuoleCB;
 
-    private ComboBox<Materia> materiaCB;
+    private ComboBox<Materia> materieCB;
 
-    private ComboBox<Appello> appelloCB;
+    private ComboBox<Appello> appelliCB;
 
     private Button esportaButton;
 

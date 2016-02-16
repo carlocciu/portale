@@ -6,9 +6,9 @@ import javafx.scene.control.TextField;
 
 public class LoginForm {
 
-    private TextField matricolaTextField;
+    private TextField matricolaTF;
 
-    private PasswordField passField;
+    private PasswordField passPF;
 
     private Button loginButton;
 

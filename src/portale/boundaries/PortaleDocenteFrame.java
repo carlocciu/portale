@@ -10,8 +10,6 @@ public class PortaleDocenteFrame {
 
     private Button logoutButton;
 
-    private Button homeButotn;
-
     public void clickVerbale() {
 
     }
@@ -24,8 +22,5 @@ public class PortaleDocenteFrame {
 
     }
 
-    public void clickHome() {
-
-    }
 
 }

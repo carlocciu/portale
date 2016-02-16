@@ -1,5 +1,6 @@
 package portale.boundaries;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import portale.entities.Appello;
@@ -7,9 +8,9 @@ import portale.entities.PianoDiStudi;
 
 public class PianoDiStudiForm {
 
-    private TableView<Appello> pianoStudiTV;
+    private TableView<PianoDiStudi> pianoStudiTV;
 
-    private TableView<PianoDiStudi> appelliTV;
+    private TableView<Appello> appelliTV;
 
     private TableColumn<PianoDiStudi, String> annoCol;
 
@@ -30,6 +31,8 @@ public class PianoDiStudiForm {
     private TableColumn<Appello, String> aulaCol;
 
     private TableColumn<Appello, String> prenotaCol;
+
+    private Button logoutButton;
 
     public void selectMateria(int pIndexMateria) {
 
