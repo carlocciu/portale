@@ -9,32 +9,33 @@ public class DocenteClass {
 
     private String matricolaDocente;
 
-    public DocenteClass(String pNome, String pCognome, String pMatricola) {
-
+    public DocenteClass(String matricolaDocente, String nomeDocente, String cognomeDocente) {
+        this.matricolaDocente = matricolaDocente;
+        this.nomeDocente = nomeDocente;
+        this.cognomeDocente = cognomeDocente;
     }
 
-    public void setNomeDocente(String pNome) {
-
+    public String getNomeDocente() {
+        return nomeDocente;
     }
 
-    public void setCognomeDocente(String pCognome) {
-
+    public void setNomeDocente(String nomeDocente) {
+        this.nomeDocente = nomeDocente;
     }
 
-    public void setMatricolaDocente(String pMatricola) {
-
+    public String getCognomeDocente() {
+        return cognomeDocente;
     }
 
-    public void getNomeDocente() {
-
+    public void setCognomeDocente(String cognomeDocente) {
+        this.cognomeDocente = cognomeDocente;
     }
 
-    public void getCognomeDocente() {
-
+    public String getMatricolaDocente() {
+        return matricolaDocente;
     }
 
-    public void getMatricolaDocente() {
-
+    public void setMatricolaDocente(String matricolaDocente) {
+        this.matricolaDocente = matricolaDocente;
     }
-
 }
