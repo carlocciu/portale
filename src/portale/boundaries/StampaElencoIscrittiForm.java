@@ -29,22 +29,16 @@ public class StampaElencoIscrittiForm {
 
     @FXML  private Button homeButton;
 
+    private Appello appelloSelezionato;
     private DocenteClass doc;
+
+    StampaElencoIscrittiCtrl ctr = new StampaElencoIscrittiCtrl();
 
     public void setDoc(DocenteClass doc) {
         this.doc = doc;
     }
 
-    public void clickEsporta() {
-
-    }
-
-    public void riempiMaterieCB(DocenteClass pDocente, String pCDL) {
-
-    }
-
     @FXML public void riempiScuoleCB() {
-        StampaElencoIscrittiCtrl ctr = new StampaElencoIscrittiCtrl();
         scuoleCB.setItems(ctr.getScuole(doc.getMatricolaDocente()));
 
         scuoleCB.setCellFactory(new Callback<ListView<Scuola>, ListCell<Scuola>>() {
@@ -80,7 +74,6 @@ public class StampaElencoIscrittiForm {
 
 
     @FXML public void riempiCdlsCB(String pScuola) {
-        StampaElencoIscrittiCtrl ctr = new StampaElencoIscrittiCtrl();
         cdlsCB.setItems(ctr.getCdls(pScuola, doc.getMatricolaDocente()));
 
         cdlsCB.setCellFactory(new Callback<ListView<CorsoDiLaurea>, ListCell<CorsoDiLaurea>>() {
@@ -92,7 +85,7 @@ public class StampaElencoIscrittiForm {
                     public void updateItem(CorsoDiLaurea item, boolean empty){
                         super.updateItem(item, empty);
                         if(!empty) {
-                            setText(item.getNomeCorso());
+                            setText(item.getCodiceCorso() + " - " + item.getNomeCorso());
                             setGraphic(null);
                         } else {
                             setText(null);
@@ -107,14 +100,81 @@ public class StampaElencoIscrittiForm {
             @Override
             public void changed(ObservableValue<? extends CorsoDiLaurea> observable,
                                 CorsoDiLaurea oldValue, CorsoDiLaurea newValue) {
-            //    riempiCdlsCB(newValue.getCodiceCorso(), doc.getMatricolaDocente() );
+                riempiMaterieCB(newValue.getCodiceCorso(), pScuola);
 
             }
         });
     }
 
-    public void riempiAppelliCB(DocenteClass pDocente, String pCodiceMateria, String pCDL) {
+    public void riempiMaterieCB(String pCDL, String pScuola) {
+        materieCB.setItems(ctr.getMaterie(pScuola, pCDL, doc.getMatricolaDocente()));
 
+        materieCB.setCellFactory(new Callback<ListView<Materia>, ListCell<Materia>>() {
+            @Override
+            public ListCell<Materia> call(ListView<Materia> param) {
+
+                return new ListCell<Materia>(){
+                    @Override
+                    public void updateItem(Materia item, boolean empty){
+                        super.updateItem(item, empty);
+                        if(!empty) {
+                            setText(item.getCodiceMateria() + " - " + item.getNomeMateria() + " - " + item.getCFU() + " CFU");
+                            setGraphic(null);
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+        materieCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Materia>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Materia> observable,
+                                Materia oldValue, Materia newValue) {
+                riempiAppelliCB(newValue.getCodiceMateria(), pCDL, pScuola);
+
+            }
+        });
+    }
+
+    public void riempiAppelliCB(String pCodiceMateria, String pCDL, String pScuola) {
+        appelliCB.setItems(ctr.getAppelli(pScuola, pCDL, pCodiceMateria, doc.getMatricolaDocente()));
+
+        appelliCB.setCellFactory(new Callback<ListView<Appello>, ListCell<Appello>>() {
+            @Override
+            public ListCell<Appello> call(ListView<Appello> param) {
+
+                return new ListCell<Appello>(){
+                    @Override
+                    public void updateItem(Appello item, boolean empty){
+                        super.updateItem(item, empty);
+                        if(!empty) {
+                            setText(item.getDataEsame().toString() + " - Aula: " + item.getAula());
+                            setGraphic(null);
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+        appelliCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appello>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Appello> observable,
+                                Appello oldValue, Appello newValue) {
+                    appelloSelezionato = newValue;
+            }
+        });
+    }
+
+
+    @FXML public void clickEsporta() throws Exception {
+        ctr.setAppello(appelloSelezionato);
+        ctr.createDocument();
     }
 
     public void clickLogout() {

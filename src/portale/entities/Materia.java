@@ -1,10 +1,12 @@
 package portale.entities;
 
+import java.nio.charset.CoderMalfunctionError;
+
 public class Materia {
 
     private String nomeMateria;
 
-    private int codiceMateria;
+    private String codiceMateria;
 
     private String ordinamento;
 
@@ -14,7 +16,13 @@ public class Materia {
 
     private int annoCorso;
 
-    public Materia(String nomeMateria, int codiceMateria, DocenteClass mDocente, String ordinamento, int CFU, int annoCorso) {
+    public Materia(String codiceMateria, String nomeMateria, int CFU) {
+        this.codiceMateria = codiceMateria;
+        this.nomeMateria = nomeMateria;
+        this.CFU = CFU;
+    }
+
+    public Materia(String nomeMateria, String codiceMateria, DocenteClass mDocente, String ordinamento, int CFU, int annoCorso) {
         this.nomeMateria = nomeMateria;
         this.codiceMateria = codiceMateria;
         this.mDocente = mDocente;
@@ -31,11 +39,11 @@ public class Materia {
         this.nomeMateria = nomeMateria;
     }
 
-    public int getCodiceMateria() {
+    public String getCodiceMateria() {
         return codiceMateria;
     }
 
-    public void setCodiceMateria(int codiceMateria) {
+    public void setCodiceMateria(String codiceMateria) {
         this.codiceMateria = codiceMateria;
     }
 
@@ -69,5 +77,10 @@ public class Materia {
 
     public void setAnnoCorso(int annoCorso) {
         this.annoCorso = annoCorso;
+    }
+
+    @Override
+    public String toString() {
+        return codiceMateria + " - " + nomeMateria + " - " + CFU + " CFU";
     }
 }

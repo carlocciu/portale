@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class Appello {
 
+    private String idAppello;
+
     private ArrayList<StudenteClass> studentiIscritti;
 
     private Date dataEsame;
@@ -15,6 +17,16 @@ public class Appello {
     private DocenteClass mDocente;
 
     private String aula;
+
+    public Appello (String idAppello, Date d, String aula){
+        this.idAppello = idAppello;
+        this.dataEsame = d;
+        this.aula = aula;
+    }
+
+    public String getIdAppello() {
+        return idAppello;
+    }
 
     public Appello(Materia mMateria, DocenteClass mDocente, String aula, ArrayList<StudenteClass> studentiIscritti, Date dataEsame) {
         this.mMateria = mMateria;
@@ -62,5 +74,11 @@ public class Appello {
 
     public void setAula(String aula) {
         this.aula = aula;
+    }
+
+    @Override
+    public String toString() {
+
+        return dataEsame.toLocaleString() + " - " + "Aula: " + aula;
     }
 }

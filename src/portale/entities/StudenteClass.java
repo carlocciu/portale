@@ -12,12 +12,11 @@ public class StudenteClass {
 
     private String recapito;
 
-    public StudenteClass(String nomeStudente, String cognomeStudente, String indirizzoEmail, String matricolaStudente, String recapito) {
+    public StudenteClass(String nomeStudente, String cognomeStudente, String matricolaStudente) {
         this.nomeStudente = nomeStudente;
         this.cognomeStudente = cognomeStudente;
-        this.indirizzoEmail = indirizzoEmail;
         this.matricolaStudente = matricolaStudente;
-        this.recapito = recapito;
+
     }
 
     public String getNomeStudente() {
@@ -58,5 +57,10 @@ public class StudenteClass {
 
     public void setRecapito(String recapito) {
         this.recapito = recapito;
+    }
+
+    @Override
+    public String toString() {
+        return matricolaStudente + " - " + nomeStudente + " " + cognomeStudente;
     }
 }
