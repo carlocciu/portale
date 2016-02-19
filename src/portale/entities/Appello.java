@@ -16,48 +16,51 @@ public class Appello {
 
     private String aula;
 
-    public Appello(ArrayList<StudenteClass> pStudentiIscritti, Date pDataEsame, Materia pMateria, DocenteClass pDocente) {
+    public Appello(Materia mMateria, DocenteClass mDocente, String aula, ArrayList<StudenteClass> studentiIscritti, Date dataEsame) {
+        this.mMateria = mMateria;
+        this.mDocente = mDocente;
+        this.aula = aula;
+        this.studentiIscritti = studentiIscritti;
+        this.dataEsame = dataEsame;
+    }
 
+    public ArrayList<StudenteClass> getStudentiIscritti() {
+        return studentiIscritti;
+    }
+
+    public void setStudentiIscritti(ArrayList<StudenteClass> studentiIscritti) {
+        this.studentiIscritti = studentiIscritti;
     }
 
     public Date getDataEsame() {
-        return null;
+        return dataEsame;
     }
 
-    public void setDataEsame(Date pDataEsame) {
-
+    public void setDataEsame(Date dataEsame) {
+        this.dataEsame = dataEsame;
     }
 
-    public ArrayList<StudenteClass> getStudentiIScritti() {
-        return null;
+    public Materia getmMateria() {
+        return mMateria;
     }
 
-    public Materia getMateria() {
-        return null;
+    public void setmMateria(Materia mMateria) {
+        this.mMateria = mMateria;
     }
 
-    public void setMateria(Materia pMateria) {
-
+    public DocenteClass getmDocente() {
+        return mDocente;
     }
 
-    public DocenteClass getDocente() {
-        return null;
-    }
-
-    public void setDocente(DocenteClass pDocente) {
-
-    }
-
-    public void setStudentiIscritti(int param2) {
-
+    public void setmDocente(DocenteClass mDocente) {
+        this.mDocente = mDocente;
     }
 
     public String getAula() {
-        return null;
+        return aula;
     }
 
     public void setAula(String aula) {
-
+        this.aula = aula;
     }
-
 }

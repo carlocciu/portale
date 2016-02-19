@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 
 import javafx.stage.Stage;
 import portale.boundaries.DBMSLoginDocenteBnd;
+import portale.boundaries.PortaleDocenteFrame;
 import portale.entities.DocenteClass;
 
 
@@ -25,14 +26,17 @@ public class AutenticazioneDocenteCtrl {
         DBMSLoginDocenteBnd db = new DBMSLoginDocenteBnd();
         if (db.isPresentUser(matricolaDocente, passwordDocente)){
             DocenteClass doc = new DocenteClass(matricolaDocente, db.getNome(), db.getCognome());
-            Parent root = FXMLLoader.load(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+
+            PortaleDocenteFrame controller = fxmlLoader.getController();
+            controller.setCurrDocente(doc);
+
             s.setTitle("Portale Docente");
             s.setScene(new Scene(root, 600, 600));
             s.setResizable(false);
             s.show();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(doc.getNomeDocente() + doc.getCognomeDocente());
-            alert.showAndWait();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

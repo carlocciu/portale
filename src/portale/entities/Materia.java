@@ -14,56 +14,60 @@ public class Materia {
 
     private int annoCorso;
 
-    public Materia(String pNomeMateria, String pCodiceMateria, String pOrdinamento, DocenteClass pDocente, int pCFU, int pAnnoCorso) {
-
+    public Materia(String nomeMateria, int codiceMateria, DocenteClass mDocente, String ordinamento, int CFU, int annoCorso) {
+        this.nomeMateria = nomeMateria;
+        this.codiceMateria = codiceMateria;
+        this.mDocente = mDocente;
+        this.ordinamento = ordinamento;
+        this.CFU = CFU;
+        this.annoCorso = annoCorso;
     }
 
     public String getNomeMateria() {
-        return null;
+        return nomeMateria;
     }
 
-    public void setNomeMateria(String pNomeMateria) {
-
-    }
-
-    public String getOrdinamento() {
-        return null;
-    }
-
-    public void setOrdinamento(String pOrdinamento) {
-
+    public void setNomeMateria(String nomeMateria) {
+        this.nomeMateria = nomeMateria;
     }
 
     public int getCodiceMateria() {
-        return 0;
+        return codiceMateria;
     }
 
-    public void setCodiceMateria(int pCodiceMateria) {
-
+    public void setCodiceMateria(int codiceMateria) {
+        this.codiceMateria = codiceMateria;
     }
 
-    public DocenteClass getDocente() {
-        return null;
+    public String getOrdinamento() {
+        return ordinamento;
     }
 
-    public void setDocente(DocenteClass pDocente) {
+    public void setOrdinamento(String ordinamento) {
+        this.ordinamento = ordinamento;
+    }
 
+    public DocenteClass getmDocente() {
+        return mDocente;
+    }
+
+    public void setmDocente(DocenteClass mDocente) {
+        this.mDocente = mDocente;
     }
 
     public int getCFU() {
-        return 0;
+        return CFU;
     }
 
-    public void setCFU(int pCFU) {
-
+    public void setCFU(int CFU) {
+        this.CFU = CFU;
     }
 
     public int getAnnoCorso() {
-        return 0;
+        return annoCorso;
     }
 
-    public void setAnnoCorso(int pAnnoCorso) {
-
+    public void setAnnoCorso(int annoCorso) {
+        this.annoCorso = annoCorso;
     }
-
 }

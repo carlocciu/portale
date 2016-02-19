@@ -10,32 +10,33 @@ public class EsameVerbalizzato {
 
     private StudenteClass mStudente;
 
-    public EsameVerbalizzato(String pVoto, String pDomande, StudenteClass pStudente) {
-
+    public EsameVerbalizzato(String voto, String domande, StudenteClass mStudente) {
+        this.voto = voto;
+        this.domande = domande;
+        this.mStudente = mStudente;
     }
 
     public String getVoto() {
-        return null;
+        return voto;
     }
 
-    public void setVoto(String pVoto) {
-
+    public void setVoto(String voto) {
+        this.voto = voto;
     }
 
     public String getDomande() {
-        return null;
+        return domande;
     }
 
-    public void setDomande(String pDomande) {
-
+    public void setDomande(String domande) {
+        this.domande = domande;
     }
 
-    public StudenteClass getStudente() {
-        return null;
+    public StudenteClass getmStudente() {
+        return mStudente;
     }
 
-    public void setStudente(StudenteClass pStudente) {
-
+    public void setmStudente(StudenteClass mStudente) {
+        this.mStudente = mStudente;
     }
-
 }

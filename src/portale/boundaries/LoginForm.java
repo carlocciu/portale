@@ -18,7 +18,6 @@ public class LoginForm {
     @FXML public void clickLogin() throws Exception{
         AutenticazioneDocenteCtrl ctr = new AutenticazioneDocenteCtrl(matricolaTF.getText(), passPF.getText());
         ctr.isPresent((Stage) loginButton.getScene().getWindow());
-
     }
 
 }

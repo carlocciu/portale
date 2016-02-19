@@ -12,48 +12,51 @@ public class StudenteClass {
 
     private String recapito;
 
-    public StudenteClass(String pNome, String pCognome, String pMatricola) {
-
-    }
-
-    public void setIndirizzoEmail(String pEmail) {
-
+    public StudenteClass(String nomeStudente, String cognomeStudente, String indirizzoEmail, String matricolaStudente, String recapito) {
+        this.nomeStudente = nomeStudente;
+        this.cognomeStudente = cognomeStudente;
+        this.indirizzoEmail = indirizzoEmail;
+        this.matricolaStudente = matricolaStudente;
+        this.recapito = recapito;
     }
 
     public String getNomeStudente() {
-        return null;
+        return nomeStudente;
     }
 
-    public void setNomeStudente(String pNome) {
-
+    public void setNomeStudente(String nomeStudente) {
+        this.nomeStudente = nomeStudente;
     }
 
     public String getCognomeStudente() {
-        return null;
+        return cognomeStudente;
     }
 
-    public void setCognomeStudente(String pCognome) {
-
+    public void setCognomeStudente(String cognomeStudente) {
+        this.cognomeStudente = cognomeStudente;
     }
 
     public String getMatricolaStudente() {
-        return null;
+        return matricolaStudente;
     }
 
-    public void setMatricolaStudente(String pMatricola) {
-
+    public void setMatricolaStudente(String matricolaStudente) {
+        this.matricolaStudente = matricolaStudente;
     }
 
-    public void getIndirizzoEmail() {
+    public String getIndirizzoEmail() {
+        return indirizzoEmail;
+    }
 
+    public void setIndirizzoEmail(String indirizzoEmail) {
+        this.indirizzoEmail = indirizzoEmail;
     }
 
     public String getRecapito() {
-        return null;
+        return recapito;
     }
 
-    public void setRecapito(String pRecapito) {
-
+    public void setRecapito(String recapito) {
+        this.recapito = recapito;
     }
-
 }

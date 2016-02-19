@@ -6,24 +6,29 @@ public class CorsoDiLaurea {
 
     private String codiceCorso;
 
-    public CorsoDiLaurea(String pNomeCorso, String pCodiceCorso) {
-
+    public CorsoDiLaurea(String codiceCorso, String nomeCorso) {
+        this.codiceCorso = codiceCorso;
+        this.nomeCorso = nomeCorso;
     }
 
     public String getNomeCorso() {
-        return null;
+        return nomeCorso;
     }
 
-    public void setNomeCorso(String pNomeCorso) {
-
+    public void setNomeCorso(String nomeCorso) {
+        this.nomeCorso = nomeCorso;
     }
 
     public String getCodiceCorso() {
-        return null;
+        return codiceCorso;
     }
 
-    public void setCodiceCorso(String pCodiceCorso) {
-
+    public void setCodiceCorso(String codiceCorso) {
+        this.codiceCorso = codiceCorso;
     }
 
+    @Override
+    public String toString() {
+        return codiceCorso + " - " + nomeCorso;
+    }
 }

@@ -23,68 +23,78 @@ public class VerbaleComplessivo {
 
     private int esamiInPagina;
 
-    public VerbaleComplessivo(ArrayList<StudenteClass> pStudentiIscritti, Date pDataEsame, Materia pMateria, DocenteClass pDocente) {
-
+    public VerbaleComplessivo(String CDL, String scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Enum pagina, int esamiInPagina) {
+        this.CDL = CDL;
+        this.scuola = scuola;
+        this.annoAccademico = annoAccademico;
+        this.mAppello = mAppello;
+        this.oraApertura = oraApertura;
+        this.esamiSostenuti = esamiSostenuti;
+        this.pagina = pagina;
+        this.esamiInPagina = esamiInPagina;
     }
 
     public String getCDL() {
-        return null;
+        return CDL;
     }
 
-    public void setCDL(String pCDL) {
-
+    public void setCDL(String CDL) {
+        this.CDL = CDL;
     }
 
     public String getScuola() {
-        return null;
+        return scuola;
     }
 
-    public void setScuola(String pScuola) {
-
+    public void setScuola(String scuola) {
+        this.scuola = scuola;
     }
 
     public String getAnnoAccademico() {
-        return null;
+        return annoAccademico;
     }
 
-    public Appello getAppello() {
-        return null;
+    public void setAnnoAccademico(String annoAccademico) {
+        this.annoAccademico = annoAccademico;
     }
 
-    public void setAppello(Appello pAppello) {
-
+    public Appello getmAppello() {
+        return mAppello;
     }
 
-    public Date getOraApertura() {
-        return null;
-    }
-
-    public void setOraApertura(Date pOra) {
-
+    public void setmAppello(Appello mAppello) {
+        this.mAppello = mAppello;
     }
 
     public ArrayList<EsameVerbalizzato> getEsamiSostenuti() {
-        return null;
+        return esamiSostenuti;
+    }
+
+    public void setEsamiSostenuti(ArrayList<EsameVerbalizzato> esamiSostenuti) {
+        this.esamiSostenuti = esamiSostenuti;
+    }
+
+    public Date getOraApertura() {
+        return oraApertura;
+    }
+
+    public void setOraApertura(Date oraApertura) {
+        this.oraApertura = oraApertura;
     }
 
     public Enum getPagina() {
-        return null;
+        return pagina;
     }
 
-    public void setPagina(Enum pPagina) {
-
+    public void setPagina(Enum pagina) {
+        this.pagina = pagina;
     }
 
     public int getEsamiInPagina() {
-        return 0;
+        return esamiInPagina;
     }
 
-    public void setAnno(String pAnno) {
-
+    public void setEsamiInPagina(int esamiInPagina) {
+        this.esamiInPagina = esamiInPagina;
     }
-
-    public void addEsameVerbalizzato(EsameVerbalizzato pEsame) {
-
-    }
-
 }

@@ -10,32 +10,33 @@ public class PianoDiStudi {
 
     private Date dataEsame;
 
-    public PianoDiStudi(Materia pMateria, String pEsito, Date pData) {
-
+    public PianoDiStudi(Materia mMateria, String esito, Date dataEsame) {
+        this.mMateria = mMateria;
+        this.esito = esito;
+        this.dataEsame = dataEsame;
     }
 
-    public Materia getMMateria() {
-        return null;
+    public Materia getmMateria() {
+        return mMateria;
     }
 
-    public void setMMateria(Materia mMateria) {
-
+    public void setmMateria(Materia mMateria) {
+        this.mMateria = mMateria;
     }
 
     public String getEsito() {
-        return null;
+        return esito;
     }
 
     public void setEsito(String esito) {
-
+        this.esito = esito;
     }
 
     public Date getDataEsame() {
-        return null;
+        return dataEsame;
     }
 
     public void setDataEsame(Date dataEsame) {
-
+        this.dataEsame = dataEsame;
     }
-
 }
