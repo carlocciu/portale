@@ -8,18 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="mysql-connector-java-5.1.38-bin" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/itext-5.5.8" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/Downloads/itext-5.5.8" />
-        </SOURCES>
-        <jarDirectory url="file://$USER_HOME$/Downloads/itext-5.5.8" recursive="false" />
-        <jarDirectory url="file://$USER_HOME$/Downloads/itext-5.5.8" recursive="false" type="SOURCES" />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" exported="" name="itextpdf-5.5.8" level="project" />
   </component>
 </module>

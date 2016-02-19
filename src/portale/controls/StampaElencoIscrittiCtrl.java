@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import portale.boundaries.DBMSStampaElencoIscrittiBnd;
 import portale.entities.*;
 
-import java.awt.*;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
