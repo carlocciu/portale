@@ -1,18 +1,23 @@
 package portale.boundaries;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import portale.controls.AutenticazioneDocenteCtrl;
 
 public class LoginForm {
 
-    private TextField matricolaTF;
+    @FXML private TextField matricolaTF;
 
-    private PasswordField passPF;
+    @FXML private PasswordField passPF;
 
-    private Button loginButton;
+    @FXML private Button loginButton;
 
-    public void clickLogin() {
+    @FXML public void clickLogin() throws Exception{
+        AutenticazioneDocenteCtrl ctr = new AutenticazioneDocenteCtrl(matricolaTF.getText(), passPF.getText());
+        ctr.isPresent((Stage) loginButton.getScene().getWindow());
 
     }
 
