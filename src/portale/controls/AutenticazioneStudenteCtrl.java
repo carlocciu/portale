@@ -83,8 +83,6 @@ public class AutenticazioneStudenteCtrl {
 
     public void sendDataToAnotherPage(DBMSLoginStudenteBnd loginDBConnection){
 
-
-
         FXMLLoader page = new FXMLLoader(getClass().getResource("../../res/PianoDiStudiForm.fxml"));
         Parent root = null;
         try {
