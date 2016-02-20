@@ -9,10 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import portale.controls.PianoDiStudiCtrl;
-import portale.entities.Appello;
-import portale.entities.DisplayPianoDiStudi;
-import portale.entities.DisplayVerbale;
-import portale.entities.PianoDiStudi;
+import portale.entities.*;
 
 import java.util.Date;
 
@@ -21,10 +18,10 @@ public class PianoDiStudiForm {
 
     @FXML private TableView<DisplayPianoDiStudi> pianoDiStudiTV;
 
-    @FXML private TableView<Appello> appelliTV;
+    @FXML private TableView<DisplayAppello> appelliTV;
 
 
-    @FXML  private Button logoutButton;
+    @FXML private Button logoutButton;
 
     @FXML public void selectMateria(int pIndexMateria) {
 
@@ -131,8 +128,82 @@ public class PianoDiStudiForm {
 
             appelliTV.setVisible(true);
 
+            fillAppelli(materia);
 
         }
+    }
+
+    public void fillAppelli(DisplayPianoDiStudi materia){
+
+        DBMSIscrizioneEsameBnd getAppelli = new DBMSIscrizioneEsameBnd();
+
+        ObservableList<DisplayAppello> appelli = getAppelli.getAppelli(materia.getCodiceMateria());
+
+        addRowsAppelli(appelli);
+
+
+    }
+
+    public void addRowsAppelli(ObservableList<DisplayAppello> appelli){
+
+        TableColumn docenteCol = new TableColumn("Docente");
+        docenteCol.setMinWidth(50);
+        docenteCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, String>("docente"));
+
+
+        TableColumn dataCol = new TableColumn("Data Esame");
+        dataCol.setMinWidth(100);
+        dataCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, Date>("dataEsame"));
+
+        TableColumn aulaCol = new TableColumn("Nome Materia");
+        aulaCol.setMinWidth(150);
+        aulaCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, String>("aula"));
+
+        TableColumn prenotatoCol = new TableColumn("Prenotazione");
+        prenotatoCol.setMinWidth(100);
+        prenotatoCol.setCellValueFactory(new PropertyValueFactory<>("Operazioni"));
+
+        Callback<TableColumn<DisplayAppello, String>, TableCell<DisplayAppello, String>> cellFactory = //
+                new Callback<TableColumn<DisplayAppello, String>, TableCell<DisplayAppello, String>>()
+                {
+                    @Override
+                    public TableCell call( final TableColumn<DisplayAppello, String> param )
+                    {
+                        final TableCell<DisplayAppello, String> cell = new TableCell<DisplayAppello, String>()
+                        {
+
+                            final Button btn = new Button( "Prenota" );
+
+                            @Override
+                            public void updateItem( String item, boolean empty )
+                            {
+                                super.updateItem( item, empty );
+                                if ( empty )
+                                {
+                                    setGraphic( null );
+                                    setText( null );
+                                }
+                                else
+                                {
+                                    btn.setOnAction( ( ActionEvent event ) ->
+                                    {
+                                        DisplayAppello appello = getTableView().getItems().get( getIndex() );
+                                        System.out.println( appello.getIdAppello());
+                                        //prenotaEsame(materia);
+
+                                    } );
+                                    setGraphic( btn );
+                                    setText( null );
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        prenotatoCol.setCellFactory( cellFactory );
+        appelliTV.setItems(appelli);
+        appelliTV.getColumns().addAll(docenteCol, dataCol, aulaCol, prenotatoCol);
     }
 
 }
