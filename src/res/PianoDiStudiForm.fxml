@@ -27,29 +27,6 @@
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </GridPane.margin>
       </ImageView>
-      <GridPane GridPane.columnSpan="3" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="190.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="430.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <TableView fx:id="pianoDiStudiTV" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
-               <GridPane.margin>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </GridPane.margin>
-            </TableView>
-            <TableView fx:id="appelliTV" prefHeight="200.0" prefWidth="641.0" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </GridPane.margin>
-            </TableView>
-         </children>
-      </GridPane>
       <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#clickLogout" text="Logout" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
@@ -63,5 +40,36 @@
             <Font size="40.0" />
          </font>
       </Text>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="190.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="430.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TableView fx:id="pianoDiStudiTV" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                           <GridPane.margin>
+                              <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                           </GridPane.margin>
+                        </TableView>
+                        <TableView fx:id="appelliTV" prefHeight="200.0" prefWidth="641.0" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                           </GridPane.margin>
+                        </TableView>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </GridPane>
