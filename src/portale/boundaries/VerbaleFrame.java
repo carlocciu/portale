@@ -139,6 +139,23 @@ public class VerbaleFrame {
 
     public void clickHome() {
 
+        try {
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Portale Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
