@@ -17,10 +17,7 @@ public class IscrizioneEsameCtrl {
 
     public void insertPrenotazione(String matricola, String appello){
 
-        System.out.println("Devo far spuntare il dialog creato apposta");
         String[] dataToConfirm = createDialog();
-
-        System.out.println(dataToConfirm[0] + dataToConfirm[1]);
 
         DBMSIscrizioneEsameBnd verify = new DBMSIscrizioneEsameBnd();
 
@@ -36,11 +33,15 @@ public class IscrizioneEsameCtrl {
 
         }else{
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore nella prenotazione");
-            alert.setHeaderText("Prenotazione non riuscita");
-            alert.setContentText("Hai inserito i dati sbagliati");
-            alert.showAndWait();
+            if (!dataToConfirm[0].equals("") || !dataToConfirm[1].equals("")){
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Errore nella prenotazione");
+                alert.setHeaderText("Prenotazione non riuscita");
+                alert.setContentText("Hai inserito i dati sbagliati");
+                alert.showAndWait();
+            }
+
         }
 
     }
@@ -48,6 +49,7 @@ public class IscrizioneEsameCtrl {
     public String[] createDialog(){
 
         String[] dataToConfirm = new String[2];
+        dataToConfirm[0] = dataToConfirm[1] =  "";
 
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Prenotazione Dialog");
@@ -100,10 +102,6 @@ public class IscrizioneEsameCtrl {
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        result.ifPresent(usernamePassword -> {
-            return;
-        });
 
         return dataToConfirm;
     }

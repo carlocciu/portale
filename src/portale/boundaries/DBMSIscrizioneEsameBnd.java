@@ -62,7 +62,6 @@ public class DBMSIscrizioneEsameBnd {
 
             while(result.next()){
 
-                System.out.println(result.getString("Nome"));
                 appelli.add(new DisplayAppello(result.getString("Cognome"), result.getDate("Data"), "sconosciuta", result.getString("Id_Appello")));
             }
 

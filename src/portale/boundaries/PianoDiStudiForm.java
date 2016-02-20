@@ -95,7 +95,7 @@ public class PianoDiStudiForm {
                                      btn.setOnAction( ( ActionEvent event ) ->
                                      {
                                          DisplayPianoDiStudi materia = getTableView().getItems().get( getIndex() );
-                                         System.out.println( materia.getEsitoMateria());
+
                                          prenotaEsame(materia);
 
                                      } );
@@ -210,7 +210,8 @@ public class PianoDiStudiForm {
 
         IscrizioneEsameCtrl iscrizione = new IscrizioneEsameCtrl();
         iscrizione.insertPrenotazione(matricola,appello);
-
+        appelliTV.getColumns().clear();
+        appelliTV.setVisible(false);
     }
 }
 

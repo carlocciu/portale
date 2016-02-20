@@ -101,7 +101,7 @@ public class DBMSLoginStudenteBnd {
 
                         pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterieSostenute.getInt("Anno"), resultMaterieSostenute.getString("Id_Materia"), resultMaterieSostenute.getString("Nome"), resultMaterieSostenute.getInt("CFU"), resultMaterieSostenute.getDate("DataEsame"), resultMaterieSostenute.getInt("Voto"), pMatricola));
                         sostenuta = true;
-                        System.out.println("Ho una materia data");
+
 
                     }
                 }
@@ -110,7 +110,6 @@ public class DBMSLoginStudenteBnd {
 
                     pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterie.getInt("Anno"), resultMaterie.getString("Id_Materia"), resultMaterie.getString("Nome"), resultMaterie.getInt("CFU"), null, 0, pMatricola));
 
-                    System.out.println("Ho una materia non data");
                 }
             }
 
