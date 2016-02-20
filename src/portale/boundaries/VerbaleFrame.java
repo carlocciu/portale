@@ -119,8 +119,12 @@ public class VerbaleFrame {
             Stage stage = (Stage) nuovoVerbaleButton.getScene().getWindow();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/InizializzaVerbaleForm.fxml"));
-
             Parent parent = fxmlLoader.load();
+
+            /* Pass Docente to InizializzaVerbaleForm */
+            InizializzaVerbaleForm inizializzaVerbaleForm = fxmlLoader.getController();
+            inizializzaVerbaleForm.setDocente(docente);
+            inizializzaVerbaleForm.riempiScuoleCB();
 
             stage.setTitle("Inizializzazione Verbale");
             stage.setScene(new Scene(parent, 600, 600));

@@ -1,5 +1,7 @@
 package portale.boundaries;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,18 +12,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import portale.controls.InizializzaVerbaleCtrl;
-import portale.entities.Appello;
-import portale.entities.CorsoDiLaurea;
-import portale.entities.DocenteClass;
-import portale.entities.Materia;
+import portale.entities.*;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-public class InizializzaVerbaleForm {
+public class InizializzaVerbaleForm{
 
     @FXML
-    private ComboBox<String> scuoleCB;
+    private ComboBox<Scuola> scuoleCB;
+    private Scuola mSelectedScuola;
 
     @FXML
     private ComboBox<CorsoDiLaurea> cdlsCB;
@@ -45,14 +44,17 @@ public class InizializzaVerbaleForm {
     @FXML
     private Button homeButton;
 
-    private InizializzaVerbaleCtrl mInizializzaVerbaleCtrl;
+    private InizializzaVerbaleCtrl mInizializzaVerbaleCtrl = new InizializzaVerbaleCtrl();
 
-    public InizializzaVerbaleForm(){
-        try {
-            mInizializzaVerbaleCtrl = new InizializzaVerbaleCtrl();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private DocenteClass mDocente;
+
+
+    public void setDocente(DocenteClass docente) {
+        mDocente = docente;
+    }
+
+    public DocenteClass getDocente() {
+        return mDocente;
     }
 
     public void clickInizializza() {
@@ -64,11 +66,21 @@ public class InizializzaVerbaleForm {
     }
 
     public void riempiScuoleCB() {
-        scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole());
+        scuoleCB.getItems().clear();
+        scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole(mDocente));
+
+        scuoleCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Scuola>() {
+            @Override
+            public void changed(ObservableValue<? extends Scuola> observable, Scuola oldValue, Scuola newValue) {
+                mSelectedScuola = newValue;
+                riempiCdlsCB(mSelectedScuola);
+            }
+        });
     }
 
-    public void riempiCdlsCB(String pScuola, DocenteClass pDocente) {
-
+    public void riempiCdlsCB(Scuola pScuola) {
+        cdlsCB.getItems().clear();
+        cdlsCB.setItems(mInizializzaVerbaleCtrl.getCDLs(pScuola, mDocente));
     }
 
     public void riempiMaterieCB(DocenteClass pDocente, String pCDL) {
