@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import portale.boundaries.DBMSStampaElencoIscrittiBnd;
 import portale.entities.*;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -61,6 +63,8 @@ public class StampaElencoIscrittiCtrl {
             document.close();
             writer.close();
 
+            Desktop d = Desktop.getDesktop();
+            d.open(new File("Elenco.pdf"));
         } catch (Exception e) {
             e.printStackTrace();
         }

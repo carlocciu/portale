@@ -17,8 +17,21 @@ public class AutenticazioneDocenteCtrl {
     private String matricolaDocente;
     private String passwordDocente;
 
+    public AutenticazioneDocenteCtrl() {
+        this.matricolaDocente = "";
+        this.passwordDocente = "";
+    }
+
     public AutenticazioneDocenteCtrl(String matricolaDocente, String passwordDocente) {
         this.matricolaDocente = matricolaDocente;
+        this.passwordDocente = passwordDocente;
+    }
+
+    public void setMatricolaDocente(String matricolaDocente) {
+        this.matricolaDocente = matricolaDocente;
+    }
+
+    public void setPasswordDocente(String passwordDocente) {
         this.passwordDocente = passwordDocente;
     }
 

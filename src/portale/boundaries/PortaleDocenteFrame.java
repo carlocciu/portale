@@ -24,11 +24,26 @@ public class PortaleDocenteFrame extends Stage{
         this.currDocente = currDocente;
     }
 
-    @FXML public void clickVerbale() {
+    @FXML public void clickVerbale() throws Exception {
+        Stage primaryStage = (Stage) verbaleButton.getScene().getWindow();
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/VerbaleFrame.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+
+        DBMSVerbaliApertiBnd db = new DBMSVerbaliApertiBnd();
+
+        VerbaleFrame controller = fxmlLoader.getController();
+        controller.setDocente(currDocente);
+        controller.riempiVerbaliAperti(db.verbaliAperti(currDocente.getMatricolaDocente()));
+
+        primaryStage.setTitle("Verbali");
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
     @FXML public void clickStampaIscritti() throws Exception {
+
         Stage primaryStage = (Stage) stampaIscrittiButton.getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/StampaElencoIscrittiForm.fxml"));
@@ -44,7 +59,7 @@ public class PortaleDocenteFrame extends Stage{
         primaryStage.show();
     }
 
-    @FXML public void clickLogout() {
+    public void clickLogout() {
 
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();

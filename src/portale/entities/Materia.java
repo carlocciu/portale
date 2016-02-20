@@ -22,6 +22,13 @@ public class Materia {
         this.CFU = CFU;
     }
 
+    public Materia(String codiceMateria, String nomeMateria, int CFU, int anno) {
+        this.codiceMateria = codiceMateria;
+        this.nomeMateria = nomeMateria;
+        this.CFU = CFU;
+        this.annoCorso = anno;
+    }
+
     public Materia(String nomeMateria, String codiceMateria, DocenteClass mDocente, String ordinamento, int CFU, int annoCorso) {
         this.nomeMateria = nomeMateria;
         this.codiceMateria = codiceMateria;

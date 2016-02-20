@@ -18,7 +18,7 @@ public class PortaleStudenti extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../res/LoginFormStudente.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../res/LoginFormDocente.fxml"));
         primaryStage.setTitle("Portale");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.setResizable(false);

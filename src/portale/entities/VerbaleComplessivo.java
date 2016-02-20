@@ -23,6 +23,15 @@ public class VerbaleComplessivo {
 
     private int esamiInPagina;
 
+    public VerbaleComplessivo(String CDL, String scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti) {
+        this.CDL = CDL;
+        this.scuola = scuola;
+        this.annoAccademico = annoAccademico;
+        this.mAppello = mAppello;
+        this.oraApertura = oraApertura;
+        this.esamiSostenuti = esamiSostenuti;
+    }
+
     public VerbaleComplessivo(String CDL, String scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Enum pagina, int esamiInPagina) {
         this.CDL = CDL;
         this.scuola = scuola;
@@ -96,5 +105,10 @@ public class VerbaleComplessivo {
 
     public void setEsamiInPagina(int esamiInPagina) {
         this.esamiInPagina = esamiInPagina;
+    }
+
+    @Override
+    public String toString() {
+        return scuola + "\n" + CDL + "\n" + "Anno Accademico: " + annoAccademico + "\n" + mAppello.toString() + "\n" + "Ora Apertura: " + oraApertura + esamiSostenuti.toString();
     }
 }
