@@ -18,6 +18,14 @@ public class Appello {
 
     private String aula;
 
+    public Appello(String idAppello, ArrayList<StudenteClass> studentiIscritti, Date dataEsame, Materia mMateria, String aula) {
+        this.idAppello = idAppello;
+        this.studentiIscritti = studentiIscritti;
+        this.dataEsame = dataEsame;
+        this.mMateria = mMateria;
+        this.aula = aula;
+    }
+
     public Appello (String idAppello, Date d, String aula){
         this.idAppello = idAppello;
         this.dataEsame = d;
@@ -81,4 +89,5 @@ public class Appello {
 
         return dataEsame.toLocaleString() + " - " + "Aula: " + aula;
     }
+
 }

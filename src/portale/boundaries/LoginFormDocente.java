@@ -1,6 +1,7 @@
 package portale.boundaries;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -15,10 +16,22 @@ public class LoginFormDocente {
 
     @FXML private Button loginButton;
 
+    AutenticazioneDocenteCtrl ctr = new AutenticazioneDocenteCtrl();
+
     @FXML public void clickLogin() throws Exception{
 
-        AutenticazioneDocenteCtrl ctr = new AutenticazioneDocenteCtrl(matricolaTF.getText(), passPF.getText());
-        ctr.isPresent((Stage) loginButton.getScene().getWindow());
+        if (!(matricolaTF.getText().isEmpty()) && !(passPF.getText().isEmpty())) {
+            ctr.setMatricolaDocente(matricolaTF.getText());
+            ctr.setPasswordDocente(passPF.getText());
+            ctr.isPresent((Stage) loginButton.getScene().getWindow());
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERRORE");
+            alert.setContentText("Username e/o password mancanti");
+            alert.showAndWait();
+        }
+
 
     }
 
