@@ -28,7 +28,7 @@ public class PortaleDocenteFrame extends Stage{
         Stage primaryStage = (Stage) verbaleButton.getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/VerbaleFrame.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
+        Parent root = fxmlLoader.load();
 
         DBMSVerbaliApertiBnd db = new DBMSVerbaliApertiBnd();
 
@@ -47,7 +47,7 @@ public class PortaleDocenteFrame extends Stage{
         Stage primaryStage = (Stage) stampaIscrittiButton.getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/StampaElencoIscrittiForm.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
+        Parent root = fxmlLoader.load();
 
         StampaElencoIscrittiForm controller = fxmlLoader.getController();
         controller.setDoc(currDocente);
@@ -66,7 +66,7 @@ public class PortaleDocenteFrame extends Stage{
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/LoginFormDocente.fxml"));
 
-            Parent parent = (Parent) fxmlLoader.load();
+            Parent parent = fxmlLoader.load();
 
             stage.setTitle("Login Docente");
             stage.setScene(new Scene(parent, 600, 600));
