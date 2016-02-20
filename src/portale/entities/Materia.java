@@ -1,7 +1,5 @@
 package portale.entities;
 
-import java.nio.charset.CoderMalfunctionError;
-
 public class Materia {
 
     private String nomeMateria;
@@ -25,6 +23,14 @@ public class Materia {
     public Materia(String codiceMateria, String nomeMateria, int CFU, int anno) {
         this.codiceMateria = codiceMateria;
         this.nomeMateria = nomeMateria;
+        this.CFU = CFU;
+        this.annoCorso = anno;
+    }
+
+    public Materia(String codiceMateria, String nomeMateria, String pOrdinamento, int CFU, int anno) {
+        this.codiceMateria = codiceMateria;
+        this.nomeMateria = nomeMateria;
+        ordinamento = pOrdinamento;
         this.CFU = CFU;
         this.annoCorso = anno;
     }

@@ -51,6 +51,14 @@ public class DBMSInizializzaVerbaleBnd {
             "\t\t\t\tWHERE Dipartimento.Ref_Scuola = ?)));\n" +
             "\n";
 
+    private final String QURY_GET_MATERIE = "SELECT *\n" +
+            "FROM Materia\n" +
+            "WHERE Materia.Docente = ?\n" +
+            "\tAND Materia.Id_Materia IN (\n" +
+            "\t\tSELECT PianoDiStudi.Ref_Materia\n" +
+            "        FROM PianoDiStudi\n" +
+            "        WHERE PianoDiStudi.Ref_CorsoDiLaurea = ?);";
+
 
     public ObservableList<StudenteClass> getStudentiIScritti(Date pDataAppello, String pMatricolaDocente, String pCodiceMateria) {
         return null;
@@ -77,8 +85,26 @@ public class DBMSInizializzaVerbaleBnd {
         return cdls;
     }
 
-    public ObservableList<Materia> getMaterie(String pCdl, String pDocente) {
-        return null;
+    public ObservableList<Materia> getMaterie(CorsoDiLaurea pCorsoDiLaurea, DocenteClass pDocente) throws SQLException {
+
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
+
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QURY_GET_MATERIE);
+        preparedStatement.setString(1, pDocente.getMatricolaDocente());
+        preparedStatement.setString(2, pCorsoDiLaurea.getCodiceCorso());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        /* Result array */
+        ObservableList<Materia> materie = FXCollections.observableArrayList();
+
+        /* Populate array */
+        while (resultSet.next()){
+            materie.add(new Materia(resultSet.getString("Id_Materia"), resultSet.getString("Nome"), resultSet.getString("Ordinamento"),
+                    resultSet.getInt("CFU"), resultSet.getInt("Anno")));
+        }
+
+        return materie;
     }
 
     public ObservableList<Appello> getAppelli(String pMatricolaDocente, String pCodiceMateria, String pCdl) {
