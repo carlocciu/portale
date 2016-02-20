@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import portale.controls.IscrizioneEsameCtrl;
 import portale.controls.PianoDiStudiCtrl;
 import portale.entities.*;
 
@@ -139,12 +140,12 @@ public class PianoDiStudiForm {
 
         ObservableList<DisplayAppello> appelli = getAppelli.getAppelli(materia.getCodiceMateria());
 
-        addRowsAppelli(appelli);
+        addRowsAppelli(appelli, materia.getMatricola());
 
 
     }
 
-    public void addRowsAppelli(ObservableList<DisplayAppello> appelli){
+    public void addRowsAppelli(ObservableList<DisplayAppello> appelli, String matricola){
 
         TableColumn docenteCol = new TableColumn("Docente");
         docenteCol.setMinWidth(50);
@@ -155,7 +156,7 @@ public class PianoDiStudiForm {
         dataCol.setMinWidth(100);
         dataCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, Date>("dataEsame"));
 
-        TableColumn aulaCol = new TableColumn("Nome Materia");
+        TableColumn aulaCol = new TableColumn("Aula");
         aulaCol.setMinWidth(150);
         aulaCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, String>("aula"));
 
@@ -188,8 +189,7 @@ public class PianoDiStudiForm {
                                     btn.setOnAction( ( ActionEvent event ) ->
                                     {
                                         DisplayAppello appello = getTableView().getItems().get( getIndex() );
-                                        System.out.println( appello.getIdAppello());
-                                        //prenotaEsame(materia);
+                                        insertPrenotazione(appello.getIdAppello(), matricola);
 
                                     } );
                                     setGraphic( btn );
@@ -206,5 +206,11 @@ public class PianoDiStudiForm {
         appelliTV.getColumns().addAll(docenteCol, dataCol, aulaCol, prenotatoCol);
     }
 
+    public void insertPrenotazione(String appello, String matricola){
+
+        IscrizioneEsameCtrl iscrizione = new IscrizioneEsameCtrl();
+        iscrizione.insertPrenotazione(matricola,appello);
+
+    }
 }
 

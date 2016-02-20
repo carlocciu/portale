@@ -95,14 +95,11 @@ public class DBMSLoginStudenteBnd {
 
                 while (resultMaterieSostenute.next()){
 
-                    System.out.println("Sono dentro il secondo while");
-                    System.out.println(resultMaterie.getString("Id_Materia") + " == " + resultMaterieSostenute.getString("Id_Materia"));
-
                     due = resultMaterieSostenute.getString("Id_Materia");
 
                     if(uno.equals(due)){
 
-                        pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterieSostenute.getInt("Anno"), resultMaterieSostenute.getString("Id_Materia"), resultMaterieSostenute.getString("Nome"), resultMaterieSostenute.getInt("CFU"), resultMaterieSostenute.getDate("DataEsame"), resultMaterieSostenute.getInt("Voto"), "no"));
+                        pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterieSostenute.getInt("Anno"), resultMaterieSostenute.getString("Id_Materia"), resultMaterieSostenute.getString("Nome"), resultMaterieSostenute.getInt("CFU"), resultMaterieSostenute.getDate("DataEsame"), resultMaterieSostenute.getInt("Voto"), pMatricola));
                         sostenuta = true;
                         System.out.println("Ho una materia data");
 
@@ -111,34 +108,13 @@ public class DBMSLoginStudenteBnd {
 
                 if(sostenuta == false){
 
-                    pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterie.getInt("Anno"), resultMaterie.getString("Id_Materia"), resultMaterie.getString("Nome"), resultMaterie.getInt("CFU"), null, 0, "no"));
+                    pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterie.getInt("Anno"), resultMaterie.getString("Id_Materia"), resultMaterie.getString("Nome"), resultMaterie.getInt("CFU"), null, 0, pMatricola));
 
                     System.out.println("Ho una materia non data");
                 }
             }
 
-            /*
-            while(result.next()){
 
-                int anno = result.getInt("Anno");
-
-                String codiceMateria = result.getString("Id_Materia");
-
-                String nomeMateria = result.getString("Nome");
-
-                int cfu = result.getInt("CFU");
-
-                Date data = result.getDate("DataEsame");
-
-                int voto = result.getInt("Voto");
-
-                String prenotato = result.getInt("Voto") > 0 ? "si":"no";
-
-                pianoDiStudi.add(new DisplayPianoDiStudi(anno, codiceMateria, nomeMateria, cfu, data, voto, prenotato));
-
-
-            }
-            */
             //statement.close();
             connection.close();
 

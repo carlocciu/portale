@@ -9,7 +9,33 @@ import java.util.Date;
 
 public class DBMSIscrizioneEsameBnd {
 
-    public void insertIscrizione(String pMatricola, String pCodiceMateria, Date pDataEsame) {
+    public void insertIscrizione(String pMatricola, String pCodiceMateria) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
+        try{
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+
+            //bada che manca l'aula nel Db --> fixare
+            String query = "INSERT INTO Prenotazione VALUES (?, ?)";
+            statement = connection.prepareStatement(query);
+
+            statement.setString(1, pMatricola);
+            statement.setString(2, pCodiceMateria);
+
+            statement.executeUpdate();
+
+            statement.close();
+            connection.close();
+
+
+        }catch(SQLException e){
+            e.printStackTrace();
+
+        }
 
     }
 
@@ -50,6 +76,47 @@ public class DBMSIscrizioneEsameBnd {
             return null;
         }
 
+    }
+
+    public boolean getTheRightStudent(String matricola, String email, String telefono){
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
+        try{
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+
+            //bada che manca l'aula nel Db --> fixare
+            String query = "SELECT * FROM Studente WHERE Matricola=? and Email=? and Telefono=? ";
+            statement = connection.prepareStatement(query);
+
+            statement.setString(1, matricola);
+            statement.setString(2, email);
+            statement.setString(3, telefono);
+
+            result = statement.executeQuery();
+
+            boolean isValid = false;
+
+            if (result.next()){
+
+                isValid = true;
+
+            }else{
+                isValid = false;
+            }
+
+            statement.close();
+            connection.close();
+
+            return isValid;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

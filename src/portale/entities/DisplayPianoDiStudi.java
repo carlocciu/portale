@@ -22,10 +22,11 @@ public class DisplayPianoDiStudi {
 
     private final SimpleStringProperty dataEsame;
 
-    private final SimpleStringProperty prenotaMateria;
+    private final SimpleStringProperty matricola;
 
 
-    public DisplayPianoDiStudi(int anno, String codiceMateria, String nomeMateria, int cfu, Date data, int voto, String prenotato) {
+
+    public DisplayPianoDiStudi(int anno, String codiceMateria, String nomeMateria, int cfu, Date data, int voto, String matricola) {
 
         this.anno = new SimpleStringProperty(String.valueOf(anno));
         this.codiceMateria = new SimpleStringProperty(codiceMateria);
@@ -33,7 +34,7 @@ public class DisplayPianoDiStudi {
         this.cfuMateria = new SimpleStringProperty(String.valueOf(cfu));
         this.esitoMateria = new SimpleStringProperty(String.valueOf(voto));
         this.dataEsame = new SimpleStringProperty(String.valueOf(data));
-        this.prenotaMateria = new SimpleStringProperty(prenotato);
+        this.matricola = new SimpleStringProperty(matricola);
 
     }
 
@@ -109,15 +110,12 @@ public class DisplayPianoDiStudi {
         this.dataEsame.set(dataEsame);
     }
 
-    public String getPrenotaMateria() {
-        return prenotaMateria.get();
+    public String getMatricola() {
+        return matricola.get();
     }
 
-    public SimpleStringProperty prenotaMateriaProperty() {
-        return prenotaMateria;
+    public SimpleStringProperty matricolaProperty() {
+        return matricola;
     }
 
-    public void setPrenotaMateria(String prenotaMateria) {
-        this.prenotaMateria.set(prenotaMateria);
-    }
 }
