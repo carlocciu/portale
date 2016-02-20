@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import portale.controls.AutenticazioneDocenteCtrl;
 
-public class LoginForm {
+public class LoginFormDocente {
 
     @FXML private TextField matricolaTF;
 
@@ -16,6 +16,7 @@ public class LoginForm {
     @FXML private Button loginButton;
 
     @FXML public void clickLogin() throws Exception{
+
         AutenticazioneDocenteCtrl ctr = new AutenticazioneDocenteCtrl(matricolaTF.getText(), passPF.getText());
         ctr.isPresent((Stage) loginButton.getScene().getWindow());
     }
