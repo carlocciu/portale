@@ -117,7 +117,7 @@ public class PianoDiStudiForm {
 
     public void prenotaEsame(DisplayPianoDiStudi materia){
 
-        if(!materia.getEsitoMateria().equals("0")){
+        if(!materia.getEsitoMateria().equals(" - ")){
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Prenotazione Fallita");

@@ -32,8 +32,19 @@ public class DisplayPianoDiStudi {
         this.codiceMateria = new SimpleStringProperty(codiceMateria);
         this.nomeMateria = new SimpleStringProperty(nomeMateria);
         this.cfuMateria = new SimpleStringProperty(String.valueOf(cfu));
-        this.esitoMateria = new SimpleStringProperty(String.valueOf(voto));
-        this.dataEsame = new SimpleStringProperty(String.valueOf(data));
+
+        if (voto == 0){
+            this.esitoMateria = new SimpleStringProperty(" - ");
+        } else {
+            this.esitoMateria = new SimpleStringProperty(String.valueOf(voto));
+        }
+
+        if (data == null){
+            this.dataEsame = new SimpleStringProperty(" - ");
+        }else {
+            this.dataEsame = new SimpleStringProperty(String.valueOf(data));
+        }
+
         this.matricola = new SimpleStringProperty(matricola);
 
     }
