@@ -12,10 +12,10 @@ public class InizializzaVerbaleCtrl {
 
     private DBMSInizializzaVerbaleBnd mDBMSInizializzaVerbaleBnd = new DBMSInizializzaVerbaleBnd();
 
-    public ObservableList<Scuola> getScuole() {
+    public ObservableList<Scuola> getScuole(DocenteClass mDocente) {
 
         try {
-            return mDBMSInizializzaVerbaleBnd.getScuole();
+            return mDBMSInizializzaVerbaleBnd.getScuole(mDocente);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,10 +15,8 @@ import portale.controls.InizializzaVerbaleCtrl;
 import portale.entities.*;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class InizializzaVerbaleForm implements Initializable{
+public class InizializzaVerbaleForm{
 
     @FXML
     private ComboBox<Scuola> scuoleCB;
@@ -51,21 +48,6 @@ public class InizializzaVerbaleForm implements Initializable{
 
     private DocenteClass mDocente;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        /* Fill scuoleCB with Scuole from DB */
-        riempiScuoleCB();
-
-        scuoleCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Scuola>() {
-            @Override
-            public void changed(ObservableValue<? extends Scuola> observable, Scuola oldValue, Scuola newValue) {
-                mSelectedScuola = newValue;
-                riempiCdlsCB(mSelectedScuola);
-            }
-        });
-
-    }
-
 
     public void setDocente(DocenteClass docente) {
         mDocente = docente;
@@ -85,7 +67,15 @@ public class InizializzaVerbaleForm implements Initializable{
 
     public void riempiScuoleCB() {
         scuoleCB.getItems().clear();
-        scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole());
+        scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole(mDocente));
+
+        scuoleCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Scuola>() {
+            @Override
+            public void changed(ObservableValue<? extends Scuola> observable, Scuola oldValue, Scuola newValue) {
+                mSelectedScuola = newValue;
+                riempiCdlsCB(mSelectedScuola);
+            }
+        });
     }
 
     public void riempiCdlsCB(Scuola pScuola) {

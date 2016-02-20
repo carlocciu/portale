@@ -123,6 +123,7 @@ public class VerbaleFrame {
             /* Pass Docente to InizializzaVerbaleForm */
             InizializzaVerbaleForm inizializzaVerbaleForm = fxmlLoader.getController();
             inizializzaVerbaleForm.setDocente(docente);
+            inizializzaVerbaleForm.riempiScuoleCB();
 
             stage.setTitle("Inizializzazione Verbale");
             stage.setScene(new Scene(parent, 600, 600));

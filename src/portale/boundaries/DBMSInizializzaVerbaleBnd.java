@@ -16,7 +16,22 @@ public class DBMSInizializzaVerbaleBnd {
 
 
     /* Queries */
-    private final String QUERY_GET_SCUOLE = "SELECT * FROM PortaleStudenti.Scuola;";
+    private final String QUERY_GET_SCUOLE = "SELECT * \n" +
+            "FROM PortaleStudenti.Scuola\n" +
+            "WHERE Scuola.Id_Scuola IN(\n" +
+            "\tSELECT Dipartimento.Ref_Scuola\n" +
+            "    FROM Dipartimento\n" +
+            "    WHERE Dipartimento.Id_Dip IN(\n" +
+            "\t\tSELECT CorsoDiLaurea.Ref_Dipartimento\n" +
+            "\t\tFROM CorsoDiLaurea\n" +
+            "\t\tWHERE CorsoDiLaurea.Id_CdL = (\n" +
+            "\t\t\tSELECT PianoDiStudi.Ref_CorsoDiLaurea\n" +
+            "\t\t\tFROM PianoDiStudi\n" +
+            "\t\t\tWHERE PianoDiStudi.Ref_Materia IN (\n" +
+            "\t\t\t\tSELECT Insegnamento.Ref_Materia\n" +
+            "\t\t\t\tFROM PortaleStudenti.Insegnamento\n" +
+            "\t\t\t\tWHERE Insegnamento.Ref_Docente = ?))));";
+
     private final String QUERY_GET_CDLS = "SELECT *\n" +
             "FROM CorsoDiLaurea\n" +
             "WHERE CorsoDiLaurea.Id_CdL = (\n" +
@@ -70,11 +85,12 @@ public class DBMSInizializzaVerbaleBnd {
         return null;
     }
 
-    public ObservableList<Scuola> getScuole() throws SQLException {
+    public ObservableList<Scuola> getScuole(DocenteClass pDocente) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
         PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_SCUOLE);
+        preparedStatement.setString(1, pDocente.getMatricolaDocente());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
