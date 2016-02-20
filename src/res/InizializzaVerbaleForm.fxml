@@ -41,7 +41,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ComboBox fx:id="scuoleCB" prefWidth="400.0" GridPane.columnIndex="1">
+            <ComboBox fx:id="scuoleCB" onMouseClicked="#riempiScuoleCB" prefWidth="400.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </GridPane.margin>

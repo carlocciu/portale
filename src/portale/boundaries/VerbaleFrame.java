@@ -3,19 +3,21 @@ package portale.boundaries;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import portale.controls.VerbaleCtrl;
 import portale.entities.DisplayVerbale;
 import portale.entities.DocenteClass;
-import portale.entities.VerbaleComplessivo;
+
+import java.io.IOException;
 
 public class VerbaleFrame {
 
@@ -113,14 +115,62 @@ public class VerbaleFrame {
     }
 
     public void clickNuovoVerbale() {
+        try {
+            Stage stage = (Stage) nuovoVerbaleButton.getScene().getWindow();
 
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/InizializzaVerbaleForm.fxml"));
+
+            Parent parent = fxmlLoader.load();
+
+            stage.setTitle("Inizializzazione Verbale");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickLogout() {
 
+        try {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/LoginFormDocente.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Login Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickHome() {
+
+        try {
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Portale Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

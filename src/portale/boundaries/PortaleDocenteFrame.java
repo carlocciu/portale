@@ -70,7 +70,7 @@ public class PortaleDocenteFrame extends Stage{
 
             Parent parent = (Parent) fxmlLoader.load();
 
-            stage.setTitle("Portale");
+            stage.setTitle("Login Docente");
             stage.setScene(new Scene(parent, 600, 600));
             stage.setResizable(false);
             stage.show();
