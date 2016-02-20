@@ -6,10 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import portale.controls.AutenticazioneDocenteCtrl;
 import portale.entities.DocenteClass;
 
-public class PortaleDocenteFrame {
+import java.io.IOException;
+
+public class PortaleDocenteFrame extends Stage{
 
     @FXML private Button verbaleButton;
 
@@ -45,6 +46,22 @@ public class PortaleDocenteFrame {
 
     @FXML public void clickLogout() {
 
+        try {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/LoginFormDocente.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Portale");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
