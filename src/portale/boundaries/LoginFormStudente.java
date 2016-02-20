@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import portale.controls.AutenticazioneDocenteCtrl;
+import portale.controls.AutenticazioneStudenteCtrl;
 
 public class LoginFormStudente {
 
@@ -17,7 +18,9 @@ public class LoginFormStudente {
 
     @FXML public void clickLogin() throws Exception{
 
+        AutenticazioneStudenteCtrl login = new AutenticazioneStudenteCtrl(matricolaTF.getText(), passPF.getText(), (Stage) loginButton.getScene().getWindow());
 
+        login.checkLogin();
 
     }
 
