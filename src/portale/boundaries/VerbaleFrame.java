@@ -114,7 +114,22 @@ public class VerbaleFrame {
     }
 
     public void clickNuovoVerbale() {
+        try {
+            Stage stage = (Stage) nuovoVerbaleButton.getScene().getWindow();
 
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/InizializzaVerbaleForm.fxml"));
+
+            Parent parent = fxmlLoader.load();
+
+            stage.setTitle("Inizializzazione Verbale");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickLogout() {
