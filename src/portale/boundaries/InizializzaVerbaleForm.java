@@ -3,6 +3,7 @@ package portale.boundaries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,9 +17,11 @@ import portale.entities.DocenteClass;
 import portale.entities.Materia;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class InizializzaVerbaleForm {
+public class InizializzaVerbaleForm implements Initializable{
 
     @FXML
     private ComboBox<String> scuoleCB;
@@ -55,6 +58,11 @@ public class InizializzaVerbaleForm {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        riempiScuoleCB();
+    }
+
     public void clickInizializza() {
 
     }
@@ -64,6 +72,7 @@ public class InizializzaVerbaleForm {
     }
 
     public void riempiScuoleCB() {
+        scuoleCB.getItems().clear();
         scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole());
     }
 
