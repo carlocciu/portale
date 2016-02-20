@@ -2,13 +2,21 @@ package portale.boundaries;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import portale.controls.InizializzaVerbaleCtrl;
 import portale.entities.Appello;
 import portale.entities.CorsoDiLaurea;
 import portale.entities.DocenteClass;
 import portale.entities.Materia;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class InizializzaVerbaleForm {
 
@@ -37,6 +45,16 @@ public class InizializzaVerbaleForm {
     @FXML
     private Button homeButton;
 
+    private InizializzaVerbaleCtrl mInizializzaVerbaleCtrl;
+
+    public InizializzaVerbaleForm(){
+        try {
+            mInizializzaVerbaleCtrl = new InizializzaVerbaleCtrl();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void clickInizializza() {
 
     }
@@ -46,7 +64,7 @@ public class InizializzaVerbaleForm {
     }
 
     public void riempiScuoleCB() {
-
+        scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole());
     }
 
     public void riempiCdlsCB(String pScuola, DocenteClass pDocente) {
@@ -62,10 +80,42 @@ public class InizializzaVerbaleForm {
     }
 
     public void clickLogout() {
+        try {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
 
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/LoginFormDocente.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Login Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickHome() {
+
+        try {
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Portale Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
