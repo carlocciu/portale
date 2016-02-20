@@ -7,7 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import portale.boundaries.DBMSLoginStudenteBnd;
+import portale.boundaries.DBMSVerbaliApertiBnd;
 import portale.boundaries.PianoDiStudiForm;
+import portale.boundaries.VerbaleFrame;
+import portale.entities.DisplayPianoDiStudi;
 import portale.entities.PianoDiStudi;
 import portale.entities.StudenteClass;
 
@@ -19,14 +22,14 @@ public class AutenticazioneStudenteCtrl {
 
     private String matricola;
     private String password;
-    private Stage thisStage;
+    //private Stage thisStage;
 
 
-    public AutenticazioneStudenteCtrl(String matricola, String password, Stage myStage) {
+    public AutenticazioneStudenteCtrl(String matricola, String password) {
 
         this.matricola = matricola;
         this.password = password;
-        this.thisStage = myStage;
+
     }
 
     public String getMatricola (){
@@ -40,7 +43,7 @@ public class AutenticazioneStudenteCtrl {
     }
 
 
-    public void checkLogin(){
+    public boolean checkLogin(){
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Login");
@@ -59,6 +62,7 @@ public class AutenticazioneStudenteCtrl {
             }
 
             alert.showAndWait();
+            return false;
 
         } else {
 
@@ -66,13 +70,13 @@ public class AutenticazioneStudenteCtrl {
 
             if(loginDBConnection.isPresenteUser(getMatricola(), getPassword())){
 
-                //quindi se lo studente è presente nel DB allora lo rimando alla pagina del portale
-                sendDataToAnotherPage(loginDBConnection);
+                return true;
 
             }else{
 
                 alert.setContentText("Studente non trovato");
                 alert.showAndWait();
+                return false;
 
             }
             //databaseConnection(alert);
@@ -81,41 +85,5 @@ public class AutenticazioneStudenteCtrl {
 
     }
 
-    public void sendDataToAnotherPage(DBMSLoginStudenteBnd loginDBConnection){
-
-        FXMLLoader page = new FXMLLoader(getClass().getResource("../../res/PianoDiStudiForm.fxml"));
-        Parent root = null;
-        try {
-
-            root = (Parent) page.load();
-
-            // mi richiamo il controller del boundary che gestisce la grafica della pagina PianoDiStudiForm.fxml
-            PianoDiStudiForm controller = page.getController();
-
-            /*
-            //adesso che ho il controller(ovvero PianoDiStudiForm.java) allora setto la matricola con la quale farò la richiesta al DB
-            controller.setMatricola(getMatricola());
-
-            //ottengo i dati del piano di studi da mostrare nella tabella
-            ObservableList<DBMSLoginStudenteBnd.PianoDiStudiModified> pianoDiStudi = loginDBConnection.getPianodiStudi(getMatricola());
-
-            //devo riempire le tabelle --> devo usare il controller
-
-            */
-
-            Scene scene = new Scene(root);
-            thisStage.setScene(scene);
-
-           // controller.riempiTabella(thisStage);
-
-            thisStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
 }
 

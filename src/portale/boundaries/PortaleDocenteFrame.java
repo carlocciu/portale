@@ -25,6 +25,7 @@ public class PortaleDocenteFrame extends Stage{
     }
 
     @FXML public void clickVerbale() throws Exception {
+
         Stage primaryStage = (Stage) verbaleButton.getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/VerbaleFrame.fxml"));
@@ -34,6 +35,7 @@ public class PortaleDocenteFrame extends Stage{
 
         VerbaleFrame controller = fxmlLoader.getController();
         controller.setDocente(currDocente);
+
         controller.riempiVerbaliAperti(db.verbaliAperti(currDocente.getMatricolaDocente()));
 
         primaryStage.setTitle("Verbali");

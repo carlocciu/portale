@@ -9,6 +9,13 @@ public class DocenteClass {
 
     private String matricolaDocente;
 
+    public DocenteClass(){
+
+        this.cognomeDocente = "";
+        this.nomeDocente = "";
+        this.matricolaDocente = "";
+    }
+
     public DocenteClass(String matricolaDocente, String nomeDocente, String cognomeDocente) {
         this.matricolaDocente = matricolaDocente;
         this.nomeDocente = nomeDocente;

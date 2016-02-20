@@ -17,26 +17,32 @@ public class PianoDiStudi {
     }
 
     public Materia getmMateria() {
+
         return mMateria;
     }
 
     public void setmMateria(Materia mMateria) {
+
         this.mMateria = mMateria;
     }
 
     public String getEsito() {
+
         return esito;
     }
 
     public void setEsito(String esito) {
+
         this.esito = esito;
     }
 
     public Date getDataEsame() {
+
         return dataEsame;
     }
 
     public void setDataEsame(Date dataEsame) {
+
         this.dataEsame = dataEsame;
     }
 }

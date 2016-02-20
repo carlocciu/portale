@@ -36,6 +36,7 @@ public class VerbaleFrame {
     }
 
     public void riempiVerbaliAperti(ObservableList<DisplayVerbale> data) {
+
         TableColumn annoCol = new TableColumn("Anno");
         annoCol.setMinWidth(50);
         annoCol.setCellValueFactory(

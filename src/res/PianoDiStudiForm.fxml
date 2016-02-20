@@ -41,14 +41,6 @@
         </rowConstraints>
          <children>
             <TableView fx:id="pianoDiStudiTV" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowSpan="3">
-               <columns>
-                  <TableColumn fx:id="annoCol" prefWidth="60.0" text="Anno" />
-                  <TableColumn fx:id="materiaCol" prefWidth="210.0" text="Codice e Insegnamento" />
-                  <TableColumn fx:id="cfuCol" prefWidth="60.0" text="CFU" />
-                  <TableColumn fx:id="esitoCol" prefWidth="110.0" text="Esito" />
-                  <TableColumn fx:id="dataCol" prefWidth="100.0" text="Data Esame" />
-                  <TableColumn fx:id="btnPrenotaCol" prefWidth="100.0" text="Prenota" />
-               </columns>
                <GridPane.margin>
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </GridPane.margin>

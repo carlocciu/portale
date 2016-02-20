@@ -1,41 +1,28 @@
 package portale.boundaries;
 
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import portale.controls.PianoDiStudiCtrl;
 import portale.entities.Appello;
+import portale.entities.DisplayPianoDiStudi;
+import portale.entities.DisplayVerbale;
 import portale.entities.PianoDiStudi;
+
+import java.util.Date;
 
 public class PianoDiStudiForm {
 
-    /*
-    private TableView<PianoDiStudi> pianoStudiTV;
 
-    private TableView<Appello> appelliTV;
+    @FXML private TableView<DisplayPianoDiStudi> pianoDiStudiTV;
 
-    private TableColumn<PianoDiStudi, String> annoCol;
+    @FXML private TableView<Appello> appelliTV;
 
-    private TableColumn<PianoDiStudi, String> materiaCol;
-
-    private TableColumn<PianoDiStudi, Integer> cfuCol;
-
-    private TableColumn<PianoDiStudi, String> esitoCol;
-
-    private TableColumn<PianoDiStudi, String> dataCol;
-
-    private TableColumn<PianoDiStudi, String> btnPrenotaCol;
-
-    private TableColumn<Appello, String> docenteCol;
-
-    private TableColumn<Appello, String> dateAppelliCol;
-
-    private TableColumn<Appello, String> aulaCol;
-
-    private TableColumn<Appello, String> prenotaCol;
-    */
 
     @FXML  private Button logoutButton;
 
@@ -54,4 +41,99 @@ public class PianoDiStudiForm {
         logout.logout();
     }
 
+    public void fillTheTable(ObservableList<DisplayPianoDiStudi> pianoDiStudi){
+
+        TableColumn annoCol = new TableColumn("Anno");
+        annoCol.setMinWidth(50);
+        annoCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("anno"));
+
+
+        TableColumn codiceMateriaCol = new TableColumn("Codice Materia");
+        codiceMateriaCol.setMinWidth(100);
+        codiceMateriaCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("codiceMateria"));
+
+        TableColumn nomeMateriaCol = new TableColumn("Nome Materia");
+        nomeMateriaCol.setMinWidth(150);
+        nomeMateriaCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("nomeMateria"));
+
+        TableColumn cfuCol = new TableColumn("CFU");
+        cfuCol.setMinWidth(50);
+        cfuCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("cfuMateria"));
+
+        TableColumn votoCol = new TableColumn("Voto");
+        votoCol.setMinWidth(50);
+        votoCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("esitoMateria"));
+
+        TableColumn dataCol = new TableColumn("Data Esame");
+        dataCol.setMinWidth(100);
+        dataCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, Date>("dataEsame"));
+
+        TableColumn prenotatoCol = new TableColumn("Prenotazione");
+        prenotatoCol.setMinWidth(100);
+        prenotatoCol.setCellValueFactory(new PropertyValueFactory<>("Operazioni"));
+
+         Callback<TableColumn<DisplayPianoDiStudi, String>, TableCell<DisplayPianoDiStudi, String>> cellFactory = //
+                 new Callback<TableColumn<DisplayPianoDiStudi, String>, TableCell<DisplayPianoDiStudi, String>>()
+                 {
+                     @Override
+                     public TableCell call( final TableColumn<DisplayPianoDiStudi, String> param )
+                     {
+                         final TableCell<DisplayPianoDiStudi, String> cell = new TableCell<DisplayPianoDiStudi, String>()
+                         {
+
+                             final Button btn = new Button( "Continua" );
+
+                             @Override
+                             public void updateItem( String item, boolean empty )
+                             {
+                                 super.updateItem( item, empty );
+                                 if ( empty )
+                                 {
+                                     setGraphic( null );
+                                     setText( null );
+                                 }
+                                 else
+                                 {
+                                     btn.setOnAction( ( ActionEvent event ) ->
+                                     {
+                                         DisplayPianoDiStudi materia = getTableView().getItems().get( getIndex() );
+                                         System.out.println( materia.getEsitoMateria());
+                                         prenotaEsame(materia);
+
+                                     } );
+                                     setGraphic( btn );
+                                     setText( null );
+                                 }
+                             }
+                         };
+                         return cell;
+                     }
+                 };
+
+        prenotatoCol.setCellFactory( cellFactory );
+        pianoDiStudiTV.setItems(pianoDiStudi);
+        pianoDiStudiTV.getColumns().addAll(annoCol, codiceMateriaCol, nomeMateriaCol, cfuCol, votoCol, dataCol, prenotatoCol);
+
+
+    }
+
+    public void prenotaEsame(DisplayPianoDiStudi materia){
+
+        if(!materia.getEsitoMateria().equals("0")){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Prenotazione Fallita");
+
+            alert.setContentText("La materia " + materia.getNomeMateria() + " e' stata gia' sostenuta");
+            alert.showAndWait();
+
+        }else{
+
+            appelliTV.setVisible(true);
+
+
+        }
+    }
+
 }
+

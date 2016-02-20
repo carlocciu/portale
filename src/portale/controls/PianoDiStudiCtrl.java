@@ -21,7 +21,7 @@ public class PianoDiStudiCtrl {
 
     }
 
-    public void logout (){
+    public void logout() {
 
         FXMLLoader page = new FXMLLoader(getClass().getResource("../../res/LoginFormStudente.fxml"));
 
@@ -44,6 +44,5 @@ public class PianoDiStudiCtrl {
 
 
     }
-
 
 }
