@@ -19,6 +19,7 @@ public class LoginFormDocente {
 
         AutenticazioneDocenteCtrl ctr = new AutenticazioneDocenteCtrl(matricolaTF.getText(), passPF.getText());
         ctr.isPresent((Stage) loginButton.getScene().getWindow());
+
     }
 
 }
