@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import portale.boundaries.DBMSInizializzaVerbaleBnd;
 import portale.entities.CorsoDiLaurea;
 import portale.entities.DocenteClass;
+import portale.entities.Materia;
 import portale.entities.Scuola;
 
 import java.sql.SQLException;
@@ -25,6 +26,15 @@ public class InizializzaVerbaleCtrl {
     public ObservableList<CorsoDiLaurea> getCDLs(Scuola pScuola, DocenteClass pDocente){
         try {
             return mDBMSInizializzaVerbaleBnd.getCDLs(pScuola, pDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ObservableList<Materia> getMaterie(CorsoDiLaurea mSelectedCorsoDiLaurea, DocenteClass pDocente) {
+        try {
+            return mDBMSInizializzaVerbaleBnd.getMaterie(mSelectedCorsoDiLaurea, pDocente);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
