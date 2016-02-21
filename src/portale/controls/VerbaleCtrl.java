@@ -36,4 +36,8 @@ public class VerbaleCtrl {
         return db.getOraApertura(idVerbale);
     }
 
+    public Materia getMateria(String idVerbale){
+        return db.getMateria(idVerbale);
+    }
+
 }

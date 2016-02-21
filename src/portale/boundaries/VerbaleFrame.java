@@ -107,8 +107,16 @@ public class VerbaleFrame {
 
                                             LocalTime mSelectedOraApertura = mVerbaleCtrl.getOraApertura(getTableView().getItems().get(getIndex()).getIdVerbale());
 
+                                            Materia mSelectedMateria = mVerbaleCtrl.getMateria(getTableView().getItems().get(getIndex()).getIdVerbale());
+
+                                            mSelectedAppello.setMateria(mSelectedMateria);
+
                                             VerbaleComplessivo pVerbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
                                                     "annoAccademico", mSelectedAppello, mSelectedOraApertura);
+
+
+
+                                            pVerbaleComplessivo.setIDVerbale(Integer.parseInt(getTableView().getItems().get(getIndex()).getIdVerbale()));
 
                                             compilazioneVerbaleForm.init(docente, pVerbaleComplessivo);
 

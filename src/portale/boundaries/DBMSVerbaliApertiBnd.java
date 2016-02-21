@@ -10,6 +10,57 @@ import java.util.*;
 
 public class DBMSVerbaliApertiBnd {
 
+    public Materia getMateria(String idVerbale){
+        Materia data = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+
+            ps = conn.prepareStatement("SELECT * FROM Materia as M, Verbale as V WHERE V.Ref_Materia = M.Id_Materia and V.Id_Verbale = ?");
+
+            ps.setString(1, idVerbale);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                data = new Materia(rs.getString("Id_Materia"), rs.getString("Nome"), rs.getString("Ordinamento"),
+                        rs.getInt("CFU"), rs.getInt("Anno"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            rs = null;
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            ps = null;
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            conn = null;
+        }
+
+        return data;
+    }
+
+
     public LocalTime getOraApertura(String idVerbale){
         LocalTime data = null;
         Connection conn = null;
