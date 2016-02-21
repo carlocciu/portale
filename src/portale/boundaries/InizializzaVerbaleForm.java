@@ -75,13 +75,12 @@ public class InizializzaVerbaleForm{
     }
 
     public void clickInizializza() {
-        if(wereStudentsImported() && mSelectedOraApertura != null){;
+        if(wereStudentsImported() && mSelectedOraApertura != null){
             VerbaleComplessivo verbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
                     "annoAccademico", mSelectedAppello, mSelectedOraApertura);
 
             verbaleComplessivo.setIDVerbale(insertNewVerbale());
             verbaleComplessivo.setAppello(mSelectedAppello);
-            verbaleComplessivo.getAppello().setMateria(mSelectedMateria);
             startCompilazioneVerbale(verbaleComplessivo);
         }
 
@@ -135,6 +134,7 @@ public class InizializzaVerbaleForm{
             @Override
             public void changed(ObservableValue<? extends Appello> observable, Appello oldValue, Appello newValue) {
                 mSelectedAppello = newValue;
+                mSelectedAppello.setMateria(mSelectedMateria);
             }
         });
     }
