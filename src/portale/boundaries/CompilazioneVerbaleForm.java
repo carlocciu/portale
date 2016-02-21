@@ -56,7 +56,6 @@ public class CompilazioneVerbaleForm {
         setVerbaleComplessivo(pVerbaleComplessivo);
         initStudentiCB();
         initEsitoComboBox();
-        initVotiComboBox();
     }
 
     public void setDocente(DocenteClass pDocente) {
@@ -95,6 +94,10 @@ public class CompilazioneVerbaleForm {
             @Override
             public void changed(ObservableValue<? extends Esito> observable, Esito oldValue, Esito newValue) {
                 mSelectedEsito = newValue;
+                if(mSelectedEsito == Esito.positivo)
+                    initVotiComboBox();
+                else
+                    mVotiComboBox.getItems().clear();
             }
         });
     }
