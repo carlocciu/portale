@@ -41,13 +41,16 @@ public class PianoDiStudiForm {
 
     public void fillTheTable(ObservableList<DisplayPianoDiStudi> pianoDiStudi){
 
+        pianoDiStudiTV.setMaxWidth(655);
+        pianoDiStudiTV.setMaxHeight(300);
+
         TableColumn annoCol = new TableColumn("Anno");
         annoCol.setMinWidth(50);
         annoCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("anno"));
 
 
         TableColumn codiceMateriaCol = new TableColumn("Codice Materia");
-        codiceMateriaCol.setMinWidth(100);
+        codiceMateriaCol.setMinWidth(150);
         codiceMateriaCol.setCellValueFactory(new PropertyValueFactory<DisplayPianoDiStudi, String>("codiceMateria"));
 
         TableColumn nomeMateriaCol = new TableColumn("Nome Materia");
@@ -95,7 +98,7 @@ public class PianoDiStudiForm {
                                      btn.setOnAction( ( ActionEvent event ) ->
                                      {
                                          DisplayPianoDiStudi materia = getTableView().getItems().get( getIndex() );
-
+                                         appelliTV.getColumns().clear();
                                          prenotaEsame(materia);
 
                                      } );
@@ -147,6 +150,9 @@ public class PianoDiStudiForm {
 
     public void addRowsAppelli(ObservableList<DisplayAppello> appelli, String matricola){
 
+        appelliTV.setMaxWidth(345);
+        appelliTV.setMaxHeight(200);
+
         TableColumn docenteCol = new TableColumn("Docente");
         docenteCol.setMinWidth(50);
         docenteCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, String>("docente"));
@@ -157,7 +163,7 @@ public class PianoDiStudiForm {
         dataCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, Date>("dataEsame"));
 
         TableColumn aulaCol = new TableColumn("Aula");
-        aulaCol.setMinWidth(150);
+        aulaCol.setMinWidth(70);
         aulaCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, String>("aula"));
 
         TableColumn prenotatoCol = new TableColumn("Prenotazione");
