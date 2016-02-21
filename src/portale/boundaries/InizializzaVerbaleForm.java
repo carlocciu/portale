@@ -39,6 +39,7 @@ public class InizializzaVerbaleForm{
 
     @FXML
     private Button importaIscrittiButton;
+    private boolean mStudentiImportati = false;
 
     @FXML
     private Button inizializzaButton;
@@ -163,6 +164,9 @@ public class InizializzaVerbaleForm{
     public void clickImportaIscritti(ActionEvent actionEvent) {
         if(mSelectedAppello != null){
             mSelectedAppello.setStudentiIscritti(mInizializzaVerbaleCtrl.getIscrittiAppello(mSelectedAppello));
+            importaIscrittiButton.setDisable(true);
+            importaIscrittiButton.setText("Studenti Importati");
+            mStudentiImportati = true;
         }
         else{
             //Advice docente that should first select an appello
