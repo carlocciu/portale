@@ -193,13 +193,10 @@ DROP TABLE IF EXISTS `Materia`;
 CREATE TABLE `Materia` (
   `Id_Materia` char(6) NOT NULL,
   `Nome` varchar(255) NOT NULL,
-  `Ref_CdL` varchar(255) NOT NULL,
   `Anno` int(11) NOT NULL,
   `CFU` int(11) NOT NULL,
   `Ordinamento` varchar(255) NOT NULL,
-  PRIMARY KEY (`Id_Materia`,`Ref_CdL`),
-  KEY `Ref_CdL` (`Ref_CdL`),
-  CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`)
+  PRIMARY KEY (`Id_Materia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -209,7 +206,7 @@ CREATE TABLE `Materia` (
 
 LOCK TABLES `Materia` WRITE;
 /*!40000 ALTER TABLE `Materia` DISABLE KEYS */;
-INSERT INTO `Materia` VALUES ('000001','Analisi 1','098765',1,12,'Nuovo'),('000002','Fisica 2','098765',2,6,'Nuovo'),('111222','Ingegneria del software','098765',2,6,'Nuovo'),('123456','Basi di dati','098765',3,6,'Nuovo'),('888888','Storia moderna','444444',2,12,'Nuovo');
+INSERT INTO `Materia` VALUES ('000001','Analisi 1',1,12,'Nuovo'),('000002','Fisica 2',2,6,'Nuovo'),('111222','Ingegneria del software',2,6,'Nuovo'),('123456','Basi di dati',3,6,'Nuovo'),('888888','Storia moderna',2,12,'Nuovo');
 /*!40000 ALTER TABLE `Materia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21 18:14:26
+-- Dump completed on 2016-02-21 19:28:42
