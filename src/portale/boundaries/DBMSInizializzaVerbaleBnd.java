@@ -35,30 +35,26 @@ public class DBMSInizializzaVerbaleBnd {
 
     private final String QUERY_GET_CDLS = "SELECT *\n" +
             "FROM CorsoDiLaurea\n" +
-            "WHERE CorsoDiLaurea.Id_CdL = (\n" +
-            "\tSELECT PianoDiStudi.Ref_CorsoDiLaurea\n" +
-            "\tFROM PianoDiStudi\n" +
-            "\tWHERE PianoDiStudi.Ref_Materia IN (\n" +
-            "\t\tSELECT Insegnamento.Ref_Materia\n" +
-            "\t\tFROM PortaleStudenti.Insegnamento\n" +
-            "\t\tWHERE Insegnamento.Ref_Docente = ?)\n" +
-            "\t\t\n" +
-            "\t\tAND PianoDiStudi.Ref_CorsoDiLaurea IN (\n" +
-            "\t\t\tSELECT CorsoDiLaurea.Id_CdL\n" +
-            "\t\t\tFROM CorsoDiLaurea\n" +
-            "\t\t\tWHERE Ref_Dipartimento IN(\n" +
-            "\t\t\t\tSELECT Id_Dip\n" +
-            "\t\t\t\tFROM PortaleStudenti.Dipartimento\n" +
-            "\t\t\t\tWHERE Dipartimento.Ref_Scuola = ?)));\n" +
-            "\n";
+            "WHERE CorsoDiLaurea.Ref_Dipartimento IN(\n" +
+            "\tSELECT Dipartimento.Id_Dip\n" +
+            "    FROM Dipartimento\n" +
+            "    WHERE Dipartimento.Ref_Scuola = ?)\n" +
+            "    \n" +
+            "    AND CorsoDiLaurea.Id_CdL IN(\n" +
+            "\t\tSELECT Materia.Ref_CdL\n" +
+            "        FROM Materia\n" +
+            "        WHERE Materia.Id_Materia IN(\n" +
+            "\t\t\tSELECT Insegnamento.Ref_Materia\n" +
+            "            FROM Insegnamento\n" +
+            "            WHERE Insegnamento.Ref_Docente = ?));";
 
     private final String QURY_GET_MATERIE = "SELECT *\n" +
             "FROM Materia\n" +
-            "WHERE Materia.Docente = ?\n" +
-            "\tAND Materia.Id_Materia IN (\n" +
-            "\t\tSELECT PianoDiStudi.Ref_Materia\n" +
-            "        FROM PianoDiStudi\n" +
-            "        WHERE PianoDiStudi.Ref_CorsoDiLaurea = ?);";
+            "WHERE Materia.Ref_CdL = ?\n" +
+            "\tAND Materia.Id_Materia IN(\n" +
+            "\t\tSELECT Insegnamento.Ref_Materia\n" +
+            "        FROM Insegnamento\n" +
+            "        WHERE Insegnamento.Ref_Docente = ?);";
 
     private final String QUERY_GET_APPELLI = "SELECT * \n" +
             "FROM PortaleStudenti.AppelloEsame\n" +
@@ -82,8 +78,8 @@ public class DBMSInizializzaVerbaleBnd {
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
         PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_CDLS);
-        preparedStatement.setString(1, pDocente.getMatricolaDocente());
-        preparedStatement.setString(2, pScuola.getIdScuola());
+        preparedStatement.setString(1, pScuola.getIdScuola());
+        preparedStatement.setString(2, pDocente.getMatricolaDocente());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -103,8 +99,8 @@ public class DBMSInizializzaVerbaleBnd {
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
         PreparedStatement preparedStatement = dBConnection.prepareStatement(QURY_GET_MATERIE);
-        preparedStatement.setString(1, pDocente.getMatricolaDocente());
-        preparedStatement.setString(2, pCorsoDiLaurea.getCodiceCorso());
+        preparedStatement.setString(1, pCorsoDiLaurea.getCodiceCorso());
+        preparedStatement.setString(2, pDocente.getMatricolaDocente());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
