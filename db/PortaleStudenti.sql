@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `PortaleStudenti` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `PortaleStudenti`;
--- MySQL dump 10.13  Distrib 5.6.22, for osx10.8 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
 --
--- Host: localhost    Database: PortaleStudenti
+-- Host: 127.0.0.1    Database: PortaleStudenti
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.6.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,8 +32,9 @@ CREATE TABLE `AppelloEsame` (
   `Ref_Docente` char(6) NOT NULL,
   PRIMARY KEY (`Id_Appello`),
   KEY `Ref_Materia_idx` (`Ref_Materia`),
-  CONSTRAINT `Ref_Materia` FOREIGN KEY (`Ref_Materia`) REFERENCES `Materia` (`Id_Materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Ref_Docente` FOREIGN KEY (`Ref_Docente`) REFERENCES `Docente` (`Matricola`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `Ref_Docente` (`Ref_Docente`),
+  CONSTRAINT `Ref_Docente` FOREIGN KEY (`Ref_Docente`) REFERENCES `Docente` (`Matricola`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Ref_Materia` FOREIGN KEY (`Ref_Materia`) REFERENCES `Materia` (`Id_Materia`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,7 +44,7 @@ CREATE TABLE `AppelloEsame` (
 
 LOCK TABLES `AppelloEsame` WRITE;
 /*!40000 ALTER TABLE `AppelloEsame` DISABLE KEYS */;
-INSERT INTO `AppelloEsame` VALUES ('123456','2016-02-19 10:29:09','123456','F310', '000112'),('333333','2016-02-19 16:21:36','888888','DEIM', '987654'),('555555','2016-02-19 16:14:07','111222','A320', '001122');
+INSERT INTO `AppelloEsame` VALUES ('123456','2016-02-19 10:29:09','123456','F310','000112'),('333333','2016-02-19 16:21:36','888888','DEIM','987654'),('555555','2016-02-19 16:14:07','111222','A320','001122');
 /*!40000 ALTER TABLE `AppelloEsame` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +124,7 @@ CREATE TABLE `Docente` (
 
 LOCK TABLES `Docente` WRITE;
 /*!40000 ALTER TABLE `Docente` DISABLE KEYS */;
-INSERT INTO `Docente` VALUES ('000112','Rosario','Sorbello','ludovica'),('001122','John','Doe','hello'),('987654','Jane','Doe','mydog');
+INSERT INTO `Docente` VALUES ('000001','Mario','Rossi','ciao'),('000002','Paolo','Bianchi','ciao'),('000003','Luca','Verdi','ciao'),('000112','Rosario','Sorbello','ludovica'),('001122','John','Doe','hello'),('987654','Jane','Doe','ciao');
 /*!40000 ALTER TABLE `Docente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,14 +137,13 @@ DROP TABLE IF EXISTS `EsameVerbalizzato`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `EsameVerbalizzato` (
   `Ref_Studente` char(6) NOT NULL,
-  `Ref_Verbale` char(6) NOT NULL,
+  `Ref_Verbale` int(11) NOT NULL,
   `Esito` enum('positivo','negativo') NOT NULL,
   `Voto` enum('18','19','20','21','22','23','24','25','26','27','28','29','30','30L') DEFAULT NULL,
   `DataEsame` datetime NOT NULL,
   PRIMARY KEY (`Ref_Studente`,`Ref_Verbale`),
   KEY `Ref_Verbale` (`Ref_Verbale`),
-  CONSTRAINT `esameverbalizzato_ibfk_1` FOREIGN KEY (`Ref_Studente`) REFERENCES `Studente` (`Matricola`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `esameverbalizzato_ibfk_2` FOREIGN KEY (`Ref_Verbale`) REFERENCES `Verbale` (`Id_Verbale`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `esameverbalizzato_ibfk_1` FOREIGN KEY (`Ref_Studente`) REFERENCES `Studente` (`Matricola`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,7 +153,6 @@ CREATE TABLE `EsameVerbalizzato` (
 
 LOCK TABLES `EsameVerbalizzato` WRITE;
 /*!40000 ALTER TABLE `EsameVerbalizzato` DISABLE KEYS */;
-INSERT INTO `EsameVerbalizzato` VALUES ('000001','111111','positivo','27','2016-02-19 10:36:54'),('000002','222222','positivo','27','2016-02-19 16:14:18'),('000003','000111','positivo','27','2016-02-19 16:21:48');
 /*!40000 ALTER TABLE `EsameVerbalizzato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,13 +193,15 @@ DROP TABLE IF EXISTS `Materia`;
 CREATE TABLE `Materia` (
   `Id_Materia` char(6) NOT NULL,
   `Nome` varchar(255) NOT NULL,
-  `Ordinamento` varchar(255) NOT NULL,
+  `Ref_CdL` varchar(255) NOT NULL,
   `Docente` char(6) NOT NULL,
   `Anno` int(11) NOT NULL,
   `CFU` int(11) NOT NULL,
-  PRIMARY KEY (`Id_Materia`),
+  PRIMARY KEY (`Id_Materia`,`Ref_CdL`),
   KEY `Matricola_idx` (`Docente`),
-  CONSTRAINT `Docente` FOREIGN KEY (`Docente`) REFERENCES `Docente` (`Matricola`) ON DELETE NO ACTION ON UPDATE CASCADE
+  KEY `Ref_CdL` (`Ref_CdL`),
+  CONSTRAINT `Docente` FOREIGN KEY (`Docente`) REFERENCES `Docente` (`Matricola`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -210,7 +211,7 @@ CREATE TABLE `Materia` (
 
 LOCK TABLES `Materia` WRITE;
 /*!40000 ALTER TABLE `Materia` DISABLE KEYS */;
-INSERT INTO `Materia` VALUES ('111222','Ingegneria del software','Informatica','001122',2,6),('123456','Basi di dati','Informatica','000112',1,6),('888888','Storia moderna','Lettere','987654',2,12);
+INSERT INTO `Materia` VALUES ('000001','Analisi 1','098765','000001',1,12),('000002','Fisica 2','098765','000003',2,6),('111222','Ingegneria del software','098765','000002',2,6),('123456','Basi di dati','098765','000002',3,6),('888888','Storia moderna','444444','987654',2,12);
 /*!40000 ALTER TABLE `Materia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +227,7 @@ CREATE TABLE `PianoDiStudi` (
   `Ref_Materia` char(6) NOT NULL,
   `Ref_CorsoDiLaurea` char(6) NOT NULL,
   `Ref_Voto` enum('18','19','20','21','22','23','24','25','26','27','28','29','30','30L') DEFAULT NULL,
-  `DataEsame` datetime NOT NULL,
+  `DataEsame` datetime DEFAULT NULL,
   PRIMARY KEY (`Ref_Studente`,`Ref_Materia`),
   KEY `Ref_Materia` (`Ref_Materia`),
   KEY `Ref_CorsoDiLaurea` (`Ref_CorsoDiLaurea`),
@@ -242,7 +243,7 @@ CREATE TABLE `PianoDiStudi` (
 
 LOCK TABLES `PianoDiStudi` WRITE;
 /*!40000 ALTER TABLE `PianoDiStudi` DISABLE KEYS */;
-INSERT INTO `PianoDiStudi` VALUES ('000001','123456','098765','27','2016-02-19 10:37:00'),('000002','111222','098765','27','2016-02-19 16:14:22'),('000003','888888','444444','27','2016-02-19 16:21:51');
+INSERT INTO `PianoDiStudi` VALUES ('000001','000001','098765',NULL,NULL),('000001','000002','098765',NULL,NULL),('000001','111222','098765',NULL,NULL),('000001','123456','098765','27','2016-02-19 10:37:00'),('000002','000001','098765',NULL,NULL),('000002','000002','098765',NULL,NULL),('000002','111222','098765','27','2016-02-19 16:14:22'),('000002','123456','098765',NULL,NULL),('000003','000001','098765',NULL,NULL),('000003','000002','098765',NULL,NULL),('000003','111222','098765',NULL,NULL),('000003','123456','098765',NULL,NULL),('000004','000001','098765',NULL,NULL),('000004','000002','098765',NULL,NULL),('000004','111222','098765',NULL,NULL),('000004','123456','098765',NULL,NULL);
 /*!40000 ALTER TABLE `PianoDiStudi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,6 +257,7 @@ DROP TABLE IF EXISTS `Prenotazione`;
 CREATE TABLE `Prenotazione` (
   `Ref_Studente` char(6) NOT NULL,
   `Ref_Appello` varchar(255) NOT NULL,
+  PRIMARY KEY (`Ref_Appello`,`Ref_Studente`),
   KEY `Ref_Studente` (`Ref_Studente`),
   KEY `Ref_Appello` (`Ref_Appello`),
   CONSTRAINT `prenotazione_ibfk_1` FOREIGN KEY (`Ref_Studente`) REFERENCES `Studente` (`Matricola`),
@@ -321,7 +323,7 @@ CREATE TABLE `Studente` (
 
 LOCK TABLES `Studente` WRITE;
 /*!40000 ALTER TABLE `Studente` DISABLE KEYS */;
-INSERT INTO `Studente` VALUES ('000001','Enrico','Casella','ciaociao','1234567890','cslnrc@gmail.com'),('000002','Carlo','Nuccio','baubau','0987654321','carlonuccio91@gmail.com'),('000003','Riccardo','Musmeci','miaomiao','1111111111','musmex92@gmail.com');
+INSERT INTO `Studente` VALUES ('000001','Enrico','Casella','ciao','1234567890','cslnrc@gmail.com'),('000002','Carlo','Nuccio','ciao','1234567890','carlonuccio91@gmail.com'),('000003','Riccardo','Musmeci','ciao','1234567890','musmex92@gmail.com'),('000004','Fabrizio','Cacicia','ciao','1234567890','fabryx92@gmail.com');
 /*!40000 ALTER TABLE `Studente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +335,7 @@ DROP TABLE IF EXISTS `Verbale`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Verbale` (
-  `Id_Verbale` char(6) NOT NULL,
+  `Id_Verbale` int(11) NOT NULL AUTO_INCREMENT,
   `Ora_Apertura` datetime NOT NULL,
   `Ora_Chiusura` datetime DEFAULT NULL,
   `Ref_CdL` char(6) NOT NULL,
@@ -343,9 +345,9 @@ CREATE TABLE `Verbale` (
   UNIQUE KEY `Ref_AppelloEsame` (`Ref_AppelloEsame`,`Ref_Materia`),
   KEY `Ref_Materia_idx` (`Ref_Materia`),
   KEY `Ref_CdL` (`Ref_CdL`),
-  CONSTRAINT `verbale_ibfk_3` FOREIGN KEY (`Ref_Materia`) REFERENCES `Materia` (`Id_Materia`),
   CONSTRAINT `verbale_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`),
-  CONSTRAINT `verbale_ibfk_2` FOREIGN KEY (`Ref_AppelloEsame`) REFERENCES `AppelloEsame` (`Id_Appello`)
+  CONSTRAINT `verbale_ibfk_2` FOREIGN KEY (`Ref_AppelloEsame`) REFERENCES `AppelloEsame` (`Id_Appello`),
+  CONSTRAINT `verbale_ibfk_3` FOREIGN KEY (`Ref_Materia`) REFERENCES `Materia` (`Id_Materia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -355,7 +357,6 @@ CREATE TABLE `Verbale` (
 
 LOCK TABLES `Verbale` WRITE;
 /*!40000 ALTER TABLE `Verbale` DISABLE KEYS */;
-INSERT INTO `Verbale` VALUES ('000111','2016-02-19 16:21:40','2016-02-19 16:21:40','444444','333333','888888'),('111111','2016-02-19 10:29:16','2016-02-19 10:29:16','098765','123456','123456'),('222222','2016-02-19 16:14:13','2016-02-19 16:14:13','098765','555555','111222');
 /*!40000 ALTER TABLE `Verbale` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -368,4 +369,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-19 17:57:52
+-- Dump completed on 2016-02-21 16:37:39
