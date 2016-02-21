@@ -58,12 +58,13 @@ public class InizializzaVerbaleCtrl {
         }
     }
 
-    public void insertNewVerbale(Timestamp pTimestamp, CorsoDiLaurea pSelectedCorsoDiLaurea, Appello pSelectedAppello,
+    public int insertNewVerbale(Timestamp pTimestamp, CorsoDiLaurea pSelectedCorsoDiLaurea, Appello pSelectedAppello,
                                  Materia pSelectedMateria) {
         try {
-            mDBMSInizializzaVerbaleBnd.insertNewVerbale(pTimestamp, pSelectedCorsoDiLaurea, pSelectedAppello, pSelectedMateria);
+            return mDBMSInizializzaVerbaleBnd.insertNewVerbale(pTimestamp, pSelectedCorsoDiLaurea, pSelectedAppello, pSelectedMateria);
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
     }
 }

@@ -79,7 +79,7 @@ public class InizializzaVerbaleForm{
             VerbaleComplessivo verbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
                     "annoAccademico", mSelectedAppello, mSelectedOraApertura);
 
-            insertNewVerbale();
+            verbaleComplessivo.setIDVerbale(insertNewVerbale());
             startCompilazioneVerbale(verbaleComplessivo);
         }
 
@@ -232,13 +232,13 @@ public class InizializzaVerbaleForm{
         });
     }
 
-    private void insertNewVerbale() {
+    private int insertNewVerbale() {
         LocalDate currentDate = LocalDate.now();
         LocalDateTime appelloLocalDateTime = LocalDateTime.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth(),
                 mSelectedOraApertura.getHour(), mSelectedOraApertura.getMinute());
 
         Timestamp appelloDateTimeForDB = Timestamp.valueOf(appelloLocalDateTime);
 
-        mInizializzaVerbaleCtrl.insertNewVerbale(appelloDateTimeForDB, mSelectedCorsoDiLaurea, mSelectedAppello, mSelectedMateria);
+        return mInizializzaVerbaleCtrl.insertNewVerbale(appelloDateTimeForDB, mSelectedCorsoDiLaurea, mSelectedAppello, mSelectedMateria);
     }
 }

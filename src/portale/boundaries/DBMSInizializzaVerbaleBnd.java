@@ -72,7 +72,7 @@ public class DBMSInizializzaVerbaleBnd {
             "\tWHERE Prenotazione.Ref_Appello = ?);";
 
     private final String INSERT_NEW_VERBALE = "INSERT INTO `Verbale`(Ora_Apertura, Ref_CdL, Ref_AppelloEsame, Ref_Materia) \n" +
-            "VALUES ('%s', '%s', '%s', '%s');";
+            "            VALUES ('%s', '%s', '%s', '%s');";
 
 
     public ObservableList<StudenteClass> getStudentiIScritti(Date pDataAppello, String pMatricolaDocente, String pCodiceMateria) {
@@ -184,17 +184,25 @@ public class DBMSInizializzaVerbaleBnd {
         return studentiIscritti;
     }
 
-    public void insertNewVerbale(Timestamp pTimestamp, CorsoDiLaurea pSelectedCorsoDiLaurea, Appello pSelectedAppello,
+    public int insertNewVerbale(Timestamp pTimestamp, CorsoDiLaurea pSelectedCorsoDiLaurea, Appello pSelectedAppello,
                                  Materia pSelectedMateria) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
-        Statement statement = dBConnection.createStatement();
-
         String insertNewVerbale = String.format(INSERT_NEW_VERBALE, pTimestamp.toString(), pSelectedCorsoDiLaurea.getCodiceCorso(),
                 pSelectedAppello.getIdAppello(), pSelectedMateria.getCodiceMateria());
 
-        statement.executeUpdate(insertNewVerbale);
+        PreparedStatement statement = dBConnection.prepareStatement(insertNewVerbale, Statement.RETURN_GENERATED_KEYS);
+
+        statement.executeUpdate();
+
+        ResultSet resultSet = statement.getGeneratedKeys();
+
+        int idVerbale = -1;
+
+        if(resultSet.next()){
+            idVerbale = resultSet.getInt(1);
+        }
 
         if(!statement.isClosed())
             statement.close();
@@ -202,5 +210,7 @@ public class DBMSInizializzaVerbaleBnd {
         if(!dBConnection.isClosed()){
             dBConnection.close();
         }
+
+        return idVerbale;
     }
 }

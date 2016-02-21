@@ -22,6 +22,8 @@ public class VerbaleComplessivo {
 
     private int esamiInPagina;
 
+    private int mIDVerbale;
+
     public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, LocalTime oraApertura) {
         this.CDL = CDL;
         this.scuola = scuola;
@@ -105,6 +107,14 @@ public class VerbaleComplessivo {
 
     public void setEsamiInPagina(int esamiInPagina) {
         this.esamiInPagina = esamiInPagina;
+    }
+
+    public int getIDVerbale() {
+        return mIDVerbale;
+    }
+
+    public void setIDVerbale(int pIDVerbale) {
+        mIDVerbale = pIDVerbale;
     }
 
     @Override
