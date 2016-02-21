@@ -16,6 +16,9 @@ import portale.controls.InizializzaVerbaleCtrl;
 import portale.entities.*;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class InizializzaVerbaleForm{
@@ -76,6 +79,7 @@ public class InizializzaVerbaleForm{
             VerbaleComplessivo verbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
                     "annoAccademico", mSelectedAppello, mSelectedOraApertura);
 
+            insertNewVerbale();
             startCompilazioneVerbale(verbaleComplessivo);
         }
 
@@ -226,5 +230,15 @@ public class InizializzaVerbaleForm{
                 mSelectedOraApertura = newValue;
             }
         });
+    }
+
+    private void insertNewVerbale() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDateTime appelloLocalDateTime = LocalDateTime.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth(),
+                mSelectedOraApertura.getHour(), mSelectedOraApertura.getMinute());
+
+        Timestamp appelloDateTimeForDB = Timestamp.valueOf(appelloLocalDateTime);
+
+        mInizializzaVerbaleCtrl.insertNewVerbale(appelloDateTimeForDB, mSelectedCorsoDiLaurea, mSelectedAppello, mSelectedMateria);
     }
 }

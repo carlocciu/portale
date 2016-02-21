@@ -5,6 +5,7 @@ import portale.boundaries.DBMSInizializzaVerbaleBnd;
 import portale.entities.*;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class InizializzaVerbaleCtrl {
@@ -54,6 +55,15 @@ public class InizializzaVerbaleCtrl {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void insertNewVerbale(Timestamp pTimestamp, CorsoDiLaurea pSelectedCorsoDiLaurea, Appello pSelectedAppello,
+                                 Materia pSelectedMateria) {
+        try {
+            mDBMSInizializzaVerbaleBnd.insertNewVerbale(pTimestamp, pSelectedCorsoDiLaurea, pSelectedAppello, pSelectedMateria);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
