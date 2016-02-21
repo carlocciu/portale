@@ -74,7 +74,7 @@ public class CompilazioneVerbaleForm {
     public void initStudentiCB() {
         /* Get studenti da esaminare from appello */
         mStudentiDaEsaminare = FXCollections.observableArrayList();
-        mStudentiDaEsaminare.addAll(mVerbaleComplessivo.getAppello().getStudentiIscritti());
+        mStudentiDaEsaminare.addAll(mCompilazioneVerbaleCtrl.getStudentiDaEsaminare(mVerbaleComplessivo.getAppello()));
 
         studentiCB.getItems().clear();
         studentiCB.setItems(mStudentiDaEsaminare);
@@ -82,7 +82,8 @@ public class CompilazioneVerbaleForm {
         studentiCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudenteClass>() {
             @Override
             public void changed(ObservableValue<? extends StudenteClass> observable, StudenteClass oldValue, StudenteClass newValue) {
-                mSelectedStudente = newValue;
+                if(newValue != null)
+                    mSelectedStudente = newValue;
             }
         });
     }
@@ -98,11 +99,13 @@ public class CompilazioneVerbaleForm {
         esitoCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Esito>() {
             @Override
             public void changed(ObservableValue<? extends Esito> observable, Esito oldValue, Esito newValue) {
-                mSelectedEsito = newValue;
-                if(mSelectedEsito == Esito.positivo)
-                    initVotiComboBox();
-                else
-                    mVotiComboBox.getItems().clear();
+                if(newValue != null){
+                    mSelectedEsito = newValue;
+                    if(mSelectedEsito == Esito.positivo)
+                        initVotiComboBox();
+                    else
+                        mVotiComboBox.getItems().clear();
+                }
             }
         });
     }
@@ -118,7 +121,8 @@ public class CompilazioneVerbaleForm {
         mVotiComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                mSelectedVoto = newValue;
+                if(newValue != null)
+                    mSelectedVoto = newValue;
             }
         });
     }
@@ -137,6 +141,8 @@ public class CompilazioneVerbaleForm {
                 if(mCompilazioneVerbaleCtrl.isValidUserPassword(mSelectedStudente, password.get())){
                     mCompilazioneVerbaleCtrl.verbalizzaEsame(mSelectedStudente, mVerbaleComplessivo, mSelectedEsito,
                             mSelectedVoto);
+
+                    clearComboBoxes();
 
                 } else {
                     passwordDialog.setHeaderText("Inserisci password portale studenti\nPassword Errata");
@@ -191,9 +197,9 @@ public class CompilazioneVerbaleForm {
     }
 
     private void clearComboBoxes(){
-        studentiCB.getItems().clear();
-        esitoCB.getItems().clear();
-        mVotiComboBox.getItems().clear();
+        initStudentiCB();
+        esitoCB.getSelectionModel().clearSelection();
+        mVotiComboBox.getSelectionModel().clearSelection();
     }
 
 }

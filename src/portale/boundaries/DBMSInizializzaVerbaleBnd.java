@@ -69,7 +69,15 @@ public class DBMSInizializzaVerbaleBnd {
             "WHERE Studente.Matricola IN(\n" +
             "\tSELECT Prenotazione.Ref_Studente\n" +
             "\tFROM PortaleStudenti.Prenotazione\n" +
-            "\tWHERE Prenotazione.Ref_Appello = ?);";
+            "    WHERE Prenotazione.Ref_Appello = ?)\n" +
+            "    \n" +
+            "    AND Studente.Matricola NOT IN(\n" +
+            "\t\tSELECT EsameVerbalizzato.Ref_Studente\n" +
+            "        FROM EsameVerbalizzato\n" +
+            "        WHERE EsameVerbalizzato.Ref_Verbale IN(\n" +
+            "\t\t\tSELECT Verbale.Id_Verbale\n" +
+            "            FROM Verbale\n" +
+            "            WHERE Verbale.Ref_AppelloEsame = ?));";
 
     private final String INSERT_NEW_VERBALE = "INSERT INTO `Verbale`(Ora_Apertura, Ref_CdL, Ref_AppelloEsame, Ref_Materia) \n" +
             "            VALUES ('%s', '%s', '%s', '%s');";
@@ -169,6 +177,7 @@ public class DBMSInizializzaVerbaleBnd {
 
         PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_ISCRITTI_APPELLO);
         preparedStatement.setString(1, pAppello.getIdAppello());
+        preparedStatement.setString(2, pAppello.getIdAppello());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
