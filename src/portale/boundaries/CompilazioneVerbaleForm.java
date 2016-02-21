@@ -1,5 +1,7 @@
 package portale.boundaries;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +21,8 @@ public class CompilazioneVerbaleForm {
     private TextArea domandeTA;
 
     @FXML
-    private ComboBox esitoCB;
+    private ComboBox<String> esitoCB;
+    private String mSelectedVoto;
 
     @FXML
     private Button verbalizzaButton;
@@ -39,6 +42,7 @@ public class CompilazioneVerbaleForm {
         setDocente(pDocente);
         setVerbaleComplessivo(pVerbaleComplessivo);
         riempiStudentiCB();
+        initEsitoCB();
     }
 
     public void setDocente(DocenteClass pDocente) {
@@ -54,6 +58,22 @@ public class CompilazioneVerbaleForm {
         ObservableList<StudenteClass> studentiIscritti = FXCollections.observableArrayList();
         studentiIscritti.addAll(mVerbaleComplessivo.getmAppello().getStudentiIscritti());
         studentiCB.setItems(studentiIscritti);
+    }
+
+    public void initEsitoCB(){
+        esitoCB.getItems().clear();
+        ObservableList<String> votiPossibili = FXCollections.observableArrayList();
+        for(int i = 18; i <= 30; i++)
+            votiPossibili.add(String.valueOf(i));
+        votiPossibili.add("30L");
+        esitoCB.setItems(votiPossibili);
+
+        esitoCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                mSelectedVoto = newValue;
+            }
+        });
     }
 
     public void clickVerbalizza() {
