@@ -17,21 +17,21 @@ public class DBMSInizializzaVerbaleBnd {
 
 
     /* Queries */
-    private final String QUERY_GET_SCUOLE = "SELECT * \n" +
-            "FROM PortaleStudenti.Scuola\n" +
+    private final String QUERY_GET_SCUOLE = "SELECT *\n" +
+            "FROM Scuola\n" +
             "WHERE Scuola.Id_Scuola IN(\n" +
             "\tSELECT Dipartimento.Ref_Scuola\n" +
             "    FROM Dipartimento\n" +
             "    WHERE Dipartimento.Id_Dip IN(\n" +
             "\t\tSELECT CorsoDiLaurea.Ref_Dipartimento\n" +
-            "\t\tFROM CorsoDiLaurea\n" +
-            "\t\tWHERE CorsoDiLaurea.Id_CdL = (\n" +
-            "\t\t\tSELECT PianoDiStudi.Ref_CorsoDiLaurea\n" +
-            "\t\t\tFROM PianoDiStudi\n" +
-            "\t\t\tWHERE PianoDiStudi.Ref_Materia IN (\n" +
+            "        FROM CorsoDiLaurea\n" +
+            "        WHERE CorsoDiLaurea.Id_CdL IN(\n" +
+            "\t\t\tSELECT Materia.Ref_CdL\n" +
+            "            FROM Materia\n" +
+            "            WHERE Materia.Id_Materia IN(\n" +
             "\t\t\t\tSELECT Insegnamento.Ref_Materia\n" +
-            "\t\t\t\tFROM PortaleStudenti.Insegnamento\n" +
-            "\t\t\t\tWHERE Insegnamento.Ref_Docente = ?))));";
+            "                FROM Insegnamento\n" +
+            "                WHERE Insegnamento.Ref_Docente = ?))));";
 
     private final String QUERY_GET_CDLS = "SELECT *\n" +
             "FROM CorsoDiLaurea\n" +
