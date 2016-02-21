@@ -32,6 +32,7 @@ public class InizializzaVerbaleForm{
 
     @FXML
     private ComboBox<Appello> appelliCB;
+    private Appello mSelectedAppello;
 
     @FXML
     private TextField oraAperturaTF;
@@ -65,9 +66,6 @@ public class InizializzaVerbaleForm{
 
     }
 
-    public Appello clickImporta() {
-        return null;
-    }
 
     public void riempiScuoleCB() {
         scuoleCB.getItems().clear();
@@ -111,6 +109,13 @@ public class InizializzaVerbaleForm{
     public void riempiAppelliCB() {
         appelliCB.getItems().clear();
         appelliCB.setItems(mInizializzaVerbaleCtrl.getAppelli(mSelectedMateria, mDocente));
+
+        appelliCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appello>() {
+            @Override
+            public void changed(ObservableValue<? extends Appello> observable, Appello oldValue, Appello newValue) {
+                mSelectedAppello = newValue;
+            }
+        });
     }
 
     public void clickLogout() {
@@ -156,5 +161,13 @@ public class InizializzaVerbaleForm{
     }
 
     public void clickImportaIscritti(ActionEvent actionEvent) {
+        if(mSelectedAppello != null){
+            System.out.println(mInizializzaVerbaleCtrl.getIscrittiAppello(mSelectedAppello));
+            mSelectedAppello.setStudentiIscritti(mInizializzaVerbaleCtrl.getIscrittiAppello(mSelectedAppello));
+        }
+        else{
+            System.out.println("Appello non selezionato");
+        }
+
     }
 }

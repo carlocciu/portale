@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import portale.entities.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DBMSInizializzaVerbaleBnd {
@@ -63,6 +64,13 @@ public class DBMSInizializzaVerbaleBnd {
             "FROM PortaleStudenti.AppelloEsame\n" +
             "WHERE AppelloEsame.Ref_Materia = ?\n" +
             "\tAND AppelloEsame.Ref_Docente = ?;";
+
+    private final String QUERY_GET_ISCRITTI_APPELLO = "SELECT *\n" +
+            "FROM Studente\n" +
+            "WHERE Studente.Matricola IN(\n" +
+            "\tSELECT Prenotazione.Ref_Studente\n" +
+            "\tFROM PortaleStudenti.Prenotazione\n" +
+            "\tWHERE Prenotazione.Ref_Appello = ?);";
 
 
     public ObservableList<StudenteClass> getStudentiIScritti(Date pDataAppello, String pMatricolaDocente, String pCodiceMateria) {
@@ -153,4 +161,24 @@ public class DBMSInizializzaVerbaleBnd {
         return scuole;
     }
 
+    public ArrayList<StudenteClass> getIscrittiAppello(Appello pAppello) throws SQLException {
+
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
+
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_ISCRITTI_APPELLO);
+        preparedStatement.setString(1, pAppello.getIdAppello());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        /* Results array */
+        ArrayList<StudenteClass> studentiIscritti = new ArrayList<>();
+
+        /* Populate array */
+        while (resultSet.next()){
+            studentiIscritti.add(new StudenteClass(resultSet.getString("Nome"), resultSet.getString("Cognome"),
+                    resultSet.getString("Matricola")));
+        }
+
+        return studentiIscritti;
+    }
 }

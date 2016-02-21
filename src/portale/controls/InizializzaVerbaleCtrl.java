@@ -5,6 +5,7 @@ import portale.boundaries.DBMSInizializzaVerbaleBnd;
 import portale.entities.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class InizializzaVerbaleCtrl {
 
@@ -41,6 +42,15 @@ public class InizializzaVerbaleCtrl {
     public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente){
         try {
             return mDBMSInizializzaVerbaleBnd.getAppelli(pMateria, pDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<StudenteClass> getIscrittiAppello(Appello pAppello) {
+        try {
+            return mDBMSInizializzaVerbaleBnd.getIscrittiAppello(pAppello);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
