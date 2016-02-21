@@ -81,7 +81,7 @@ public class InizializzaVerbaleForm{
 
             verbaleComplessivo.setIDVerbale(insertNewVerbale());
             verbaleComplessivo.setAppello(mSelectedAppello);
-            verbaleComplessivo.getAppello().setmMateria(mSelectedMateria);
+            verbaleComplessivo.getAppello().setMateria(mSelectedMateria);
             startCompilazioneVerbale(verbaleComplessivo);
         }
 

@@ -66,7 +66,7 @@ public class DBMSVerbalizzaEsameBnd {
 
         Appello appello = pVerbaleComplessivo.getAppello();
         Date dataEsame = new Date(appello.getDataEsame().getTime());
-        Materia materia = appello.getmMateria();
+        Materia materia = appello.getMateria();
         String matricolaStudente = pStudente.getMatricolaStudente();
 
 
