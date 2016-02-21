@@ -41,7 +41,7 @@ public class CompilazioneVerbaleForm {
     public void init(DocenteClass pDocente, VerbaleComplessivo pVerbaleComplessivo){
         setDocente(pDocente);
         setVerbaleComplessivo(pVerbaleComplessivo);
-        riempiStudentiCB();
+        initStudentiCB();
         initEsitoCB();
     }
 
@@ -53,7 +53,7 @@ public class CompilazioneVerbaleForm {
         mVerbaleComplessivo = pVerbaleComplessivo;
     }
 
-    public void riempiStudentiCB() {
+    public void initStudentiCB() {
         studentiCB.getItems().clear();
         ObservableList<StudenteClass> studentiIscritti = FXCollections.observableArrayList();
         studentiIscritti.addAll(mVerbaleComplessivo.getmAppello().getStudentiIscritti());
