@@ -46,19 +46,26 @@ public class PortaleDocenteFrame extends Stage{
 
     @FXML public void clickStampaIscritti() throws Exception {
 
-        Stage primaryStage = (Stage) stampaIscrittiButton.getScene().getWindow();
+        try {
+            Stage stage = (Stage) stampaIscrittiButton.getScene().getWindow();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/StampaElencoIscrittiForm.fxml"));
-        Parent root = fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/StampaElencoIscrittiForm.fxml"));
+            Parent parent = fxmlLoader.load();
 
-        StampaElencoIscrittiForm controller = fxmlLoader.getController();
-        controller.setDoc(currDocente);
-        controller.riempiScuoleCB();
+            /* Pass Docente to StampaElencoIscrittiForm */
+            StampaElencoIscrittiForm elencoIscrittiForm = fxmlLoader.getController();
+            elencoIscrittiForm.setDocente(currDocente);
+            elencoIscrittiForm.init();
 
-        primaryStage.setTitle("Elenco Iscritti");
-        primaryStage.setScene(new Scene(root, 600, 600));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+            stage.setTitle("Stampa Elenco Iscritti");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickLogout() {

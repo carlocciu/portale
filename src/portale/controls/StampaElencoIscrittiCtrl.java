@@ -4,51 +4,69 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.List;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
+import portale.boundaries.DBMSInizializzaVerbaleBnd;
 import portale.boundaries.DBMSStampaElencoIscrittiBnd;
 import portale.entities.*;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StampaElencoIscrittiCtrl {
 
-    private String matricolaDocente;
-    private String idScuola;
-    private String cdl;
-    private String materia;
-    private Appello appello;
+    private DBMSStampaElencoIscrittiBnd mDBMSStampaIscrittiBnd = new DBMSStampaElencoIscrittiBnd();
 
-    public void setAppello(Appello appello) {
-        this.appello = appello;
+    public ObservableList<Scuola> getScuole(DocenteClass mDocente) {
+
+        try {
+            return mDBMSStampaIscrittiBnd.getScuole(mDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    DBMSStampaElencoIscrittiBnd db = new DBMSStampaElencoIscrittiBnd();
-
-    public ObservableList<Scuola> getScuole(String matricolaDocente){
-        this.matricolaDocente = matricolaDocente;
-        return db.getScuole(matricolaDocente);
+    public ObservableList<CorsoDiLaurea> getCDLs(Scuola pScuola, DocenteClass pDocente){
+        try {
+            return mDBMSStampaIscrittiBnd.getCDLs(pScuola, pDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public ObservableList<CorsoDiLaurea> getCdls(String idScuola, String matricolaDocente){
-        this.idScuola = idScuola;
-        return db.getCDLs(idScuola, matricolaDocente);
+    public ObservableList<Materia> getMaterie(CorsoDiLaurea mSelectedCorsoDiLaurea, DocenteClass pDocente) {
+        try {
+            return mDBMSStampaIscrittiBnd.getMaterie(mSelectedCorsoDiLaurea, pDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public ObservableList<Materia> getMaterie(String idScuola, String cdl, String matricolaDocente){
-        this.cdl = cdl;
-        return db.getMaterie(idScuola, cdl, matricolaDocente);
+    public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente){
+        try {
+            return mDBMSStampaIscrittiBnd.getAppelli(pMateria, pDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public ObservableList<Appello> getAppelli(String idScuola, String cdl, String materia, String matricolaDocente){
-        this.materia = materia;
-        return db.getAppelli(idScuola, cdl, materia, matricolaDocente);
+    public ArrayList<StudenteClass> getIscrittiAppello(Appello pAppello) {
+        try {
+            return mDBMSStampaIscrittiBnd.getIscrittiAppello(pAppello);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void createDocument() throws Exception {
+    public void createDocument(Appello pAppello) throws Exception {
         Document document = new Document();
-        ArrayList<StudenteClass> listaIscritti = db.getStudentiIScritti(appello.getIdAppello());
+        ArrayList<StudenteClass> listaIscritti = mDBMSStampaIscrittiBnd.getIscrittiAppello(pAppello);
         try {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Elenco.pdf"));
             document.open();

@@ -3,25 +3,38 @@ package portale.boundaries;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import portale.controls.StampaElencoIscrittiCtrl;
 import portale.entities.*;
 
 import javax.print.Doc;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class StampaElencoIscrittiForm {
 
-    @FXML private ComboBox<CorsoDiLaurea> cdlsCB;
+    @FXML
+    private ComboBox<Scuola> scuoleCB;
+    private Scuola mSelectedScuola;
 
-    @FXML private ComboBox<Scuola> scuoleCB;
+    @FXML
+    private ComboBox<CorsoDiLaurea> cdlsCB;
+    private CorsoDiLaurea mSelectedCorsoDiLaurea;
 
-    @FXML  private ComboBox<Materia> materieCB;
+    @FXML
+    private ComboBox<Materia> materieCB;
+    private Materia mSelectedMateria;
 
-    @FXML private ComboBox<Appello> appelliCB;
+    @FXML
+    private ComboBox<Appello> appelliCB;
+    private Appello mSelectedAppello;
 
     @FXML  private Button esportaButton;
 
@@ -29,160 +42,122 @@ public class StampaElencoIscrittiForm {
 
     @FXML  private Button homeButton;
 
-    private Appello appelloSelezionato;
-    private DocenteClass doc;
 
-    StampaElencoIscrittiCtrl ctr = new StampaElencoIscrittiCtrl();
+    private StampaElencoIscrittiCtrl mStampaElencoIscrittiCtrl = new StampaElencoIscrittiCtrl();
 
-    public void setDoc(DocenteClass doc) {
-        this.doc = doc;
+    private DocenteClass mDocente;
+
+    public void init(){
+        riempiScuoleCB();
     }
 
-    @FXML public void riempiScuoleCB() {
-        scuoleCB.setItems(ctr.getScuole(doc.getMatricolaDocente()));
+    public void setDocente(DocenteClass docente) {
+        mDocente = docente;
+    }
 
-        scuoleCB.setCellFactory(new Callback<ListView<Scuola>, ListCell<Scuola>>() {
-            @Override
-            public ListCell<Scuola> call(ListView<Scuola> param) {
+    public DocenteClass getDocente() {
+        return mDocente;
+    }
 
-                return new ListCell<Scuola>(){
-                    @Override
-                    public void updateItem(Scuola item, boolean empty){
-                        super.updateItem(item, empty);
-                        if(!empty) {
-                            setText(item.getNomeScuola());
-                            setGraphic(null);
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
+    public void riempiScuoleCB() {
+        scuoleCB.getItems().clear();
+        scuoleCB.setItems(mStampaElencoIscrittiCtrl.getScuole(mDocente));
 
         scuoleCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Scuola>() {
-
             @Override
-            public void changed(ObservableValue<? extends Scuola> observable,
-                                Scuola oldValue, Scuola newValue) {
-                riempiCdlsCB(newValue.getIdScuola());
-
+            public void changed(ObservableValue<? extends Scuola> observable, Scuola oldValue, Scuola newValue) {
+                mSelectedScuola = newValue;
+                riempiCdlsCB(mSelectedScuola);
             }
         });
-
     }
 
-
-    @FXML public void riempiCdlsCB(String pScuola) {
-        cdlsCB.setItems(ctr.getCdls(pScuola, doc.getMatricolaDocente()));
-
-        cdlsCB.setCellFactory(new Callback<ListView<CorsoDiLaurea>, ListCell<CorsoDiLaurea>>() {
-            @Override
-            public ListCell<CorsoDiLaurea> call(ListView<CorsoDiLaurea> param) {
-
-                return new ListCell<CorsoDiLaurea>(){
-                    @Override
-                    public void updateItem(CorsoDiLaurea item, boolean empty){
-                        super.updateItem(item, empty);
-                        if(!empty) {
-                            setText(item.getCodiceCorso() + " - " + item.getNomeCorso());
-                            setGraphic(null);
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
+    public void riempiCdlsCB(Scuola pScuola) {
+        cdlsCB.getItems().clear();
+        cdlsCB.setItems(mStampaElencoIscrittiCtrl.getCDLs(pScuola, mDocente));
 
         cdlsCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CorsoDiLaurea>() {
-
             @Override
-            public void changed(ObservableValue<? extends CorsoDiLaurea> observable,
-                                CorsoDiLaurea oldValue, CorsoDiLaurea newValue) {
-                riempiMaterieCB(newValue.getCodiceCorso(), pScuola);
-
+            public void changed(ObservableValue<? extends CorsoDiLaurea> observable, CorsoDiLaurea oldValue, CorsoDiLaurea newValue) {
+                mSelectedCorsoDiLaurea = newValue;
+                riempiMaterieCB(mSelectedCorsoDiLaurea);
             }
         });
     }
 
-    public void riempiMaterieCB(String pCDL, String pScuola) {
-        materieCB.setItems(ctr.getMaterie(pScuola, pCDL, doc.getMatricolaDocente()));
-
-        materieCB.setCellFactory(new Callback<ListView<Materia>, ListCell<Materia>>() {
-            @Override
-            public ListCell<Materia> call(ListView<Materia> param) {
-
-                return new ListCell<Materia>(){
-                    @Override
-                    public void updateItem(Materia item, boolean empty){
-                        super.updateItem(item, empty);
-                        if(!empty) {
-                            setText(item.getCodiceMateria() + " - " + item.getNomeMateria() + " - " + item.getCFU() + " CFU");
-                            setGraphic(null);
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
+    public void riempiMaterieCB(CorsoDiLaurea pCorsoDiLaurea) {
+        materieCB.getItems().clear();
+        materieCB.setItems(mStampaElencoIscrittiCtrl.getMaterie(mSelectedCorsoDiLaurea, mDocente));
 
         materieCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Materia>() {
-
             @Override
-            public void changed(ObservableValue<? extends Materia> observable,
-                                Materia oldValue, Materia newValue) {
-                riempiAppelliCB(newValue.getCodiceMateria(), pCDL, pScuola);
-
+            public void changed(ObservableValue<? extends Materia> observable, Materia oldValue, Materia newValue) {
+                mSelectedMateria = newValue;
+                riempiAppelliCB();
             }
         });
     }
 
-    public void riempiAppelliCB(String pCodiceMateria, String pCDL, String pScuola) {
-        appelliCB.setItems(ctr.getAppelli(pScuola, pCDL, pCodiceMateria, doc.getMatricolaDocente()));
-
-        appelliCB.setCellFactory(new Callback<ListView<Appello>, ListCell<Appello>>() {
-            @Override
-            public ListCell<Appello> call(ListView<Appello> param) {
-
-                return new ListCell<Appello>(){
-                    @Override
-                    public void updateItem(Appello item, boolean empty){
-                        super.updateItem(item, empty);
-                        if(!empty) {
-                            setText(item.getDataEsame().toString() + " - Aula: " + item.getAula());
-                            setGraphic(null);
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
+    public void riempiAppelliCB() {
+        appelliCB.getItems().clear();
+        appelliCB.setItems(mStampaElencoIscrittiCtrl.getAppelli(mSelectedMateria, mDocente));
 
         appelliCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appello>() {
-
             @Override
-            public void changed(ObservableValue<? extends Appello> observable,
-                                Appello oldValue, Appello newValue) {
-                    appelloSelezionato = newValue;
+            public void changed(ObservableValue<? extends Appello> observable, Appello oldValue, Appello newValue) {
+                mSelectedAppello = newValue;
             }
         });
-    }
-
-
-    @FXML public void clickEsporta() throws Exception {
-        ctr.setAppello(appelloSelezionato);
-        ctr.createDocument();
     }
 
     public void clickLogout() {
+        try {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
 
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/LoginFormDocente.fxml"));
+
+            Parent parent = (Parent) fxmlLoader.load();
+
+            stage.setTitle("Login Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickHome() {
 
+        try {
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+            Parent parent = fxmlLoader.load();
+
+            PortaleDocenteFrame portaleDocenteFrame = fxmlLoader.getController();
+            portaleDocenteFrame.setCurrDocente(mDocente);
+
+            stage.setTitle("Portale Docente");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void clickEsporta() throws Exception{
+        try {
+            mStampaElencoIscrittiCtrl.createDocument(mSelectedAppello);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

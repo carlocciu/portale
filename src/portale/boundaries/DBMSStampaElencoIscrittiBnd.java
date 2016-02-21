@@ -10,267 +10,177 @@ import java.util.Date;
 
 public class DBMSStampaElencoIscrittiBnd {
 
-    public ObservableList<Scuola> getScuole(String matricolaDocente) {
-        ObservableList<Scuola> data = FXCollections.observableArrayList();;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+    /* Connection data */
+    private final String DBMS_URL = "jdbc:mysql://localhost:3306/PortaleStudenti";
+    private final String DBM_USER = "root";
+    private final String DBMS_PASS = "apswpa";
 
-            ps = conn.prepareStatement("SELECT * FROM Scuola as S, " +
-                    "Dipartimento as D, CorsoDiLaurea as C, PianoDiStudi as P, " +
-                    "Materia as M, Insegnamento as I" +
-                    " WHERE I.Ref_Docente = ? and I.Ref_Materia = M.Id_Materia" +
-                    " and I.Ref_Docente = M.Docente and P.Ref_Materia = M.Id_Materia" +
-                    " and P.Ref_CorsoDiLaurea = C.Id_Cdl and C.Ref_Dipartimento = D.Id_Dip" +
-                    " and D.Ref_Scuola = S.Id_Scuola");
 
-            ps.setString(1, matricolaDocente);
+    /* Queries */
+    private final String QUERY_GET_SCUOLE = "SELECT *\n" +
+            "FROM Scuola\n" +
+            "WHERE Scuola.Id_Scuola IN(\n" +
+            "\tSELECT Dipartimento.Ref_Scuola\n" +
+            "    FROM Dipartimento\n" +
+            "    WHERE Dipartimento.Id_Dip IN(\n" +
+            "\t\tSELECT CorsoDiLaurea.Ref_Dipartimento\n" +
+            "        FROM CorsoDiLaurea\n" +
+            "        WHERE CorsoDiLaurea.Id_CdL IN(\n" +
+            "\t\t\tSELECT Materia.Ref_CdL\n" +
+            "            FROM Materia\n" +
+            "            WHERE Materia.Id_Materia IN(\n" +
+            "\t\t\t\tSELECT Insegnamento.Ref_Materia\n" +
+            "                FROM Insegnamento\n" +
+            "                WHERE Insegnamento.Ref_Docente = ?))));";
 
-            rs = ps.executeQuery();
+    private final String QUERY_GET_CDLS = "SELECT *\n" +
+            "FROM CorsoDiLaurea\n" +
+            "WHERE CorsoDiLaurea.Ref_Dipartimento IN(\n" +
+            "\tSELECT Dipartimento.Id_Dip\n" +
+            "    FROM Dipartimento\n" +
+            "    WHERE Dipartimento.Ref_Scuola = ?)\n" +
+            "    \n" +
+            "    AND CorsoDiLaurea.Id_CdL IN(\n" +
+            "\t\tSELECT Materia.Ref_CdL\n" +
+            "        FROM Materia\n" +
+            "        WHERE Materia.Id_Materia IN(\n" +
+            "\t\t\tSELECT Insegnamento.Ref_Materia\n" +
+            "            FROM Insegnamento\n" +
+            "            WHERE Insegnamento.Ref_Docente = ?));";
 
-            while (rs.next()) {
-                data.add(new Scuola(rs.getString("S.Id_Scuola"), rs.getString("S.Nome")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            rs = null;
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            ps = null;
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            conn = null;
-        }
-        return data;
+    private final String QURY_GET_MATERIE = "SELECT *\n" +
+            "FROM Materia\n" +
+            "WHERE Materia.Ref_CdL = ?\n" +
+            "\tAND Materia.Id_Materia IN(\n" +
+            "\t\tSELECT Insegnamento.Ref_Materia\n" +
+            "        FROM Insegnamento\n" +
+            "        WHERE Insegnamento.Ref_Docente = ?);";
 
+    private final String QUERY_GET_APPELLI = "SELECT * \n" +
+            "FROM PortaleStudenti.AppelloEsame\n" +
+            "WHERE AppelloEsame.Ref_Materia = ?\n" +
+            "\tAND AppelloEsame.Ref_Docente = ?\n" +
+            "    AND AppelloEsame.Id_Appello";
+
+    private final String QUERY_GET_ISCRITTI_APPELLO = "SELECT *\n" +
+            "FROM Studente\n" +
+            "WHERE Studente.Matricola IN(\n" +
+            "\tSELECT Prenotazione.Ref_Studente\n" +
+            "\tFROM PortaleStudenti.Prenotazione\n" +
+            "\tWHERE Prenotazione.Ref_Appello = ?);";
+
+    private final String INSERT_NEW_VERBALE = "INSERT INTO `Verbale`(Ora_Apertura, Ref_CdL, Ref_AppelloEsame, Ref_Materia) \n" +
+            "VALUES ('%s', '%s', '%s', '%s');";
+
+
+    public ObservableList<StudenteClass> getStudentiIScritti(Date pDataAppello, String pMatricolaDocente, String pCodiceMateria) {
+        return null;
     }
 
-    public ObservableList<CorsoDiLaurea> getCDLs(String pScuola, String docente) {
-        ObservableList<CorsoDiLaurea> data = FXCollections.observableArrayList();;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+    public ObservableList<CorsoDiLaurea> getCDLs(Scuola pScuola, DocenteClass pDocente) throws SQLException {
 
-            ps = conn.prepareStatement("SELECT CL.Id_Cdl, CL.Nome FROM CorsoDiLaurea as CL, Scuola as S, Dipartimento as D, PianoDiStudi as P, Materia as M, Insegnamento as I WHERE I.Ref_Docente = ? and I.Ref_Materia = M.Id_Materia and I.Ref_Docente = M.Docente and P.Ref_Materia = M.Id_Materia and P.Ref_CorsoDiLaurea = CL.Id_Cdl and CL.Ref_Dipartimento = D.Id_Dip and D.Ref_Scuola = S.Id_Scuola and S.Id_Scuola = ?");
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
-            ps.setString(1, docente);
-            ps.setString(2, pScuola);
-            rs = ps.executeQuery();
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_CDLS);
+        preparedStatement.setString(1, pScuola.getIdScuola());
+        preparedStatement.setString(2, pDocente.getMatricolaDocente());
 
-            while (rs.next()) {
-                data.add(new CorsoDiLaurea(rs.getString("CL.Id_Cdl"), rs.getString("CL.Nome")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            rs = null;
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            ps = null;
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            conn = null;
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        /* Result array */
+        ObservableList<CorsoDiLaurea> cdls = FXCollections.observableArrayList();
+
+        /* Populate array */
+        while (resultSet.next()){
+            cdls.add(new CorsoDiLaurea(resultSet.getString("Id_Cdl"), resultSet.getString("Nome")));
         }
-        return data;
 
+        return cdls;
     }
 
-    public ObservableList<Materia> getMaterie(String idScuola, String Cdl, String pDocente) {
-        ObservableList<Materia> data = FXCollections.observableArrayList();;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+    public ObservableList<Materia> getMaterie(CorsoDiLaurea pCorsoDiLaurea, DocenteClass pDocente) throws SQLException {
 
-            ps = conn.prepareStatement("SELECT M.Id_Materia, M.Nome, M.CFU FROM CorsoDiLaurea as CL, Scuola as S, Dipartimento as D, PianoDiStudi as P, Materia as M, Insegnamento as I WHERE I.Ref_Docente = ? and I.Ref_Materia = M.Id_Materia and I.Ref_Docente = M.Docente and P.Ref_Materia = M.Id_Materia and P.Ref_CorsoDiLaurea = CL.Id_Cdl and CL.Ref_Dipartimento = D.Id_Dip and D.Ref_Scuola = S.Id_Scuola and S.Id_Scuola = ? and CL.Id_Cdl = ?");
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QURY_GET_MATERIE);
+        preparedStatement.setString(1, pCorsoDiLaurea.getCodiceCorso());
+        preparedStatement.setString(2, pDocente.getMatricolaDocente());
 
-            ps.setString(1, pDocente);
-            ps.setString(2, idScuola);
-            ps.setString(3, Cdl);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            rs = ps.executeQuery();
+        /* Result array */
+        ObservableList<Materia> materie = FXCollections.observableArrayList();
 
-            while (rs.next()) {
-                data.add(new Materia(rs.getString("M.Id_Materia"), rs.getString("M.Nome"), rs.getInt("M.CFU")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            rs = null;
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            ps = null;
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            conn = null;
+        /* Populate array */
+        while (resultSet.next()){
+            materie.add(new Materia(resultSet.getString("Id_Materia"), resultSet.getString("Nome"), resultSet.getString("Ordinamento"),
+                    resultSet.getInt("CFU"), resultSet.getInt("Anno")));
         }
-        return data;
 
+        return materie;
     }
 
+    public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente) throws SQLException {
 
-    public ObservableList<Appello> getAppelli(String idScuola, String pCdl, String pCodiceMateria, String matricola) {
-        ObservableList<Appello> data = FXCollections.observableArrayList();;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
-            ps = conn.prepareStatement("SELECT AE.Id_Appello, AE.Data, AE.Aula FROM AppelloEsame as AE, CorsoDiLaurea as CL, Scuola as S, Dipartimento as D, PianoDiStudi as P, Materia as M, Insegnamento as I WHERE I.Ref_Docente = ? and I.Ref_Materia = M.Id_Materia and I.Ref_Docente = M.Docente and P.Ref_Materia = M.Id_Materia and P.Ref_CorsoDiLaurea = CL.Id_Cdl and CL.Ref_Dipartimento = D.Id_Dip and D.Ref_Scuola = S.Id_Scuola and S.Id_Scuola = ? and CL.Id_Cdl = ? and AE.Ref_Materia = M.Id_Materia and M.Id_Materia = ?");
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_APPELLI);
+        preparedStatement.setString(1, pMateria.getCodiceMateria());
+        preparedStatement.setString(2, pDocente.getMatricolaDocente());
 
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            ps.setString(1, matricola);
-            ps.setString(2, idScuola);
-            ps.setString(3, pCdl);
-            ps.setString(4, pCodiceMateria);
+        /* Results array */
+        ObservableList<Appello> appelli = FXCollections.observableArrayList();
 
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Date D = rs.getTimestamp("AE.Data");
-                data.add(new Appello(rs.getString("AE.Id_Appello"), D, rs.getString("AE.Aula")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            rs = null;
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            ps = null;
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            conn = null;
+        /* Populate array */
+        while (resultSet.next()){
+            appelli.add(new Appello(resultSet.getString("Id_Appello"), resultSet.getDate("Data"), resultSet.getString("Aula")));
         }
-        return data;
 
+        return appelli;
     }
 
-    public ArrayList<StudenteClass> getStudentiIScritti(String appello) {
-        ArrayList<StudenteClass> data = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+    public ObservableList<Scuola> getScuole(DocenteClass pDocente) throws SQLException {
 
-            ps = conn.prepareStatement("SELECT S.Matricola, S.Nome, S.Cognome FROM Prenotazione P, Studente S WHERE S.Matricola = P.Ref_Studente and P.Ref_Appello = ?");
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_SCUOLE);
+        preparedStatement.setString(1, pDocente.getMatricolaDocente());
 
-            ps.setString(1, appello);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
+        /* Results array */
+        ObservableList<Scuola> scuole = FXCollections.observableArrayList();
 
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                data.add(new StudenteClass(rs.getString("S.Nome"), rs.getString("S.Cognome"), rs.getString("S.Matricola")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            rs = null;
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            ps = null;
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            conn = null;
+        /* Populate array */
+        while(resultSet.next()){
+            scuole.add(new Scuola(resultSet.getString("Id_Scuola"), resultSet.getString("Nome")));
         }
-        return data;
+
+        return scuole;
     }
 
+    public ArrayList<StudenteClass> getIscrittiAppello(Appello pAppello) throws SQLException {
+
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
+
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_ISCRITTI_APPELLO);
+        preparedStatement.setString(1, pAppello.getIdAppello());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        /* Results array */
+        ArrayList<StudenteClass> studentiIscritti = new ArrayList<>();
+
+        /* Populate array */
+        while (resultSet.next()){
+            studentiIscritti.add(new StudenteClass(resultSet.getString("Nome"), resultSet.getString("Cognome"),
+                    resultSet.getString("Matricola")));
+        }
+
+        return studentiIscritti;
+    }
 
 
 }
