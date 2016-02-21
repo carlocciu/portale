@@ -1,5 +1,6 @@
 package portale.boundaries;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -9,16 +10,22 @@ import portale.entities.VerbaleComplessivo;
 
 public class CompilazioneVerbaleForm {
 
+    @FXML
     private ComboBox<StudenteClass> studentiCB;
 
+    @FXML
     private TextArea domandeTA;
 
+    @FXML
     private ComboBox esitoCB;
 
+    @FXML
     private Button verbalizzaButton;
 
+    @FXML
     private Button logoutButton;
 
+    @FXML
     private Button homeButton;
 
     private DocenteClass mDocente;
