@@ -59,7 +59,10 @@ public class DBMSInizializzaVerbaleBnd {
     private final String QUERY_GET_APPELLI = "SELECT * \n" +
             "FROM PortaleStudenti.AppelloEsame\n" +
             "WHERE AppelloEsame.Ref_Materia = ?\n" +
-            "\tAND AppelloEsame.Ref_Docente = ?;";
+            "\tAND AppelloEsame.Ref_Docente = ?\n" +
+            "    AND AppelloEsame.Id_Appello NOT IN(\n" +
+            "\t\tSELECT Verbale.Ref_AppelloEsame\n" +
+            "        FROM Verbale);";
 
     private final String QUERY_GET_ISCRITTI_APPELLO = "SELECT *\n" +
             "FROM Studente\n" +
