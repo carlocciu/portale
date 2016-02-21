@@ -80,7 +80,6 @@ public class InizializzaVerbaleForm{
                     "annoAccademico", mSelectedAppello, mSelectedOraApertura);
 
             verbaleComplessivo.setIDVerbale(insertNewVerbale());
-            verbaleComplessivo.setAppello(mSelectedAppello);
             startCompilazioneVerbale(verbaleComplessivo);
         }
 
