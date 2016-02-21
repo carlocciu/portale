@@ -68,12 +68,12 @@ public class Appello {
         mMateria = pMateria;
     }
 
-    public DocenteClass getmDocente() {
+    public DocenteClass getDocente() {
         return mDocente;
     }
 
-    public void setmDocente(DocenteClass mDocente) {
-        this.mDocente = mDocente;
+    public void setDocente(DocenteClass pDocente) {
+        mDocente = pDocente;
     }
 
     public String getAula() {
