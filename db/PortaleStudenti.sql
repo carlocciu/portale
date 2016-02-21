@@ -44,7 +44,7 @@ CREATE TABLE `AppelloEsame` (
 
 LOCK TABLES `AppelloEsame` WRITE;
 /*!40000 ALTER TABLE `AppelloEsame` DISABLE KEYS */;
-INSERT INTO `AppelloEsame` VALUES ('123456','2016-02-19 10:29:09','123456','F310','000112'),('333333','2016-02-19 16:21:36','888888','DEIM','987654'),('555555','2016-02-19 16:14:07','111222','A320','001122');
+INSERT INTO `AppelloEsame` VALUES ('1','2016-02-02 09:00:00','000001','F130','000001'),('2','2016-02-21 16:44:52','000002','F310','000003'),('3','2016-02-21 16:48:13','000001','F130','000001'),('4','2016-02-21 16:49:39','000002','F100','000003'),('5','2016-02-21 16:50:29','111222','A320','000002'),('6','2016-02-21 16:50:41','111222','A230','000002'),('7','2016-02-21 16:51:06','123456','A310','000002'),('8','2016-02-21 16:51:26','123456','A320','000002');
 /*!40000 ALTER TABLE `AppelloEsame` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +179,6 @@ CREATE TABLE `Insegnamento` (
 
 LOCK TABLES `Insegnamento` WRITE;
 /*!40000 ALTER TABLE `Insegnamento` DISABLE KEYS */;
-INSERT INTO `Insegnamento` VALUES ('123456','000112'),('111222','001122'),('888888','987654');
 /*!40000 ALTER TABLE `Insegnamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,13 +193,11 @@ CREATE TABLE `Materia` (
   `Id_Materia` char(6) NOT NULL,
   `Nome` varchar(255) NOT NULL,
   `Ref_CdL` varchar(255) NOT NULL,
-  `Docente` char(6) NOT NULL,
   `Anno` int(11) NOT NULL,
   `CFU` int(11) NOT NULL,
+  `Ordinamento` varchar(255) NOT NULL,
   PRIMARY KEY (`Id_Materia`,`Ref_CdL`),
-  KEY `Matricola_idx` (`Docente`),
   KEY `Ref_CdL` (`Ref_CdL`),
-  CONSTRAINT `Docente` FOREIGN KEY (`Docente`) REFERENCES `Docente` (`Matricola`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -211,7 +208,7 @@ CREATE TABLE `Materia` (
 
 LOCK TABLES `Materia` WRITE;
 /*!40000 ALTER TABLE `Materia` DISABLE KEYS */;
-INSERT INTO `Materia` VALUES ('000001','Analisi 1','098765','000001',1,12),('000002','Fisica 2','098765','000003',2,6),('111222','Ingegneria del software','098765','000002',2,6),('123456','Basi di dati','098765','000002',3,6),('888888','Storia moderna','444444','987654',2,12);
+INSERT INTO `Materia` VALUES ('000001','Analisi 1','098765',1,12,'Nuovo'),('000002','Fisica 2','098765',2,6,'Nuovo'),('111222','Ingegneria del software','098765',2,6,'Nuovo'),('123456','Basi di dati','098765',3,6,'Nuovo'),('888888','Storia moderna','444444',2,12,'Nuovo');
 /*!40000 ALTER TABLE `Materia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,12 +253,11 @@ DROP TABLE IF EXISTS `Prenotazione`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Prenotazione` (
   `Ref_Studente` char(6) NOT NULL,
-  `Ref_Appello` varchar(255) NOT NULL,
+  `Ref_Appello` int(11) NOT NULL,
   PRIMARY KEY (`Ref_Appello`,`Ref_Studente`),
   KEY `Ref_Studente` (`Ref_Studente`),
   KEY `Ref_Appello` (`Ref_Appello`),
-  CONSTRAINT `prenotazione_ibfk_1` FOREIGN KEY (`Ref_Studente`) REFERENCES `Studente` (`Matricola`),
-  CONSTRAINT `prenotazione_ibfk_2` FOREIGN KEY (`Ref_Appello`) REFERENCES `AppelloEsame` (`Id_Appello`)
+  CONSTRAINT `prenotazione_ibfk_1` FOREIGN KEY (`Ref_Studente`) REFERENCES `Studente` (`Matricola`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -271,7 +267,7 @@ CREATE TABLE `Prenotazione` (
 
 LOCK TABLES `Prenotazione` WRITE;
 /*!40000 ALTER TABLE `Prenotazione` DISABLE KEYS */;
-INSERT INTO `Prenotazione` VALUES ('000001','123456'),('000002','555555'),('000003','333333');
+INSERT INTO `Prenotazione` VALUES ('000001',1);
 /*!40000 ALTER TABLE `Prenotazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21 16:37:39
+-- Dump completed on 2016-02-21 17:12:17
