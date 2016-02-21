@@ -198,6 +198,10 @@ public class InizializzaVerbaleForm{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/CompilazioneVerbaleForm.fxml"));
             Parent parent = fxmlLoader.load();
 
+            CompilazioneVerbaleForm compilazioneVerbaleForm = fxmlLoader.getController();
+            compilazioneVerbaleForm.setDocente(mDocente);
+            compilazioneVerbaleForm.setVerbaleComplessivo(pVerbaleComplessivo);
+
             stage.setTitle("Compilazione Verbale");
             stage.setScene(new Scene(parent, 600, 600));
             stage.setResizable(false);
