@@ -162,11 +162,10 @@ public class InizializzaVerbaleForm{
 
     public void clickImportaIscritti(ActionEvent actionEvent) {
         if(mSelectedAppello != null){
-            System.out.println(mInizializzaVerbaleCtrl.getIscrittiAppello(mSelectedAppello));
             mSelectedAppello.setStudentiIscritti(mInizializzaVerbaleCtrl.getIscrittiAppello(mSelectedAppello));
         }
         else{
-            System.out.println("Appello non selezionato");
+            //Advice docente that should first select an appello
         }
 
     }
