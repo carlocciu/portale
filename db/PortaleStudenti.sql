@@ -196,7 +196,10 @@ CREATE TABLE `Materia` (
   `Anno` int(11) NOT NULL,
   `CFU` int(11) NOT NULL,
   `Ordinamento` varchar(255) NOT NULL,
-  PRIMARY KEY (`Id_Materia`)
+  `Ref_CdL` char(6) DEFAULT NULL,
+  PRIMARY KEY (`Id_Materia`),
+  KEY `Ref_CdL` (`Ref_CdL`),
+  CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,7 +209,7 @@ CREATE TABLE `Materia` (
 
 LOCK TABLES `Materia` WRITE;
 /*!40000 ALTER TABLE `Materia` DISABLE KEYS */;
-INSERT INTO `Materia` VALUES ('000001','Analisi 1',1,12,'Nuovo'),('000002','Fisica 2',2,6,'Nuovo'),('111222','Ingegneria del software',2,6,'Nuovo'),('123456','Basi di dati',3,6,'Nuovo'),('888888','Storia moderna',2,12,'Nuovo');
+INSERT INTO `Materia` VALUES ('000001','Analisi 1',1,12,'Nuovo','098765'),('000002','Fisica 2',2,6,'Nuovo','098765'),('111222','Ingegneria del software',2,6,'Nuovo','098765'),('123456','Basi di dati',3,6,'Nuovo','098765'),('888888','Storia moderna',2,12,'Nuovo','444444');
 /*!40000 ALTER TABLE `Materia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,7 +345,7 @@ CREATE TABLE `Verbale` (
   CONSTRAINT `verbale_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`),
   CONSTRAINT `verbale_ibfk_2` FOREIGN KEY (`Ref_AppelloEsame`) REFERENCES `AppelloEsame` (`Id_Appello`),
   CONSTRAINT `verbale_ibfk_3` FOREIGN KEY (`Ref_Materia`) REFERENCES `Materia` (`Id_Materia`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -351,6 +354,7 @@ CREATE TABLE `Verbale` (
 
 LOCK TABLES `Verbale` WRITE;
 /*!40000 ALTER TABLE `Verbale` DISABLE KEYS */;
+INSERT INTO `Verbale` VALUES (1,'2016-02-21 19:32:27',NULL,'098765','1','000001'),(2,'2016-02-21 14:00:00',NULL,'098765','3','000001');
 /*!40000 ALTER TABLE `Verbale` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -363,4 +367,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21 19:28:42
+-- Dump completed on 2016-02-21 19:46:12
