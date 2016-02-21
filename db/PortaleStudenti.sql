@@ -196,9 +196,9 @@ CREATE TABLE `Materia` (
   `Anno` int(11) NOT NULL,
   `CFU` int(11) NOT NULL,
   `Ordinamento` varchar(255) NOT NULL,
-  `Ref_CdL` char(6) DEFAULT NULL,
+  `Ref_CdL` char(6) NOT NULL,
   PRIMARY KEY (`Id_Materia`),
-  KEY `Ref_CdL` (`Ref_CdL`),
+  KEY `materia_ibfk_1` (`Ref_CdL`),
   CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`Ref_CdL`) REFERENCES `CorsoDiLaurea` (`Id_CdL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -367,4 +367,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-21 19:46:12
+-- Dump completed on 2016-02-21 20:35:13
