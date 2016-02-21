@@ -1,15 +1,13 @@
 package portale.entities;
 
-import portale.entities.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 
 public class VerbaleComplessivo {
 
-    private String CDL;
+    private CorsoDiLaurea CDL;
 
-    private String scuola;
+    private Scuola scuola;
 
     private String annoAccademico;
 
@@ -19,43 +17,45 @@ public class VerbaleComplessivo {
 
     private ArrayList<EsameVerbalizzato> esamiSostenuti;
 
-    private Enum pagina;
+    private enum Pagina {FRONTE, RETRO};
+    private Pagina mPagina;
 
     private int esamiInPagina;
 
-    public VerbaleComplessivo(String CDL, String scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti) {
+    public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, Date oraApertura) {
         this.CDL = CDL;
         this.scuola = scuola;
         this.annoAccademico = annoAccademico;
         this.mAppello = mAppello;
         this.oraApertura = oraApertura;
-        this.esamiSostenuti = esamiSostenuti;
+        esamiSostenuti = new ArrayList<>();
+        mPagina = Pagina.FRONTE;
     }
 
-    public VerbaleComplessivo(String CDL, String scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Enum pagina, int esamiInPagina) {
+    public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Pagina pagina, int esamiInPagina) {
         this.CDL = CDL;
         this.scuola = scuola;
         this.annoAccademico = annoAccademico;
         this.mAppello = mAppello;
         this.oraApertura = oraApertura;
         this.esamiSostenuti = esamiSostenuti;
-        this.pagina = pagina;
+        this.mPagina = pagina;
         this.esamiInPagina = esamiInPagina;
     }
 
-    public String getCDL() {
+    public CorsoDiLaurea getCDL() {
         return CDL;
     }
 
-    public void setCDL(String CDL) {
+    public void setCDL(CorsoDiLaurea CDL) {
         this.CDL = CDL;
     }
 
-    public String getScuola() {
+    public Scuola getScuola() {
         return scuola;
     }
 
-    public void setScuola(String scuola) {
+    public void setScuola(Scuola scuola) {
         this.scuola = scuola;
     }
 
@@ -91,12 +91,12 @@ public class VerbaleComplessivo {
         this.oraApertura = oraApertura;
     }
 
-    public Enum getPagina() {
-        return pagina;
+    public Pagina getPagina() {
+        return mPagina;
     }
 
-    public void setPagina(Enum pagina) {
-        this.pagina = pagina;
+    public void setPagina(Pagina pagina) {
+        mPagina = pagina;
     }
 
     public int getEsamiInPagina() {
