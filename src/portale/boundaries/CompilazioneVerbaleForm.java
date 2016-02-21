@@ -1,5 +1,7 @@
 package portale.boundaries;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -42,7 +44,10 @@ public class CompilazioneVerbaleForm {
     }
 
     public void riempiStudentiCB() {
-
+        studentiCB.getItems().clear();
+        ObservableList<StudenteClass> studentiIscritti = FXCollections.observableArrayList();
+        studentiIscritti.addAll(mVerbaleComplessivo.getmAppello().getStudentiIscritti());
+        studentiCB.setItems(studentiIscritti);
     }
 
     public void clickVerbalizza() {
