@@ -58,7 +58,7 @@ public class CompilazioneVerbaleForm {
     public void initStudentiCB() {
         /* Get studenti da esaminare from appello */
         mStudentiDaEsaminare = FXCollections.observableArrayList();
-        mStudentiDaEsaminare.addAll(mVerbaleComplessivo.getmAppello().getStudentiIscritti());
+        mStudentiDaEsaminare.addAll(mVerbaleComplessivo.getAppello().getStudentiIscritti());
 
         studentiCB.getItems().clear();
         studentiCB.setItems(mStudentiDaEsaminare);
