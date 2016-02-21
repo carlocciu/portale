@@ -104,5 +104,10 @@
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </GridPane.margin>
       </Button>
+      <Button fx:id="chiudiVerbaleButton" mnemonicParsing="false" onAction="#chiudiVerbale" text="Chiudi Verbale" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </GridPane.margin>
+      </Button>
    </children>
 </GridPane>

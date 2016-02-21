@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import portale.controls.CompilazioneVerbaleCtrl;
 import portale.entities.DocenteClass;
@@ -19,6 +16,7 @@ import portale.entities.StudenteClass;
 import portale.entities.VerbaleComplessivo;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Optional;
 
 public class CompilazioneVerbaleForm {
@@ -54,6 +52,23 @@ public class CompilazioneVerbaleForm {
     private VerbaleComplessivo mVerbaleComplessivo;
 
     private CompilazioneVerbaleCtrl mCompilazioneVerbaleCtrl = new CompilazioneVerbaleCtrl();
+
+    public void chiudiVerbale() throws Exception{
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Chiudi Verbale");
+        alert.setContentText("Sei sicuro di chiudere il verbale?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            mCompilazioneVerbaleCtrl.chiudiVerbale(mVerbaleComplessivo);
+            clickHome();
+        } else {
+
+        }
+
+
+    }
 
 
     public void init(DocenteClass pDocente, VerbaleComplessivo pVerbaleComplessivo){

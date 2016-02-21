@@ -114,8 +114,6 @@ public class VerbaleFrame {
                                             VerbaleComplessivo pVerbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
                                                     "annoAccademico", mSelectedAppello, mSelectedOraApertura);
 
-
-
                                             pVerbaleComplessivo.setIDVerbale(Integer.parseInt(getTableView().getItems().get(getIndex()).getIdVerbale()));
 
                                             compilazioneVerbaleForm.init(docente, pVerbaleComplessivo);

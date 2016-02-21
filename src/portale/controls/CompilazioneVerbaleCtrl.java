@@ -12,6 +12,7 @@ import portale.entities.VerbaleComplessivo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CompilazioneVerbaleCtrl {
 
@@ -21,6 +22,10 @@ public class CompilazioneVerbaleCtrl {
     public boolean isValidUserPassword(StudenteClass pStudente, String pPassword) {
         DBMSLoginStudenteBnd dbmsLoginStudenteBnd = new DBMSLoginStudenteBnd();
         return dbmsLoginStudenteBnd.isPresenteUser(pStudente.getMatricolaStudente(), pPassword);
+    }
+
+    public void chiudiVerbale (VerbaleComplessivo pVerbale) throws Exception{
+         mDBMSVerbalizzaEsameBnd.chiudiVerbale(pVerbale);
     }
 
     public void verbalizzaEsame(StudenteClass pStudente, VerbaleComplessivo pVerbaleComplessivo,

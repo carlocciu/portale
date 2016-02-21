@@ -6,6 +6,11 @@ import portale.entities.StudenteClass;
 import portale.entities.VerbaleComplessivo;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.StringJoiner;
 
 public class DBMSVerbalizzaEsameBnd {
 
@@ -31,6 +36,30 @@ public class DBMSVerbalizzaEsameBnd {
             "    \n" +
             "    ";
 
+    private final String CLOSE_VERBALE = "UPDATE Verbale SET Ora_Chiusura = ? WHERE Id_Verbale = ?";
+
+    public void chiudiVerbale(VerbaleComplessivo pVerbaleComplessivo) throws Exception{
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
+
+
+        /* Close Verbale */
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(CLOSE_VERBALE);
+        Calendar currenttime = Calendar.getInstance();
+        Date sqldate = new Date((currenttime.getTime()).getTime());
+
+        preparedStatement.setDate(1, sqldate);
+
+        preparedStatement.setInt(2, pVerbaleComplessivo.getIDVerbale());
+
+        preparedStatement.executeUpdate();
+
+        if(!preparedStatement.isClosed())
+            preparedStatement.close();
+
+        if(!dBConnection.isClosed())
+            dBConnection.close();
+
+    }
 
     public void insertEsameSostenuto(StudenteClass pStudente, VerbaleComplessivo pVerbaleComplessivo,
                                      CompilazioneVerbaleForm.Esito pEsito, String pVoto) throws SQLException {
