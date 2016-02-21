@@ -2,10 +2,7 @@ package portale.controls;
 
 import javafx.collections.ObservableList;
 import portale.boundaries.DBMSInizializzaVerbaleBnd;
-import portale.entities.CorsoDiLaurea;
-import portale.entities.DocenteClass;
-import portale.entities.Materia;
-import portale.entities.Scuola;
+import portale.entities.*;
 
 import java.sql.SQLException;
 
@@ -35,6 +32,15 @@ public class InizializzaVerbaleCtrl {
     public ObservableList<Materia> getMaterie(CorsoDiLaurea mSelectedCorsoDiLaurea, DocenteClass pDocente) {
         try {
             return mDBMSInizializzaVerbaleBnd.getMaterie(mSelectedCorsoDiLaurea, pDocente);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente){
+        try {
+            return mDBMSInizializzaVerbaleBnd.getAppelli(pMateria, pDocente);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

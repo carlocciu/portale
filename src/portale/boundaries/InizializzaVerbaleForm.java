@@ -28,6 +28,7 @@ public class InizializzaVerbaleForm{
 
     @FXML
     private ComboBox<Materia> materieCB;
+    private Materia mSelectedMateria;
 
     @FXML
     private ComboBox<Appello> appelliCB;
@@ -97,10 +98,19 @@ public class InizializzaVerbaleForm{
     public void riempiMaterieCB(CorsoDiLaurea pCorsoDiLaurea) {
         materieCB.getItems().clear();
         materieCB.setItems(mInizializzaVerbaleCtrl.getMaterie(mSelectedCorsoDiLaurea, mDocente));
+
+        materieCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Materia>() {
+            @Override
+            public void changed(ObservableValue<? extends Materia> observable, Materia oldValue, Materia newValue) {
+                mSelectedMateria = newValue;
+                riempiAppelliCB();
+            }
+        });
     }
 
-    public void riempiAppelliCB(DocenteClass pDocente, String pCodiceMateria, String pCDL) {
-
+    public void riempiAppelliCB() {
+        appelliCB.getItems().clear();
+        appelliCB.setItems(mInizializzaVerbaleCtrl.getAppelli(mSelectedMateria, mDocente));
     }
 
     public void clickLogout() {

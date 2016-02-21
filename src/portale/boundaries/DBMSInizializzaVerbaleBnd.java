@@ -59,6 +59,11 @@ public class DBMSInizializzaVerbaleBnd {
             "        FROM PianoDiStudi\n" +
             "        WHERE PianoDiStudi.Ref_CorsoDiLaurea = ?);";
 
+    private final String QUERY_GET_APPELLI = "SELECT * \n" +
+            "FROM PortaleStudenti.AppelloEsame\n" +
+            "WHERE AppelloEsame.Ref_Materia = ?\n" +
+            "\tAND AppelloEsame.Ref_Docente = ?;";
+
 
     public ObservableList<StudenteClass> getStudentiIScritti(Date pDataAppello, String pMatricolaDocente, String pCodiceMateria) {
         return null;
@@ -107,8 +112,25 @@ public class DBMSInizializzaVerbaleBnd {
         return materie;
     }
 
-    public ObservableList<Appello> getAppelli(String pMatricolaDocente, String pCodiceMateria, String pCdl) {
-        return null;
+    public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente) throws SQLException {
+
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
+
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(QUERY_GET_APPELLI);
+        preparedStatement.setString(1, pMateria.getCodiceMateria());
+        preparedStatement.setString(2, pDocente.getMatricolaDocente());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        /* Results array */
+        ObservableList<Appello> appelli = FXCollections.observableArrayList();
+
+        /* Populate array */
+        while (resultSet.next()){
+            appelli.add(new Appello(resultSet.getString("Id_Appello"), resultSet.getDate("Data"), resultSet.getString("Aula")));
+        }
+
+        return appelli;
     }
 
     public ObservableList<Scuola> getScuole(DocenteClass pDocente) throws SQLException {
