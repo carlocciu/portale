@@ -60,12 +60,12 @@ public class Appello {
         this.dataEsame = dataEsame;
     }
 
-    public Materia getmMateria() {
+    public Materia getMateria() {
         return mMateria;
     }
 
-    public void setmMateria(Materia mMateria) {
-        this.mMateria = mMateria;
+    public void setMateria(Materia pMateria) {
+        mMateria = pMateria;
     }
 
     public DocenteClass getmDocente() {
