@@ -15,6 +15,7 @@ import portale.controls.InizializzaVerbaleCtrl;
 import portale.entities.*;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 public class InizializzaVerbaleForm{
 
@@ -64,6 +65,13 @@ public class InizializzaVerbaleForm{
     }
 
     public void clickInizializza() {
+        if(wereStudentsImported() && !oraAperturaTF.getText().equals("")){
+            LocalTime oraApertura = LocalTime.parse(oraAperturaTF.getText());
+            VerbaleComplessivo verbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
+                    "annoAccademico", mSelectedAppello, oraApertura);
+
+            startCompilazioneVerbale(verbaleComplessivo);
+        }
 
     }
 
@@ -171,6 +179,27 @@ public class InizializzaVerbaleForm{
         else{
             //Advice docente that should first select an appello
         }
+    }
 
+    private boolean wereStudentsImported(){
+        return mStudentiImportati;
+    }
+
+    private void startCompilazioneVerbale(VerbaleComplessivo pVerbaleComplessivo){
+        try {
+            Stage stage = (Stage) inizializzaButton.getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/CompilazioneVerbaleForm.fxml"));
+            Parent parent = fxmlLoader.load();
+
+            stage.setTitle("Compilazione Verbale");
+            stage.setScene(new Scene(parent, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
