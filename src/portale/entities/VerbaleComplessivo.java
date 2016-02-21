@@ -67,12 +67,12 @@ public class VerbaleComplessivo {
         this.annoAccademico = annoAccademico;
     }
 
-    public Appello getmAppello() {
+    public Appello getAppello() {
         return mAppello;
     }
 
-    public void setmAppello(Appello mAppello) {
-        this.mAppello = mAppello;
+    public void setAppello(Appello pAppello) {
+        mAppello = pAppello;
     }
 
     public ArrayList<EsameVerbalizzato> getEsamiSostenuti() {
