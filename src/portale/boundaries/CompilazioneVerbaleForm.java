@@ -11,12 +11,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import portale.controls.CompilazioneVerbaleCtrl;
 import portale.entities.DocenteClass;
 import portale.entities.StudenteClass;
 import portale.entities.VerbaleComplessivo;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class CompilazioneVerbaleForm {
 
@@ -31,7 +34,7 @@ public class CompilazioneVerbaleForm {
 
     @FXML
     private ComboBox<Esito> esitoCB;
-    private enum Esito {positivo, negativo};
+    public enum Esito {positivo, negativo};
     private Esito mSelectedEsito;
 
     public ComboBox<String> mVotiComboBox;
@@ -49,6 +52,8 @@ public class CompilazioneVerbaleForm {
     private DocenteClass mDocente;
 
     private VerbaleComplessivo mVerbaleComplessivo;
+
+    private CompilazioneVerbaleCtrl mCompilazioneVerbaleCtrl = new CompilazioneVerbaleCtrl();
 
 
     public void init(DocenteClass pDocente, VerbaleComplessivo pVerbaleComplessivo){
@@ -120,6 +125,25 @@ public class CompilazioneVerbaleForm {
 
     public void clickVerbalizza() {
 
+        if(mSelectedStudente != null && mSelectedEsito != null && mSelectedVoto != null){
+            TextInputDialog passwordDialog = new TextInputDialog();
+            passwordDialog.setTitle("Firma Studente");
+            passwordDialog.setHeaderText("Inserisci password portale studenti");
+
+            Optional<String> password = passwordDialog.showAndWait();
+
+            if(password.isPresent()){
+                System.out.println(password.get());
+                if(mCompilazioneVerbaleCtrl.isValidUserPassword(mSelectedStudente, password.get())){
+                    mCompilazioneVerbaleCtrl.verbalizzaEsame(mSelectedStudente, mVerbaleComplessivo, mSelectedEsito,
+                            mSelectedVoto);
+
+                } else {
+                    passwordDialog.setHeaderText("Inserisci password portale studenti\nPassword Errata");
+                }
+            }
+        }
+
     }
 
     public void clickLogout() {
@@ -164,6 +188,12 @@ public class CompilazioneVerbaleForm {
             e.printStackTrace();
         }
 
+    }
+
+    private void clearComboBoxes(){
+        studentiCB.getItems().clear();
+        esitoCB.getItems().clear();
+        mVotiComboBox.getItems().clear();
     }
 
 }
