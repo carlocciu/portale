@@ -199,9 +199,7 @@ public class InizializzaVerbaleForm{
             Parent parent = fxmlLoader.load();
 
             CompilazioneVerbaleForm compilazioneVerbaleForm = fxmlLoader.getController();
-            compilazioneVerbaleForm.setDocente(mDocente);
-            compilazioneVerbaleForm.setVerbaleComplessivo(pVerbaleComplessivo);
-            compilazioneVerbaleForm.riempiStudentiCB();
+            compilazioneVerbaleForm.init(mDocente, pVerbaleComplessivo);
 
             stage.setTitle("Compilazione Verbale");
             stage.setScene(new Scene(parent, 600, 600));

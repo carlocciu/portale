@@ -35,6 +35,12 @@ public class CompilazioneVerbaleForm {
     private VerbaleComplessivo mVerbaleComplessivo;
 
 
+    public void init(DocenteClass pDocente, VerbaleComplessivo pVerbaleComplessivo){
+        setDocente(pDocente);
+        setVerbaleComplessivo(pVerbaleComplessivo);
+        riempiStudentiCB();
+    }
+
     public void setDocente(DocenteClass pDocente) {
         mDocente = pDocente;
     }
