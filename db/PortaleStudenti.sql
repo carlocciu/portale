@@ -28,6 +28,7 @@ CREATE TABLE `AppelloEsame` (
   `Id_Appello` varchar(255) NOT NULL,
   `Data` datetime NOT NULL,
   `Ref_Materia` char(6) NOT NULL,
+  `Aula` varchar(255) DEFAULT NULL,
   `Ref_Docente` char(6) NOT NULL,
   PRIMARY KEY (`Id_Appello`),
   KEY `Ref_Materia_idx` (`Ref_Materia`),
@@ -42,7 +43,7 @@ CREATE TABLE `AppelloEsame` (
 
 LOCK TABLES `AppelloEsame` WRITE;
 /*!40000 ALTER TABLE `AppelloEsame` DISABLE KEYS */;
-INSERT INTO `AppelloEsame` VALUES ('123456','2016-02-19 10:29:09','123456', '000112'),('333333','2016-02-19 16:21:36','888888', '987654'),('555555','2016-02-19 16:14:07','111222', '001122');
+INSERT INTO `AppelloEsame` VALUES ('123456','2016-02-19 10:29:09','123456','F310', '000112'),('333333','2016-02-19 16:21:36','888888','DEIM', '987654'),('555555','2016-02-19 16:14:07','111222','A320', '001122');
 /*!40000 ALTER TABLE `AppelloEsame` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-19 16:22:40
+-- Dump completed on 2016-02-19 17:57:52
