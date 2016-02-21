@@ -163,8 +163,10 @@ public class VerbaleFrame {
             Stage stage = (Stage) homeButton.getScene().getWindow();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/PortaleDocenteFrame.fxml"));
+            Parent parent = fxmlLoader.load();
 
-            Parent parent = (Parent) fxmlLoader.load();
+            PortaleDocenteFrame portaleDocenteFrame = fxmlLoader.getController();
+            portaleDocenteFrame.setCurrDocente(docente);
 
             stage.setTitle("Portale Docente");
             stage.setScene(new Scene(parent, 600, 600));
