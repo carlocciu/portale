@@ -59,10 +59,8 @@ public class DBMSLoginStudenteBnd {
     public ObservableList<DisplayPianoDiStudi> getPianodiStudi(String pMatricola) {
 
         Connection connection = null;
-        PreparedStatement statementMaterieSostenute = null;
-        PreparedStatement statementMaterie = null;
-        ResultSet resultMaterie = null;
-        ResultSet resultMaterieSostenute = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
 
         try{
 
@@ -70,51 +68,21 @@ public class DBMSLoginStudenteBnd {
 
 
             //Ottenfo tutte le materie del piano di studi
-            String queryTutteLeMaterie = "select M.Nome, M.Id_Materia, M.Anno, M.CFU from Studente S, PianoDiStudi P, Materia M where S.Matricola=P.Ref_Studente and P.Ref_Materia=M.Id_Materia and S.Matricola=?";
+            String query = "select M.Nome, M.Id_Materia, M.Anno, M.CFU, P.Ref_Voto, P.DataEsame from Studente S, PianoDiStudi P, Materia M where S.Matricola=P.Ref_Studente and P.Ref_Materia=M.Id_Materia and S.Matricola=?";
 
-            statementMaterie = connection.prepareStatement(queryTutteLeMaterie);
-            statementMaterie.setString(1, pMatricola);
-            resultMaterie = statementMaterie.executeQuery();
-
-
-            //Ottengo tutte le materie sostenute
-            String queryTutteLeMaterieSostenute = "SELECT M.Anno, M.Id_Materia, M.Nome, M.CFU, E.DataEsame, E.Voto FROM Materia M, AppelloEsame A, Verbale V, EsameVerbalizzato E, Studente S WHERE M.Id_Materia = A.Ref_Materia AND A.Id_Appello = V.Ref_AppelloEsame AND V.Id_Verbale = E.Ref_Verbale AND E.Ref_Studente = S.Matricola AND S.Matricola = ?";
-
-            statementMaterieSostenute = connection.prepareStatement(queryTutteLeMaterieSostenute);
-            statementMaterieSostenute.setString(1, pMatricola);
-            resultMaterieSostenute = statementMaterieSostenute.executeQuery();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, pMatricola);
+            result = statement.executeQuery();
 
             ObservableList<DisplayPianoDiStudi> pianoDiStudi = FXCollections.observableArrayList();
 
-            boolean sostenuta = false;
+             while(result.next()){
 
-            while(resultMaterie.next()){
+                pianoDiStudi.add(new DisplayPianoDiStudi(result.getInt("Anno"), result.getString("Id_Materia"), result.getString("Nome"), result.getInt("CFU"), result.getDate("DataEsame"), result.getInt("Ref_Voto"), pMatricola));
 
-                String uno = resultMaterie.getString("Id_Materia");
-                String due = "";
-
-                while (resultMaterieSostenute.next()){
-
-                    due = resultMaterieSostenute.getString("Id_Materia");
-
-                    if(uno.equals(due)){
-
-                        pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterieSostenute.getInt("Anno"), resultMaterieSostenute.getString("Id_Materia"), resultMaterieSostenute.getString("Nome"), resultMaterieSostenute.getInt("CFU"), resultMaterieSostenute.getDate("DataEsame"), resultMaterieSostenute.getInt("Voto"), pMatricola));
-                        sostenuta = true;
-
-
-                    }
-                }
-
-                if(sostenuta == false){
-
-                    pianoDiStudi.add(new DisplayPianoDiStudi(resultMaterie.getInt("Anno"), resultMaterie.getString("Id_Materia"), resultMaterie.getString("Nome"), resultMaterie.getInt("CFU"), null, 0, pMatricola));
-
-                }
             }
 
-
-            //statement.close();
+            statement.close();
             connection.close();
 
             return pianoDiStudi;

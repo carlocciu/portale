@@ -42,7 +42,7 @@ public class LoginFormStudente {
             controller.fillTheTable(db.getPianodiStudi(matricolaTF.getText()));
 
             primaryStage.setTitle("Piano Di Studi");
-            primaryStage.setScene(new Scene(root, 700, 600));
+            primaryStage.setScene(new Scene(root, 700, 700));
             primaryStage.setResizable(false);
             primaryStage.show();
         }

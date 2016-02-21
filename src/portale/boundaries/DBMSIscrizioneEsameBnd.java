@@ -2,6 +2,7 @@ package portale.boundaries;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import jdk.internal.cmm.SystemResourcePressureImpl;
 import portale.entities.DisplayAppello;
 
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 public class DBMSIscrizioneEsameBnd {
 
-    public void insertIscrizione(String pMatricola, String pCodiceMateria) {
+    public boolean insertIscrizione(String pMatricola, String pCodiceMateria) {
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -26,15 +27,17 @@ public class DBMSIscrizioneEsameBnd {
             statement.setString(1, pMatricola);
             statement.setString(2, pCodiceMateria);
 
-            statement.executeUpdate();
+            int count = statement.executeUpdate();
+            System.out.println(count);
 
             statement.close();
             connection.close();
 
+            return (count>0);
 
         }catch(SQLException e){
             e.printStackTrace();
-
+            return false;
         }
 
     }
@@ -50,7 +53,7 @@ public class DBMSIscrizioneEsameBnd {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
 
             //bada che manca l'aula nel Db --> fixare
-            String query = "select D.Cognome, D.Nome, A.Data, A.Id_Appello, A.Aula  from Materia M, Docente D, AppelloEsame A where M.Docente=D.Matricola and A.Ref_Materia=M.Id_Materia and M.Id_Materia=?;";
+            String query = "select D.Cognome, A.Data, A.Id_Appello, A.Aula from AppelloEsame A, Materia M, Insegnamento I, Docente D where  A.Ref_Materia = M.Id_Materia and M.Id_Materia = I.Ref_Materia and I.Ref_Docente = D.Matricola and I.Ref_Materia=?";
 
             statement = connection.prepareStatement(query);
 
@@ -62,7 +65,7 @@ public class DBMSIscrizioneEsameBnd {
 
             while(result.next()){
 
-                appelli.add(new DisplayAppello(result.getString("Cognome"), result.getDate("Data"), result.getString("Aula"), result.getString("Id_Appello")));
+                appelli.add(new DisplayAppello(result.getString("Cognome"), result.getTimestamp("Data"), result.getString("Aula"), result.getString("Id_Appello")));
             }
 
             statement.close();

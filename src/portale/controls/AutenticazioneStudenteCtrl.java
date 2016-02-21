@@ -42,7 +42,6 @@ public class AutenticazioneStudenteCtrl {
         return this.password;
     }
 
-
     public boolean checkLogin(){
 
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -3,15 +3,17 @@ package portale.boundaries;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import portale.controls.IscrizioneEsameCtrl;
-import portale.controls.PianoDiStudiCtrl;
 import portale.entities.*;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class PianoDiStudiForm {
@@ -34,15 +36,33 @@ public class PianoDiStudiForm {
 
     @FXML public void clickLogout() {
 
-        PianoDiStudiCtrl logout = new PianoDiStudiCtrl((Stage) logoutButton.getScene().getWindow());
 
-        logout.logout();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+
+        FXMLLoader page = new FXMLLoader(getClass().getResource("../../res/LoginFormStudente.fxml"));
+
+        Parent root = null;
+
+        try {
+
+            root = (Parent) page.load();
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            // controller.riempiTabella(thisStage);
+
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void fillTheTable(ObservableList<DisplayPianoDiStudi> pianoDiStudi){
 
-        pianoDiStudiTV.setMaxWidth(655);
-        pianoDiStudiTV.setMaxHeight(300);
+        pianoDiStudiTV.setMaxWidth(654);
+        pianoDiStudiTV.setMaxHeight(500);
 
         TableColumn annoCol = new TableColumn("Anno");
         annoCol.setMinWidth(50);
@@ -150,7 +170,7 @@ public class PianoDiStudiForm {
 
     public void addRowsAppelli(ObservableList<DisplayAppello> appelli, String matricola){
 
-        appelliTV.setMaxWidth(345);
+        appelliTV.setMaxWidth(405);
         appelliTV.setMaxHeight(200);
 
         TableColumn docenteCol = new TableColumn("Docente");
@@ -159,7 +179,7 @@ public class PianoDiStudiForm {
 
 
         TableColumn dataCol = new TableColumn("Data Esame");
-        dataCol.setMinWidth(100);
+        dataCol.setMinWidth(160);
         dataCol.setCellValueFactory(new PropertyValueFactory<DisplayAppello, Date>("dataEsame"));
 
         TableColumn aulaCol = new TableColumn("Aula");

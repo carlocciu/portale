@@ -2,6 +2,8 @@ package portale.entities;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -10,11 +12,11 @@ import java.util.Date;
 public class DisplayAppello {
 
     private final SimpleStringProperty docente;
-    private final Date dataEsame;
+    private final Timestamp dataEsame;
     private final SimpleStringProperty aula;
     private final SimpleStringProperty idAppello;
 
-    public DisplayAppello(String docente, Date dataEsame, String aula, String idAppello) {
+    public DisplayAppello(String docente, Timestamp dataEsame, String aula, String idAppello) {
 
         this.docente = new SimpleStringProperty(docente);
         this.dataEsame = dataEsame;
@@ -34,7 +36,7 @@ public class DisplayAppello {
         this.docente.set(docente);
     }
 
-    public Date getDataEsame() {
+    public Timestamp getDataEsame() {
         return dataEsame;
     }
 

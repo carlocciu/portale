@@ -23,13 +23,23 @@ public class IscrizioneEsameCtrl {
 
         if(verify.getTheRightStudent(matricola, dataToConfirm[0], dataToConfirm[1])){
 
-            verify.insertIscrizione(matricola, appello);
+            if(verify.insertIscrizione(matricola, appello)){
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Prenotazione");
-            alert.setHeaderText("Prenotazione avvenuta con successo");
-            alert.setContentText("Ti sei prenotato all'appello!");
-            alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Prenotazione");
+                alert.setHeaderText("Prenotazione avvenuta con successo");
+                alert.setContentText("Ti sei prenotato all'appello!");
+                alert.showAndWait();
+            }else{
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Errore nella prenotazione");
+                alert.setHeaderText("Prenotazione non riuscita");
+                alert.setContentText("Hai gia' prenotato questo appello");
+                alert.showAndWait();
+            }
+
+
 
         }else{
 
