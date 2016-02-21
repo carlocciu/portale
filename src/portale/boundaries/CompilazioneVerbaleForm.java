@@ -20,6 +20,7 @@ import java.io.IOException;
 
 public class CompilazioneVerbaleForm {
 
+
     @FXML
     private ComboBox<StudenteClass> studentiCB;
     private ObservableList<StudenteClass> mStudentiDaEsaminare;
@@ -29,7 +30,11 @@ public class CompilazioneVerbaleForm {
     private TextArea domandeTA;
 
     @FXML
-    private ComboBox<String> esitoCB;
+    private ComboBox<Esito> esitoCB;
+    private enum Esito {positivo, negativo};
+    private Esito mSelectedEsito;
+
+    public ComboBox<String> mVotiComboBox;
     private String mSelectedVoto;
 
     @FXML
@@ -50,7 +55,8 @@ public class CompilazioneVerbaleForm {
         setDocente(pDocente);
         setVerbaleComplessivo(pVerbaleComplessivo);
         initStudentiCB();
-        initEsitoCB();
+        initEsitoComboBox();
+        initVotiComboBox();
     }
 
     public void setDocente(DocenteClass pDocente) {
@@ -77,15 +83,31 @@ public class CompilazioneVerbaleForm {
         });
     }
 
-    public void initEsitoCB(){
+    public void initEsitoComboBox(){
         esitoCB.getItems().clear();
+        ObservableList<Esito> esitiPossibili = FXCollections.observableArrayList();
+        esitiPossibili.add(Esito.positivo);
+        esitiPossibili.add(Esito.negativo);
+
+        esitoCB.setItems(esitiPossibili);
+
+        esitoCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Esito>() {
+            @Override
+            public void changed(ObservableValue<? extends Esito> observable, Esito oldValue, Esito newValue) {
+                mSelectedEsito = newValue;
+            }
+        });
+    }
+
+    public void initVotiComboBox(){
+        mVotiComboBox.getItems().clear();
         ObservableList<String> votiPossibili = FXCollections.observableArrayList();
         for(int i = 18; i <= 30; i++)
             votiPossibili.add(String.valueOf(i));
         votiPossibili.add("30L");
-        esitoCB.setItems(votiPossibili);
+        mVotiComboBox.setItems(votiPossibili);
 
-        esitoCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        mVotiComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 mSelectedVoto = newValue;
