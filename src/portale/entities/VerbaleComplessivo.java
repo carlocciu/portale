@@ -1,7 +1,7 @@
 package portale.entities;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class VerbaleComplessivo {
 
@@ -13,7 +13,7 @@ public class VerbaleComplessivo {
 
     private Appello mAppello;
 
-    private Date oraApertura;
+    private LocalTime oraApertura;
 
     private ArrayList<EsameVerbalizzato> esamiSostenuti;
 
@@ -22,7 +22,7 @@ public class VerbaleComplessivo {
 
     private int esamiInPagina;
 
-    public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, Date oraApertura) {
+    public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, LocalTime oraApertura) {
         this.CDL = CDL;
         this.scuola = scuola;
         this.annoAccademico = annoAccademico;
@@ -32,7 +32,7 @@ public class VerbaleComplessivo {
         mPagina = Pagina.FRONTE;
     }
 
-    public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, Date oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Pagina pagina, int esamiInPagina) {
+    public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, LocalTime oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Pagina pagina, int esamiInPagina) {
         this.CDL = CDL;
         this.scuola = scuola;
         this.annoAccademico = annoAccademico;
@@ -83,11 +83,11 @@ public class VerbaleComplessivo {
         this.esamiSostenuti = esamiSostenuti;
     }
 
-    public Date getOraApertura() {
+    public LocalTime getOraApertura() {
         return oraApertura;
     }
 
-    public void setOraApertura(Date oraApertura) {
+    public void setOraApertura(LocalTime oraApertura) {
         this.oraApertura = oraApertura;
     }
 
