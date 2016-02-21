@@ -16,6 +16,8 @@ public class CompilazioneVerbaleForm {
 
     @FXML
     private ComboBox<StudenteClass> studentiCB;
+    private ObservableList<StudenteClass> mStudentiDaEsaminare;
+    private StudenteClass mSelectedStudente;
 
     @FXML
     private TextArea domandeTA;
@@ -54,10 +56,19 @@ public class CompilazioneVerbaleForm {
     }
 
     public void initStudentiCB() {
+        /* Get studenti da esaminare from appello */
+        mStudentiDaEsaminare = FXCollections.observableArrayList();
+        mStudentiDaEsaminare.addAll(mVerbaleComplessivo.getmAppello().getStudentiIscritti());
+
         studentiCB.getItems().clear();
-        ObservableList<StudenteClass> studentiIscritti = FXCollections.observableArrayList();
-        studentiIscritti.addAll(mVerbaleComplessivo.getmAppello().getStudentiIscritti());
-        studentiCB.setItems(studentiIscritti);
+        studentiCB.setItems(mStudentiDaEsaminare);
+
+        studentiCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StudenteClass>() {
+            @Override
+            public void changed(ObservableValue<? extends StudenteClass> observable, StudenteClass oldValue, StudenteClass newValue) {
+                mSelectedStudente = newValue;
+            }
+        });
     }
 
     public void initEsitoCB(){
