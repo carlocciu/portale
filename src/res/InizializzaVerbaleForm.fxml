@@ -91,16 +91,16 @@
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </GridPane.margin>
             </Text>
-            <TextField fx:id="oraAperturaTF" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </GridPane.margin>
-            </TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ora apertura:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </GridPane.margin>
             </Text>
+            <ComboBox fx:id="oraAperturaCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+               </GridPane.margin>
+            </ComboBox>
          </children>
       </GridPane>
       <Button fx:id="inizializzaButton" mnemonicParsing="false" onAction="#clickInizializza" text="Conferma" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">

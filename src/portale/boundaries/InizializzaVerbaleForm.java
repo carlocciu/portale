@@ -2,6 +2,8 @@ package portale.boundaries;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import portale.controls.InizializzaVerbaleCtrl;
 import portale.entities.*;
@@ -36,7 +37,8 @@ public class InizializzaVerbaleForm{
     private Appello mSelectedAppello;
 
     @FXML
-    private TextField oraAperturaTF;
+    private ComboBox<LocalTime> oraAperturaCB;
+    private LocalTime mSelectedOraApertura;
 
     @FXML
     private Button importaIscrittiButton;
@@ -55,6 +57,11 @@ public class InizializzaVerbaleForm{
 
     private DocenteClass mDocente;
 
+    public void init(){
+        riempiScuoleCB();
+        initOraAperturaCB();
+    }
+
 
     public void setDocente(DocenteClass docente) {
         mDocente = docente;
@@ -65,10 +72,9 @@ public class InizializzaVerbaleForm{
     }
 
     public void clickInizializza() {
-        if(wereStudentsImported() && !oraAperturaTF.getText().equals("")){
-            LocalTime oraApertura = LocalTime.parse(oraAperturaTF.getText());
+        if(wereStudentsImported() && mSelectedOraApertura != null){;
             VerbaleComplessivo verbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
-                    "annoAccademico", mSelectedAppello, oraApertura);
+                    "annoAccademico", mSelectedAppello, mSelectedOraApertura);
 
             startCompilazioneVerbale(verbaleComplessivo);
         }
@@ -201,5 +207,21 @@ public class InizializzaVerbaleForm{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void initOraAperturaCB(){
+        ObservableList<LocalTime> orariPossibiliAppelli = FXCollections.observableArrayList();
+        for(int i = 8; i <= 17; i++){
+            orariPossibiliAppelli.add(LocalTime.of(i, 0));
+        }
+        oraAperturaCB.getItems().clear();
+        oraAperturaCB.setItems(orariPossibiliAppelli);
+
+        oraAperturaCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LocalTime>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalTime> observable, LocalTime oldValue, LocalTime newValue) {
+                mSelectedOraApertura = newValue;
+            }
+        });
     }
 }
