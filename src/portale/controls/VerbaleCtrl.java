@@ -2,8 +2,9 @@ package portale.controls;
 
 import javafx.collections.ObservableList;
 import portale.boundaries.DBMSVerbaliApertiBnd;
-import portale.entities.DisplayVerbale;
-import portale.entities.DocenteClass;
+import portale.entities.*;
+
+import java.time.LocalTime;
 
 public class VerbaleCtrl {
 
@@ -17,6 +18,22 @@ public class VerbaleCtrl {
 
     public ObservableList<DisplayVerbale> getVerbaliAperti(){
         return db.verbaliAperti(docente.getMatricolaDocente());
+    }
+
+    public Appello getAppello(String idVerbale){
+        return db.getAppello(idVerbale);
+    }
+
+    public CorsoDiLaurea getCDL(String idVerbale){
+        return db.getCDL(idVerbale);
+    }
+
+    public Scuola getScuola(String idVerbale){
+        return db.getScuola(idVerbale);
+    }
+
+    public LocalTime getOraApertura(String idVerbale){
+        return db.getOraApertura(idVerbale);
     }
 
 }

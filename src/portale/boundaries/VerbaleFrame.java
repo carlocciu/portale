@@ -14,10 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import portale.controls.VerbaleCtrl;
-import portale.entities.DisplayVerbale;
-import portale.entities.DocenteClass;
+import portale.entities.*;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 public class VerbaleFrame {
 
@@ -31,7 +31,7 @@ public class VerbaleFrame {
 
     private DocenteClass docente;
 
-    VerbaleCtrl ctr = new VerbaleCtrl(docente);
+    private VerbaleCtrl mVerbaleCtrl = new VerbaleCtrl(docente);
 
     public void setDocente(DocenteClass docente) {
         this.docente = docente;
@@ -91,8 +91,40 @@ public class VerbaleFrame {
                                 {
                                     btn.setOnAction( ( ActionEvent event ) ->
                                     {
+                                        try {
+                                            Stage stage = (Stage) btn.getScene().getWindow();
+
+                                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/CompilazioneVerbaleForm.fxml"));
+                                            Parent parent = fxmlLoader.load();
+
+                                            CompilazioneVerbaleForm compilazioneVerbaleForm = fxmlLoader.getController();
+
+                                            Appello mSelectedAppello = mVerbaleCtrl.getAppello(getTableView().getItems().get(getIndex()).getIdVerbale());
+
+                                            CorsoDiLaurea mSelectedCorsoDiLaurea = mVerbaleCtrl.getCDL(getTableView().getItems().get(getIndex()).getIdVerbale());
+
+                                            Scuola mSelectedScuola = mVerbaleCtrl.getScuola(getTableView().getItems().get(getIndex()).getIdVerbale());
+
+                                            LocalTime mSelectedOraApertura = mVerbaleCtrl.getOraApertura(getTableView().getItems().get(getIndex()).getIdVerbale());
+
+                                            VerbaleComplessivo pVerbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
+                                                    "annoAccademico", mSelectedAppello, mSelectedOraApertura);
+
+                                            compilazioneVerbaleForm.init(docente, pVerbaleComplessivo);
+
+                                            stage.setTitle("Compilazione Verbale");
+                                            stage.setScene(new Scene(parent, 600, 600));
+                                            stage.setResizable(false);
+                                            stage.show();
+
+
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
                                         DisplayVerbale person = getTableView().getItems().get( getIndex() );
                                         System.out.println( person.getIdVerbale() );
+
                                     } );
                                     setGraphic( btn );
                                     setText( null );
@@ -107,10 +139,6 @@ public class VerbaleFrame {
 
         verbaliApertiTV.setItems(data);
         verbaliApertiTV.getColumns().addAll(annoCol, cdlCol, materiaCol, cfuCol, dataCol, actionCol);
-
-    }
-
-    public void clickSelectVerbale(int pSelectedVerbale) {
 
     }
 
