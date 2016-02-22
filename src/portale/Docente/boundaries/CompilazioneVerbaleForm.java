@@ -18,6 +18,9 @@ import portale.common.VerbaleComplessivo;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Classe Boundary che gestisce la view per la compilazione del verbale
+ */
 public class CompilazioneVerbaleForm {
 
     /**

@@ -50,10 +50,7 @@ public class DisplayVerbale {
         this.idVerbale = idVerbale;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public String getIdVerbale() {
         return idVerbale;
     }

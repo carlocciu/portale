@@ -8,15 +8,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Classe Boundary che gestisce la comunicazione del database per inizializzare il verbale
+ */
 public class DBMSInizializzaVerbaleBnd {
 
     /* Connection data */
     private final String DBMS_URL = "jdbc:mysql://localhost:3306/PortaleStudenti";
+    /* Connection data */
     private final String DBM_USER = "root";
+    /* Connection data */
     private final String DBMS_PASS = "apswpa";
 
 
-    /* Queries */
+    /**
+     * Query get scuole
+     */
     private final String QUERY_GET_SCUOLE = "SELECT *\n" +
             "FROM Scuola\n" +
             "WHERE Scuola.Id_Scuola IN(\n" +
@@ -33,6 +40,10 @@ public class DBMSInizializzaVerbaleBnd {
             "                FROM Insegnamento\n" +
             "                WHERE Insegnamento.Ref_Docente = ?))));";
 
+
+    /**
+     * Query get corsi di laurea
+     */
     private final String QUERY_GET_CDLS = "SELECT *\n" +
             "FROM CorsoDiLaurea\n" +
             "WHERE CorsoDiLaurea.Ref_Dipartimento IN(\n" +
@@ -48,6 +59,9 @@ public class DBMSInizializzaVerbaleBnd {
             "            FROM Insegnamento\n" +
             "            WHERE Insegnamento.Ref_Docente = ?));";
 
+    /**
+     * Query get materie
+     */
     private final String QURY_GET_MATERIE = "SELECT *\n" +
             "FROM Materia\n" +
             "WHERE Materia.Ref_CdL = ?\n" +
@@ -56,6 +70,9 @@ public class DBMSInizializzaVerbaleBnd {
             "        FROM Insegnamento\n" +
             "        WHERE Insegnamento.Ref_Docente = ?);";
 
+    /**
+     * Query get appelli
+     */
     private final String QUERY_GET_APPELLI = "SELECT * \n" +
             "FROM PortaleStudenti.AppelloEsame\n" +
             "WHERE AppelloEsame.Ref_Materia = ?\n" +
@@ -64,6 +81,9 @@ public class DBMSInizializzaVerbaleBnd {
             "\t\tSELECT Verbale.Ref_AppelloEsame\n" +
             "        FROM Verbale);";
 
+    /**
+     * Query get iscritti ad un appello
+     */
     private final String QUERY_GET_ISCRITTI_APPELLO = "SELECT *\n" +
             "FROM Studente\n" +
             "WHERE Studente.Matricola IN(\n" +
@@ -79,14 +99,19 @@ public class DBMSInizializzaVerbaleBnd {
             "            FROM Verbale\n" +
             "            WHERE Verbale.Ref_AppelloEsame = ?));";
 
+    /**
+     * Query insert nuovo verbale
+     */
     private final String INSERT_NEW_VERBALE = "INSERT INTO `Verbale`(Ora_Apertura, Ref_CdL, Ref_AppelloEsame, Ref_Materia) \n" +
             "            VALUES ('%s', '%s', '%s', '%s');";
 
-
-    public ObservableList<StudenteClass> getStudentiIScritti(Date pDataAppello, String pMatricolaDocente, String pCodiceMateria) {
-        return null;
-    }
-
+    /**
+     * Ritorna la lista dei corsi di laurea di una scuola selezionata in cui insegna il docente
+     * @param pScuola informazioni scuola
+     * @param pDocente informazioni docente
+     * @return lista di corsi di laurea
+     * @throws SQLException
+     */
     public ObservableList<CorsoDiLaurea> getCDLs(Scuola pScuola, DocenteClass pDocente) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
@@ -108,6 +133,13 @@ public class DBMSInizializzaVerbaleBnd {
         return cdls;
     }
 
+    /**
+     * Ritorna la lista delle materie insegnate dal docente in un corso di laurea selezionato
+     * @param pCorsoDiLaurea informazioni corso di laurea
+     * @param pDocente informazioni docente
+     * @return lista di materie
+     * @throws SQLException
+     */
     public ObservableList<Materia> getMaterie(CorsoDiLaurea pCorsoDiLaurea, DocenteClass pDocente) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
@@ -130,6 +162,13 @@ public class DBMSInizializzaVerbaleBnd {
         return materie;
     }
 
+    /**
+     * Ritorna la lista degli appelli di una materia selezionata
+     * @param pMateria informazioni materia
+     * @param pDocente informazioni docente
+     * @return lista di appelli
+     * @throws SQLException
+     */
     public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
@@ -151,6 +190,12 @@ public class DBMSInizializzaVerbaleBnd {
         return appelli;
     }
 
+    /**
+     * Ritorna la lista delle scuole in cui il docente insegna
+     * @param pDocente informazioni docente
+     * @return lista scuole
+     * @throws SQLException
+     */
     public ObservableList<Scuola> getScuole(DocenteClass pDocente) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
@@ -171,6 +216,12 @@ public class DBMSInizializzaVerbaleBnd {
         return scuole;
     }
 
+    /**
+     * Ritorna la lista degli studenti iscritti ad un appello
+     * @param pAppello appello
+     * @return lista di studenti iscritti
+     * @throws SQLException
+     */
     public ArrayList<StudenteClass> getIscrittiAppello(Appello pAppello) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
@@ -193,6 +244,15 @@ public class DBMSInizializzaVerbaleBnd {
         return studentiIscritti;
     }
 
+    /**
+     * Inserisce un nuovo verbale nel database
+     * @param pTimestamp ora di apertura
+     * @param pSelectedCorsoDiLaurea corso di laurea selezionato
+     * @param pSelectedAppello appello selezionato
+     * @param pSelectedMateria materia selezionata
+     * @return id verbale
+     * @throws SQLException
+     */
     public int insertNewVerbale(Timestamp pTimestamp, CorsoDiLaurea pSelectedCorsoDiLaurea, Appello pSelectedAppello,
                                 Materia pSelectedMateria) throws SQLException {
 
