@@ -77,8 +77,11 @@ public class DBMSLoginStudenteBnd {
             ObservableList<DisplayPianoDiStudi> pianoDiStudi = FXCollections.observableArrayList();
 
              while(result.next()){
-
-                pianoDiStudi.add(new DisplayPianoDiStudi(result.getInt("Anno"), result.getString("Id_Materia"), result.getString("Nome"), result.getInt("CFU"), result.getDate("DataEsame"), result.getInt("Ref_Voto"), pMatricola));
+                 int voto = result.getInt("Ref_Voto");
+                 java.util.Date date = result.getDate("DataEsame");
+                 if (voto == 0)
+                    date = null;
+                pianoDiStudi.add(new DisplayPianoDiStudi(result.getInt("Anno"), result.getString("Id_Materia"), result.getString("Nome"), result.getInt("CFU"), date, result.getInt("Ref_Voto"), pMatricola));
 
             }
 

@@ -93,7 +93,7 @@ public class PianoDiStudiForm {
         prenotatoCol.setMinWidth(100);
         prenotatoCol.setCellValueFactory(new PropertyValueFactory<>("Operazioni"));
 
-         Callback<TableColumn<DisplayPianoDiStudi, String>, TableCell<DisplayPianoDiStudi, String>> cellFactory = //
+        Callback<TableColumn<DisplayPianoDiStudi, String>, TableCell<DisplayPianoDiStudi, String>> cellFactory = //
                  new Callback<TableColumn<DisplayPianoDiStudi, String>, TableCell<DisplayPianoDiStudi, String>>()
                  {
                      @Override
@@ -102,13 +102,13 @@ public class PianoDiStudiForm {
                          final TableCell<DisplayPianoDiStudi, String> cell = new TableCell<DisplayPianoDiStudi, String>()
                          {
 
-                             final Button btn = new Button( "Continua" );
+                             final Button btn = new Button( "Prenota" );
 
                              @Override
                              public void updateItem( String item, boolean empty )
                              {
                                  super.updateItem( item, empty );
-                                 if ( empty )
+                                 if ( empty || !(getTableView().getItems().get( getIndex()).getEsitoMateria().equals(" - ")))
                                  {
                                      setGraphic( null );
                                      setText( null );

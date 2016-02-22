@@ -118,7 +118,7 @@ public class CompilazioneVerbaleForm {
                     if(mSelectedEsito == Esito.positivo)
                         initVotiComboBox();
                     else
-                        mSelectedVoto = null;
+                        mSelectedVoto = "0";
                 }
             }
         });
@@ -143,7 +143,7 @@ public class CompilazioneVerbaleForm {
 
     public void clickVerbalizza() {
 
-        if(mSelectedStudente != null && ((mSelectedEsito == Esito.positivo && mSelectedVoto != null) || (mSelectedEsito == Esito.negativo && mSelectedVoto == null))){
+        if(mSelectedStudente != null && ((mSelectedEsito == Esito.positivo && mSelectedVoto != null) || (mSelectedEsito == Esito.negativo && mSelectedVoto == "0"))){
             TextInputDialog passwordDialog = new TextInputDialog();
             passwordDialog.setTitle("Firma Studente");
             passwordDialog.setHeaderText("Inserisci password portale studenti");
