@@ -11,6 +11,9 @@ import portale.common.DocenteClass;
 
 import java.io.IOException;
 
+/**
+ * Classe Boundary che gestisce la finestra principale del portale
+ */
 public class PortaleDocenteFrame extends Stage {
 
     /**

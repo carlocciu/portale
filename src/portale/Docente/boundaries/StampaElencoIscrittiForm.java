@@ -14,6 +14,9 @@ import portale.common.*;
 
 import java.io.IOException;
 
+/**
+ * Classe Boundary che gestisce la finestra per esportare gli iscritti
+ */
 public class StampaElencoIscrittiForm {
 
     /**

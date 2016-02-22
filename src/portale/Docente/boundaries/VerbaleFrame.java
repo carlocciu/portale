@@ -19,28 +19,57 @@ import portale.common.*;
 import java.io.IOException;
 import java.time.LocalTime;
 
+/**
+ * Classe Boundary che gestisce la finestra di gestione dei verbali
+ */
 public class VerbaleFrame {
 
+    /**
+     * TableView per visualizzare i verbali aperti
+     */
     @FXML
     private TableView<DisplayVerbale> verbaliApertiTV;
 
+    /**
+     * Button per creare un nuovo verbale
+     */
     @FXML
     private Button nuovoVerbaleButton;
 
+    /**
+     * Button per il logout
+     */
     @FXML
     private Button logoutButton;
 
+    /**
+     * Button per tornare alla pagina principale del portale
+     */
     @FXML
     private Button homeButton;
 
+    /**
+     * Informazioni docente
+     */
     private DocenteClass docente;
 
+    /**
+     * Control che gestisce la comunicazione con il database
+     */
     private VerbaleCtrl mVerbaleCtrl = new VerbaleCtrl(docente);
 
+    /**
+     * Setta le informazioni del docente
+     * @param docente
+     */
     public void setDocente(DocenteClass docente) {
         this.docente = docente;
     }
 
+    /**
+     * Inserisce la lista dei verbali aperti nella tabella
+     * @param data lista di verbali aperti
+     */
     public void riempiVerbaliAperti(ObservableList<DisplayVerbale> data) {
 
         TableColumn annoCol = new TableColumn("Anno");
@@ -145,6 +174,9 @@ public class VerbaleFrame {
 
     }
 
+    /**
+     * Inoltra l'utente nella pagina di inizializzazione verbale
+     */
     public void clickNuovoVerbale() {
         try {
             Stage stage = (Stage) nuovoVerbaleButton.getScene().getWindow();
@@ -168,6 +200,9 @@ public class VerbaleFrame {
         }
     }
 
+    /**
+     * Logout
+     */
     public void clickLogout() {
 
         try {
@@ -188,6 +223,9 @@ public class VerbaleFrame {
         }
     }
 
+    /**
+     * Torna alla pagina principale del portale
+     */
     public void clickHome() {
 
         try {
