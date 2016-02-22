@@ -50,19 +50,31 @@ public class DisplayVerbale {
         this.idVerbale = idVerbale;
     }
 
-
+    /**
+     * Ritorna l'id del verbale
+     * @return id verbale
+     */
     public String getIdVerbale() {
         return idVerbale;
     }
 
+    /**
+     * Ritorna l'anno in cui si svolgono le lezioni della materia
+     * @return
+     */
     public String getAnno() {
         return anno.get();
     }
+
 
     public SimpleStringProperty annoProperty() {
         return anno;
     }
 
+    /**
+     * Ritorna il nome del corso di laurea della relativa materia
+     * @return
+     */
     public String getCdl() {
         return cdl.get();
     }
@@ -71,6 +83,10 @@ public class DisplayVerbale {
         return cdl;
     }
 
+    /**
+     * Ritorna il nome della materia
+     * @return
+     */
     public String getMateria() {
         return materia.get();
     }
@@ -79,6 +95,10 @@ public class DisplayVerbale {
         return materia;
     }
 
+    /**
+     * Ritorna il numero di crediti della relativa materia
+     * @return
+     */
     public String getCfu() {
         return cfu.get();
     }
@@ -87,6 +107,10 @@ public class DisplayVerbale {
         return cfu;
     }
 
+    /**
+     * Ritorna la data in cui si svolge l'esame
+     * @return
+     */
     public String getData() {
         return data.get();
     }
