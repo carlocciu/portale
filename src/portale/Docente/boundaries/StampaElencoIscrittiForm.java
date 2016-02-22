@@ -16,48 +16,101 @@ import java.io.IOException;
 
 public class StampaElencoIscrittiForm {
 
+    /**
+     * Menù per selezionare una scuola
+     */
     @FXML
     private ComboBox<Scuola> scuoleCB;
+    /**
+     * Scuola selezionata
+     */
     private Scuola mSelectedScuola;
 
+    /**
+     * Menù per selezionare un corso di laurea
+     */
     @FXML
     private ComboBox<CorsoDiLaurea> cdlsCB;
+    /**
+     * Corso di laurea selezionato
+     */
     private CorsoDiLaurea mSelectedCorsoDiLaurea;
 
+    /**
+     * Menù per selezionare una materia
+     */
     @FXML
     private ComboBox<Materia> materieCB;
+    /**
+     * Materia selezionata
+     */
     private Materia mSelectedMateria;
 
+    /**
+     * Menù per selezionare un appello
+     */
     @FXML
     private ComboBox<Appello> appelliCB;
+    /**
+     * Appello selezionato
+     */
     private Appello mSelectedAppello;
 
+    /**
+     * Button per confermare l'esportazione
+     */
     @FXML
     private Button esportaButton;
 
+    /**
+     * Button per il logout
+     */
     @FXML
     private Button logoutButton;
 
+    /**
+     * Button per tornare al portale docente
+     */
     @FXML
     private Button homeButton;
 
 
+    /**
+     * Control che gestisce la comunicazione con il database
+     */
     private StampaElencoIscrittiCtrl mStampaElencoIscrittiCtrl = new StampaElencoIscrittiCtrl();
 
+    /**
+     * Informazioni dodcente
+     */
     private DocenteClass mDocente;
 
+    /**
+     * Inizializza la finestra di esportazione
+     */
     public void init() {
         riempiScuoleCB();
     }
 
+    /**
+     * Ritorna le informazioni del docente
+     * @return informazioni docente
+     */
     public DocenteClass getDocente() {
         return mDocente;
     }
 
+    /**
+     * Setta le informazioni del docente
+     * @param docente info docente
+     */
     public void setDocente(DocenteClass docente) {
         mDocente = docente;
     }
 
+    /**
+     * Inserisce le scuole in cui insegna il docente nel relativo combobox
+     */
     public void riempiScuoleCB() {
         scuoleCB.getItems().clear();
         scuoleCB.setItems(mStampaElencoIscrittiCtrl.getScuole(mDocente));
@@ -71,6 +124,10 @@ public class StampaElencoIscrittiForm {
         });
     }
 
+    /**
+     * Inserisce i corsi di laurea della scuola selezionata nel combobox relativo
+     * @param pScuola scuola selezionata
+     */
     public void riempiCdlsCB(Scuola pScuola) {
         cdlsCB.getItems().clear();
         cdlsCB.setItems(mStampaElencoIscrittiCtrl.getCDLs(pScuola, mDocente));
@@ -84,6 +141,10 @@ public class StampaElencoIscrittiForm {
         });
     }
 
+    /**
+     * Inserisce le materia del cdl selezionato nel combobox relativo
+     * @param pCorsoDiLaurea cdl selezionato
+     */
     public void riempiMaterieCB(CorsoDiLaurea pCorsoDiLaurea) {
         materieCB.getItems().clear();
         materieCB.setItems(mStampaElencoIscrittiCtrl.getMaterie(mSelectedCorsoDiLaurea, mDocente));
@@ -97,6 +158,10 @@ public class StampaElencoIscrittiForm {
         });
     }
 
+
+    /**
+     * Inserisce gli appelli della materia selezionata nel relativo combobox
+     */
     public void riempiAppelliCB() {
         appelliCB.getItems().clear();
         appelliCB.setItems(mStampaElencoIscrittiCtrl.getAppelli(mSelectedMateria, mDocente));
@@ -109,6 +174,9 @@ public class StampaElencoIscrittiForm {
         });
     }
 
+    /**
+     * Logout
+     */
     public void clickLogout() {
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();
@@ -128,6 +196,9 @@ public class StampaElencoIscrittiForm {
         }
     }
 
+    /**
+     * Torna alla pagina principale del portale
+     */
     public void clickHome() {
 
         try {
@@ -151,6 +222,10 @@ public class StampaElencoIscrittiForm {
 
     }
 
+    /**
+     * Mostra pdf con gli iscritti all'appello selezionato
+     * @throws Exception
+     */
     public void clickEsporta() throws Exception {
         try {
             mStampaElencoIscrittiCtrl.createDocument(mSelectedAppello);
