@@ -16,6 +16,14 @@ import java.util.Date;
 
 public class DBMSLoginStudenteBnd {
 
+    /**
+     * Ritorna un boolean che ci permette di verificare se i dati inseriti
+     * come stringhe sono presenti nel DB.
+     *
+     * @param  pMatricola  la matricola dello studente che vuole autenticarsi
+     * @param  pPassword la password dello studente che vuole autenticarsi
+     * @return      un boolean che indica l'esistenza nel DB dello studente
+     */
     public boolean isPresenteUser(String pMatricola, String pPassword) {
 
         Connection connection = null;
@@ -56,6 +64,16 @@ public class DBMSLoginStudenteBnd {
 
     }
 
+    /**
+     * Ritorna un ObservableList di oggetti DisplayPianoDiStudi che
+     * ci permette di inserire queste informazioni all'interno di
+     * una TableView. Accetta come paramentro la matricola dello studente
+     * e ci restituisce il suo piano di studi
+     *
+     * @param  pMatricola  la matricola dello studente di cui voglio ottenere il piano di studi
+     * @return      il piano di studi dello studente
+     * @see         DisplayPianoDiStudi
+     */
     public ObservableList<DisplayPianoDiStudi> getPianodiStudi(String pMatricola) {
 
         Connection connection = null;

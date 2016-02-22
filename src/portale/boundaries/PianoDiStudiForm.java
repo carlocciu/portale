@@ -23,17 +23,12 @@ public class PianoDiStudiForm {
 
     @FXML private TableView<DisplayAppello> appelliTV;
 
-
     @FXML private Button logoutButton;
 
-    @FXML public void selectMateria(int pIndexMateria) {
-
-    }
-
-    @FXML public void selectAppello(int pIndexAppello) {
-
-    }
-
+    /**
+     * Permette di effettuare il logout dal sistema quando
+     * si clicca sul button "logout"
+     */
     @FXML public void clickLogout() {
 
 
@@ -59,6 +54,13 @@ public class PianoDiStudiForm {
         }
     }
 
+    /**
+     * Riempe la tabella del piano di studi aggiungendo tante righe quanti
+     * sono gli elementi che ci sono nella ObservableList di oggetti DisplayPianoDiStudi
+     *
+     * @param  pianoDiStudi  un elenco di informazioni sulle materie del piano di studi
+     * @see         DisplayPianoDiStudi
+     */
     public void fillTheTable(ObservableList<DisplayPianoDiStudi> pianoDiStudi){
 
         pianoDiStudiTV.setMaxWidth(654);
@@ -138,25 +140,28 @@ public class PianoDiStudiForm {
 
     }
 
+    /**
+     * Permette di prenotarsi alla materia selezionata, materia che passo
+     * come parametro con un oggetto DisplayPianoDiStudi
+     *
+     * @param  materia  un elenco di informazioni sulla materia
+     * @see         DisplayPianoDiStudi
+     */
     public void prenotaEsame(DisplayPianoDiStudi materia){
-
-        if(!materia.getEsitoMateria().equals(" - ")){
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Prenotazione Fallita");
-
-            alert.setContentText("La materia " + materia.getNomeMateria() + " e' stata gia' sostenuta");
-            alert.showAndWait();
-
-        }else{
 
             appelliTV.setVisible(true);
 
             fillAppelli(materia);
 
-        }
     }
 
+    /**
+     * Ottiene una ObservableList di oggetti DisplayAppello a
+     * partire dalla materia passata in input.
+     *
+     * @param  materia  un elenco di informazioni sulla materia utili nel display degli appelli
+     * @see         DisplayPianoDiStudi
+     */
     public void fillAppelli(DisplayPianoDiStudi materia){
 
         DBMSIscrizioneEsameBnd getAppelli = new DBMSIscrizioneEsameBnd();
@@ -168,6 +173,15 @@ public class PianoDiStudiForm {
 
     }
 
+    /**
+     * Riempe la tabella degli appelli aggiungendo tante righe quanti
+     * sono gli elementi che ci sono nella ObservableList di oggetti DisplayAppello
+     * passati come parametro.
+     *
+     * @param  appelli  un elenco di informazioni sugli appelli di una materia
+     * @param matricola matricola dello studente che si vuole prenotare all'appello
+     * @see         DisplayAppello
+     */
     public void addRowsAppelli(ObservableList<DisplayAppello> appelli, String matricola){
 
         appelliTV.setMaxWidth(405);
@@ -232,6 +246,14 @@ public class PianoDiStudiForm {
         appelliTV.getColumns().addAll(docenteCol, dataCol, aulaCol, prenotatoCol);
     }
 
+    /**
+     * Permette l'inserimento della prenotazione nel DB.
+     * Riceve in input l'id dell'appello e la matricola dello
+     * studente,
+     *
+     * @param  appello  l'id dell'appello selezionato
+     * @param matricola matricola dello studente che si vuole prenotare all'appello
+     */
     public void insertPrenotazione(String appello, String matricola){
 
         IscrizioneEsameCtrl iscrizione = new IscrizioneEsameCtrl();

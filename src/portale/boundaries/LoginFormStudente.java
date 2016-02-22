@@ -19,6 +19,11 @@ public class LoginFormStudente {
 
     @FXML private Button loginButton;
 
+    /**
+     * Permette di avviare il procedimento di verifica
+     * dei dati inseriti nel momento in cui si clicca sul
+     * button.
+     */
     @FXML public void clickLogin() throws Exception{
 
         AutenticazioneStudenteCtrl login = new AutenticazioneStudenteCtrl(matricolaTF.getText(), passPF.getText());

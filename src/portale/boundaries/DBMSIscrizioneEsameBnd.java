@@ -10,6 +10,15 @@ import java.util.Date;
 
 public class DBMSIscrizioneEsameBnd {
 
+    /**
+     * Ritorna un boolean per informarci se l'iscrizione ad un appello
+     * è andata a buon fine. Viene utilizzata per evitare che uno studente si iscriva
+     * allo stesso appello più volte.
+     *
+     * @param  pMatricola  matricola dello studente che si vuole iscrivere ad un appello
+     * @param pCodiceMateria codice della materia dell'appello selezionato
+     * @return un boolean che ci dice se l'iscrizio all'appello è andata a buon fine
+     */
     public boolean insertIscrizione(String pMatricola, String pCodiceMateria) {
 
         Connection connection = null;
@@ -42,6 +51,15 @@ public class DBMSIscrizioneEsameBnd {
 
     }
 
+
+    /**
+     * Ritorna una ObservableList di oggetti DisplayAppello che contiene
+     * l'elenco degli appelli per una data materia passata come parametro
+     *
+     * @param idMateria identificativo della materia della quale voglio ottenere l'elenco degli appelli
+     * @return un elenco di appelli disponibili per la materia passata in input
+     * @see DisplayAppello
+     */
     public ObservableList<DisplayAppello> getAppelli(String idMateria){
 
         Connection connection = null;
@@ -80,6 +98,18 @@ public class DBMSIscrizioneEsameBnd {
 
     }
 
+
+    /**
+     * Ritorna un boolean per informarci se l'iscrizione ad un appello
+     * è andata a buon fine. Viene utilizzata per controllare se lo studente
+     * ha inserito correttamente email e telefono nella conferma della
+     * prenotazione.
+     *
+     * @param  matricola  matricola dello studente che si vuole prenotare all'appello
+     * @param email email dello studente che si vuole prenotare all'appello
+     * @param telefono telefono dello studente che si vuole prenotare all'appello
+     * @return un boolean che ci dice se l'iscrizio all'appello è andata a buon fine
+     */
     public boolean getTheRightStudent(String matricola, String email, String telefono){
 
         Connection connection = null;
