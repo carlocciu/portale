@@ -1,7 +1,11 @@
 package portale.entities;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class VerbaleComplessivo {
 
@@ -27,7 +31,7 @@ public class VerbaleComplessivo {
     public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, LocalTime oraApertura) {
         this.CDL = CDL;
         this.scuola = scuola;
-        this.annoAccademico = annoAccademico;
+        setAnno();
         this.mAppello = mAppello;
         this.oraApertura = oraApertura;
         esamiSostenuti = new ArrayList<>();
@@ -37,12 +41,24 @@ public class VerbaleComplessivo {
     public VerbaleComplessivo(CorsoDiLaurea CDL, Scuola scuola, String annoAccademico, Appello mAppello, LocalTime oraApertura, ArrayList<EsameVerbalizzato> esamiSostenuti, Pagina pagina, int esamiInPagina) {
         this.CDL = CDL;
         this.scuola = scuola;
-        this.annoAccademico = annoAccademico;
+        setAnno();
         this.mAppello = mAppello;
         this.oraApertura = oraApertura;
         this.esamiSostenuti = esamiSostenuti;
         this.mPagina = pagina;
         this.esamiInPagina = esamiInPagina;
+    }
+
+    public void setAnno(){
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+
+        if (month == 10 || month == 11 || month == 12){
+            this.annoAccademico = year + "/" + year+1;
+        }
+        else
+            this.annoAccademico = year-1 + "/" + year;
     }
 
     public CorsoDiLaurea getCDL() {

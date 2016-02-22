@@ -68,7 +68,7 @@ public class StampaElencoIscrittiCtrl {
         Document document = new Document();
         ArrayList<StudenteClass> listaIscritti = mDBMSStampaIscrittiBnd.getIscrittiAppello(pAppello);
         try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Elenco.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Elenco" + pAppello.getIdAppello() + ".pdf"));
             document.open();
             document.add(new Paragraph("Lista Iscritti"));
 
@@ -82,7 +82,7 @@ public class StampaElencoIscrittiCtrl {
             writer.close();
 
             Desktop d = Desktop.getDesktop();
-            d.open(new File("Elenco.pdf"));
+            d.open(new File("Elenco" + pAppello.getIdAppello() + ".pdf"));
         } catch (Exception e) {
             e.printStackTrace();
         }

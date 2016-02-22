@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `PortaleStudenti`;
 CREATE DATABASE  IF NOT EXISTS `PortaleStudenti` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `PortaleStudenti`;
 -- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
@@ -141,6 +142,7 @@ CREATE TABLE `EsameVerbalizzato` (
   `Esito` enum('positivo','negativo') NOT NULL,
   `Voto` enum('18','19','20','21','22','23','24','25','26','27','28','29','30','30L') DEFAULT NULL,
   `DataEsame` datetime NOT NULL,
+  `Domande` varchar(4000) NOT NULL,
   PRIMARY KEY (`Ref_Studente`,`Ref_Verbale`),
   KEY `Ref_Verbale` (`Ref_Verbale`),
   CONSTRAINT `esameverbalizzato_ibfk_1` FOREIGN KEY (`Ref_Studente`) REFERENCES `Studente` (`Matricola`) ON DELETE NO ACTION ON UPDATE NO ACTION

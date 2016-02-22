@@ -53,14 +53,14 @@ public class CompilazioneVerbaleForm {
 
     private CompilazioneVerbaleCtrl mCompilazioneVerbaleCtrl = new CompilazioneVerbaleCtrl();
 
-    public void chiudiVerbale() throws Exception{
+    public void chiudiVerbale() throws Exception {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Chiudi Verbale");
         alert.setContentText("Sei sicuro di chiudere il verbale?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             mCompilazioneVerbaleCtrl.chiudiVerbale(mVerbaleComplessivo);
             clickHome();
         } else {
@@ -69,7 +69,6 @@ public class CompilazioneVerbaleForm {
 
 
     }
-
 
     public void init(DocenteClass pDocente, VerbaleComplessivo pVerbaleComplessivo){
         setDocente(pDocente);
@@ -119,7 +118,7 @@ public class CompilazioneVerbaleForm {
                     if(mSelectedEsito == Esito.positivo)
                         initVotiComboBox();
                     else
-                        mVotiComboBox.getItems().clear();
+                        mSelectedVoto = null;
                 }
             }
         });
@@ -144,7 +143,7 @@ public class CompilazioneVerbaleForm {
 
     public void clickVerbalizza() {
 
-        if(mSelectedStudente != null && mSelectedEsito != null && mSelectedVoto != null){
+        if(mSelectedStudente != null && ((mSelectedEsito == Esito.positivo && mSelectedVoto != null) || (mSelectedEsito == Esito.negativo && mSelectedVoto == null))){
             TextInputDialog passwordDialog = new TextInputDialog();
             passwordDialog.setTitle("Firma Studente");
             passwordDialog.setHeaderText("Inserisci password portale studenti");
@@ -152,10 +151,10 @@ public class CompilazioneVerbaleForm {
             Optional<String> password = passwordDialog.showAndWait();
 
             if(password.isPresent()){
-                System.out.println(password.get());
+                //System.out.println(password.get());
                 if(mCompilazioneVerbaleCtrl.isValidUserPassword(mSelectedStudente, password.get())){
                     mCompilazioneVerbaleCtrl.verbalizzaEsame(mSelectedStudente, mVerbaleComplessivo, mSelectedEsito,
-                            mSelectedVoto);
+                            mSelectedVoto, domandeTA.getText());
 
                     clearComboBoxes();
 
@@ -213,6 +212,7 @@ public class CompilazioneVerbaleForm {
 
     private void clearComboBoxes(){
         initStudentiCB();
+        domandeTA.clear();
         esitoCB.getSelectionModel().clearSelection();
         mVotiComboBox.getSelectionModel().clearSelection();
     }

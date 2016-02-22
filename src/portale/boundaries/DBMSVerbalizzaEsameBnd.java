@@ -1,16 +1,11 @@
 package portale.boundaries;
 
-import portale.entities.Appello;
-import portale.entities.Materia;
-import portale.entities.StudenteClass;
-import portale.entities.VerbaleComplessivo;
+import portale.entities.*;
 
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class DBMSVerbalizzaEsameBnd {
 
@@ -21,8 +16,8 @@ public class DBMSVerbalizzaEsameBnd {
 
 
     /* SQL */
-    private final String INSERT_ESAME_SOSTENUTO = "INSERT INTO `EsameVerbalizzato`(Ref_Studente, Ref_Verbale, Esito, Voto, DataEsame) \n" +
-            "            VALUES (?, ?, ?, ?, ?);\n";
+    private final String INSERT_ESAME_SOSTENUTO = "INSERT INTO `EsameVerbalizzato`(Ref_Studente, Ref_Verbale, Esito, Voto, DataEsame, Domande) \n" +
+            "            VALUES (?, ?, ?, ?, ?, ?);\n";
 
     private final String UPDATE_PIANO_DI_STUDI1 = "UPDATE PianoDiStudi\n" +
             "SET PianoDiStudi.Ref_Voto = ?\n" +
@@ -35,6 +30,8 @@ public class DBMSVerbalizzaEsameBnd {
             "\tAND PianoDiStudi.Ref_Studente = ?;    \n" +
             "    \n" +
             "    ";
+
+    private final String ESAMI_VERBALIZZATI = "SELECT * FROM EsameVerbalizzato as E, Studente as S WHERE E.Ref_Verbale = ? and E.Ref_Studente = S.Matricola";
 
     private final String CLOSE_VERBALE = "UPDATE Verbale SET Ora_Chiusura = ? WHERE Id_Verbale = ?";
 
@@ -62,7 +59,7 @@ public class DBMSVerbalizzaEsameBnd {
     }
 
     public void insertEsameSostenuto(StudenteClass pStudente, VerbaleComplessivo pVerbaleComplessivo,
-                                     CompilazioneVerbaleForm.Esito pEsito, String pVoto) throws SQLException {
+                                     CompilazioneVerbaleForm.Esito pEsito, String pVoto, String pDomande) throws SQLException {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
@@ -76,6 +73,7 @@ public class DBMSVerbalizzaEsameBnd {
         preparedStatement.setString(3, pEsito.toString());
         preparedStatement.setString(4, pVoto);
         preparedStatement.setDate(5, dataEsame);
+        preparedStatement.setString(6, pDomande);
 
         preparedStatement.executeUpdate();
 
@@ -123,5 +121,30 @@ public class DBMSVerbalizzaEsameBnd {
 
         if(!dBConnection.isClosed())
             dBConnection.close();
+    }
+
+    public ArrayList<EsameVerbalizzato> getEsamiVerbalizzati(VerbaleComplessivo pVerbaleComplessivo) throws Exception{
+
+        Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
+
+
+        /* Close Verbale */
+        PreparedStatement preparedStatement = dBConnection.prepareStatement(ESAMI_VERBALIZZATI);
+
+        preparedStatement.setInt(1, pVerbaleComplessivo.getIDVerbale());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        /* Results array */
+        ArrayList<EsameVerbalizzato> esamiSostenuti = new ArrayList<>();
+
+        /* Populate array */
+        while (resultSet.next()){
+            esamiSostenuti.add(new EsameVerbalizzato(resultSet.getString("E.Voto"), resultSet.getString("E.Domande"),
+                    new StudenteClass(resultSet.getString("S.Nome"), resultSet.getString("S.Cognome"), resultSet.getString("S.Matricola"))));
+        }
+
+        return esamiSostenuti;
+
     }
 }

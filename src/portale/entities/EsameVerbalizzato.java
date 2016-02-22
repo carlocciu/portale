@@ -39,4 +39,13 @@ public class EsameVerbalizzato {
     public void setmStudente(StudenteClass mStudente) {
         this.mStudente = mStudente;
     }
+
+    @Override
+    public String toString() {
+        return "Matricola: " + mStudente.getMatricolaStudente() + "\t\t" + "Domande: " + domande + "\n" +
+                "Cognome e Nome: " + mStudente.getCognomeStudente() + " " + mStudente.getNomeStudente() +
+                "\t\t" + "Voto: " + voto;
+
+
+    }
 }
