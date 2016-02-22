@@ -100,7 +100,7 @@ public class Appello {
 
     /**
      * Setta la lista degli studenti iscritti in un appello
-     * @param studentiIscritti
+     * @param studentiIscritti lista degli studenti iscritti
      */
     public void setStudentiIscritti(ArrayList<StudenteClass> studentiIscritti) {
         this.studentiIscritti = studentiIscritti;
@@ -116,7 +116,7 @@ public class Appello {
 
     /**
      * Setta la data dell'esame di un appello
-     * @param dataEsame
+     * @param dataEsame data in cui si svolge l'esame
      */
     public void setDataEsame(Date dataEsame) {
         this.dataEsame = dataEsame;
@@ -132,7 +132,7 @@ public class Appello {
 
     /**
      * Setta la materia di un appello
-     * @param pMateria
+     * @param pMateria materia appello
      */
     public void setMateria(Materia pMateria) {
         mMateria = pMateria;
@@ -148,7 +148,7 @@ public class Appello {
 
     /**
      * Setta il docente di un appello
-     * @param pDocente
+     * @param pDocente docente dell'appello
      */
     public void setDocente(DocenteClass pDocente) {
         mDocente = pDocente;
@@ -164,7 +164,7 @@ public class Appello {
 
     /**
      * Setta l'aula di un esame
-     * @param aula
+     * @param aula aula in cui si svolge l'esame
      */
     public void setAula(String aula) {
         this.aula = aula;
@@ -172,7 +172,7 @@ public class Appello {
 
     /**
      * Override del metodo toString() per la classe Appello
-     * @return
+     * @return una stringa contenente data e aula dell'esame
      */
     @Override
     public String toString() {

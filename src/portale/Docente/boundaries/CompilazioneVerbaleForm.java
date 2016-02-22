@@ -20,30 +20,75 @@ import java.util.Optional;
 
 public class CompilazioneVerbaleForm {
 
-
+    /**
+     * Menù per selezionare l'esito dell'esame
+    */
     public ComboBox<String> mVotiComboBox;
+    /**
+     * Lista degli studenti iscritti all'appello
+     */
     @FXML
     private ComboBox<StudenteClass> studentiCB;
+    /**
+     * Lista degli studenti iscritti che devono sostenere l'esame
+     */
     private ObservableList<StudenteClass> mStudentiDaEsaminare;
+    /**
+     * Studente selezionato
+     */
     private StudenteClass mSelectedStudente;
+    /**
+     * Domande fatte allo studente
+     */
     @FXML
     private TextArea domandeTA;
+    /**
+     * Menù per selezionare esito positivo o negativo
+     */
     @FXML
     private ComboBox<Esito> esitoCB;
 
-    ;
+    /**
+     * Esito selezionato
+     */
     private Esito mSelectedEsito;
+    /**
+     * Voto selezionato
+     */
     private String mSelectedVoto;
+    /**
+     * Button per confermare l'esame sostenuto
+     */
     @FXML
     private Button verbalizzaButton;
+    /**
+     * Button per effettuare il logout
+     */
     @FXML
     private Button logoutButton;
+    /**
+     * Button per tornare alla pagina principale del portale
+     */
     @FXML
     private Button homeButton;
+    /**
+     * Informazioni sul docente
+     */
     private DocenteClass mDocente;
+    /**
+     * Informazioni del verbale
+     */
     private VerbaleComplessivo mVerbaleComplessivo;
+    /**
+     * Control che gestisce la comunicazione con il database
+     */
     private CompilazioneVerbaleCtrl mCompilazioneVerbaleCtrl = new CompilazioneVerbaleCtrl();
 
+    /**
+     * Mostra un alert per confermare la chiusura del verbale, aggiorna il database e mostra un pdf con la
+     * lista degli esami sostenuti
+     * @throws Exception
+     */
     public void chiudiVerbale() throws Exception {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -61,6 +106,11 @@ public class CompilazioneVerbaleForm {
 
     }
 
+    /**
+     * Inizializza la pagina di compilazione
+     * @param pDocente informazioni docente
+     * @param pVerbaleComplessivo informazioni verbale
+     */
     public void init(DocenteClass pDocente, VerbaleComplessivo pVerbaleComplessivo) {
         setDocente(pDocente);
         setVerbaleComplessivo(pVerbaleComplessivo);
@@ -68,14 +118,25 @@ public class CompilazioneVerbaleForm {
         initEsitoComboBox();
     }
 
+    /**
+     * Setta le informazioni del docente
+     * @param pDocente informazioni docente
+     */
     public void setDocente(DocenteClass pDocente) {
         mDocente = pDocente;
     }
 
+    /**
+     * Setta le informazioni del verbale
+     * @param pVerbaleComplessivo informazioni verbale
+     */
     public void setVerbaleComplessivo(VerbaleComplessivo pVerbaleComplessivo) {
         mVerbaleComplessivo = pVerbaleComplessivo;
     }
 
+    /**
+     * Inizializza il menù degli studenti da esaminare
+     */
     public void initStudentiCB() {
         /* Get studenti da esaminare from appello */
         mStudentiDaEsaminare = FXCollections.observableArrayList();
@@ -93,6 +154,9 @@ public class CompilazioneVerbaleForm {
         });
     }
 
+    /**
+     * Inizializza il menù dell'esito (positivo o negativo)
+     */
     public void initEsitoComboBox() {
         esitoCB.getItems().clear();
         ObservableList<Esito> esitiPossibili = FXCollections.observableArrayList();
@@ -115,6 +179,9 @@ public class CompilazioneVerbaleForm {
         });
     }
 
+    /**
+     * Se l'esito è positivo, mostra la lista dei voti possibili
+     */
     public void initVotiComboBox() {
         mVotiComboBox.getItems().clear();
         ObservableList<String> votiPossibili = FXCollections.observableArrayList();
@@ -132,6 +199,9 @@ public class CompilazioneVerbaleForm {
         });
     }
 
+    /**
+     * Conferma esame sostenuto e chiede allo studente di inserire la firma digitale
+     */
     public void clickVerbalizza() {
 
         if (mSelectedStudente != null && ((mSelectedEsito == Esito.positivo && mSelectedVoto != null) || (mSelectedEsito == Esito.negativo && mSelectedVoto == "0"))) {
@@ -157,6 +227,9 @@ public class CompilazioneVerbaleForm {
 
     }
 
+    /**
+     * Effettua il logout
+     */
     public void clickLogout() {
 
         try {
@@ -178,6 +251,9 @@ public class CompilazioneVerbaleForm {
 
     }
 
+    /**
+     * Torna alla pagina principale del portale docente
+     */
     public void clickHome() {
 
         try {
@@ -201,6 +277,9 @@ public class CompilazioneVerbaleForm {
 
     }
 
+    /**
+     * Resetta i campi della pagina
+     */
     private void clearComboBoxes() {
         initStudentiCB();
         domandeTA.clear();
