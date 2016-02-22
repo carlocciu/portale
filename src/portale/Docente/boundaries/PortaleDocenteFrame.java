@@ -13,23 +13,46 @@ import java.io.IOException;
 
 public class PortaleDocenteFrame extends Stage {
 
+    /**
+     * Button per iniziare le operazioni per i verbali
+     */
     @FXML
     private Button verbaleButton;
 
+    /**
+     * Button per visualizzare la finestra per stampare gli iscritti
+     */
     @FXML
     private Button stampaIscrittiButton;
 
+    /**
+     * Button logout
+     */
     @FXML
     private Button logoutButton;
 
+    /**
+     * Informazioni del docente
+     */
     private DocenteClass currDocente;
 
+    /**
+     * Control che gestisce la comunicazione con il database
+     */
     private PortaleDocenteCtrl mPortaleDocenteCtrl = new PortaleDocenteCtrl();
 
+    /**
+     * Setta le informazioni del docente
+     * @param currDocente informazioni docente
+     */
     public void setCurrDocente(DocenteClass currDocente) {
         this.currDocente = currDocente;
     }
 
+    /**
+     * Inoltra il docente nella pagina di gestione dei verbali
+     * @throws Exception
+     */
     @FXML
     public void clickVerbale() throws Exception {
 
@@ -49,6 +72,10 @@ public class PortaleDocenteFrame extends Stage {
         primaryStage.show();
     }
 
+    /**
+     * Inoltra il docente nella pagina per la stampa degli iscritti ad un appello
+     * @throws Exception
+     */
     @FXML
     public void clickStampaIscritti() throws Exception {
 
@@ -74,6 +101,9 @@ public class PortaleDocenteFrame extends Stage {
         }
     }
 
+    /**
+     * Logout
+     */
     public void clickLogout() {
 
         try {

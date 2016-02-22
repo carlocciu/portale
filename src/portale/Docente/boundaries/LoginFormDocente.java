@@ -8,19 +8,38 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import portale.Docente.controls.AutenticazioneDocenteCtrl;
 
+/**
+ * Classe Boundary che gestisce la finestra di login per il docente
+ */
 public class LoginFormDocente {
 
+    /**
+     * Campo di testo per inserire la matricola
+     */
     @FXML
     private TextField matricolaTF;
 
+    /**
+     * Campo di testo per inserire la password
+     */
     @FXML
     private PasswordField passPF;
 
+    /**
+     * Button per confermare il login
+     */
     @FXML
     private Button loginButton;
 
+    /**
+     * Control che gestisce la comunicazione con il database
+     */
     private AutenticazioneDocenteCtrl mAutenticazioneDocenteCtrl = new AutenticazioneDocenteCtrl();
 
+    /**
+     * Invia i dati al control; se i dati sono invalidi, visualizza un messaggio d'errore
+     * @throws Exception
+     */
     @FXML
     public void clickLogin() throws Exception {
 
