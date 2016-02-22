@@ -8,8 +8,16 @@ import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+/**
+ * Classe che gestisce la comunicazione con il database per recuperare verbali aperti
+ */
 public class DBMSVerbaliApertiBnd {
 
+    /**
+     * Ritorna le informazioni della materia relativa al verbale
+     * @param idVerbale id verbale
+     * @return materia del verbale
+     */
     public Materia getMateria(String idVerbale) {
         Materia data = null;
         Connection conn = null;
@@ -61,6 +69,11 @@ public class DBMSVerbaliApertiBnd {
     }
 
 
+    /**
+     * Ritorna l'ora di apertura del verbale
+     * @param idVerbale id verbale
+     * @return ora di apertura
+     */
     public LocalTime getOraApertura(String idVerbale) {
         LocalTime data = null;
         Connection conn = null;
@@ -110,6 +123,11 @@ public class DBMSVerbaliApertiBnd {
         return data;
     }
 
+    /**
+     * Ritorna le informazioni della scuola del verbale
+     * @param idVerbale id verbale
+     * @return scuola del verbale
+     */
     public Scuola getScuola(String idVerbale) {
         Scuola data = null;
         Connection conn = null;
@@ -160,6 +178,11 @@ public class DBMSVerbaliApertiBnd {
     }
 
 
+    /**
+     * Ritorna le informazioni del corso di laurea
+     * @param idVerbale id verbale
+     * @return corso di laurea del verbale
+     */
     public CorsoDiLaurea getCDL(String idVerbale) {
         CorsoDiLaurea data = null;
         Connection conn = null;
@@ -210,6 +233,11 @@ public class DBMSVerbaliApertiBnd {
     }
 
 
+    /**
+     * Ritorna le informazioni dell'appello del verbale
+     * @param idVerbale id verbale
+     * @return appello del verbale
+     */
     public Appello getAppello(String idVerbale) {
         Appello data = null;
         Connection conn = null;
@@ -259,6 +287,11 @@ public class DBMSVerbaliApertiBnd {
         return data;
     }
 
+    /**
+     * Ritorna la lista dei verbali aperti per il docente
+     * @param pMatricolaDocente matricola docente
+     * @return lista di verbali aperti
+     */
     public ObservableList<DisplayVerbale> verbaliAperti(String pMatricolaDocente) {
         ObservableList<DisplayVerbale> data = FXCollections.observableArrayList();
         Connection conn = null;
@@ -310,6 +343,11 @@ public class DBMSVerbaliApertiBnd {
         return data;
     }
 
+    /**
+     * Ritorna la lista degli esami sostenuti di quel verbale
+     * @param idVerbale id verbale
+     * @return lista di esami sostenuti
+     */
     public ArrayList<EsameVerbalizzato> getEsamiSostenuti(String idVerbale) {
         ArrayList<EsameVerbalizzato> data = new ArrayList<>();
         Connection conn = null;
@@ -358,6 +396,11 @@ public class DBMSVerbaliApertiBnd {
         return data;
     }
 
+    /**
+     * Ritorna la lista degli iscritti ad un appello
+     * @param appello appello
+     * @return lista degli iscritti
+     */
     public ArrayList<StudenteClass> getStudentiIScritti(String appello) {
         ArrayList<StudenteClass> data = new ArrayList<>();
         Connection conn = null;

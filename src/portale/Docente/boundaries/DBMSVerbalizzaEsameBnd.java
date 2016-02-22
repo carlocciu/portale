@@ -6,6 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * Classe che gestisce la comunicazione con il database per
+ */
 public class DBMSVerbalizzaEsameBnd {
 
     /* Connection data */
