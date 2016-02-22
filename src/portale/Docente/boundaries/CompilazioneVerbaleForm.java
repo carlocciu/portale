@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * Classe Boundary che gestisce la view per la compilazione del verbale
+ * Classe Boundary che gestisce la finestra di compilazione del verbale
  */
 public class CompilazioneVerbaleForm {
 

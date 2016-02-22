@@ -21,58 +21,126 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+/**
+ * Classe Boundary che gestisce la finestra di inizializzazione del verbale
+ */
 public class InizializzaVerbaleForm {
 
+    /**
+     * Menù per selezionare una scuola
+     */
     @FXML
     private ComboBox<Scuola> scuoleCB;
+    /**
+     * Scuola selezionata
+     */
     private Scuola mSelectedScuola;
 
+    /**
+     * Menù per selezionare un corso di laurea
+     */
     @FXML
     private ComboBox<CorsoDiLaurea> cdlsCB;
+    /**
+     * Corso di laurea selezionato
+     */
     private CorsoDiLaurea mSelectedCorsoDiLaurea;
 
+    /**
+     * Menù per selezionare una materia
+     */
     @FXML
     private ComboBox<Materia> materieCB;
+    /**
+     * Materia selezionata
+     */
     private Materia mSelectedMateria;
 
+    /**
+     * Menù per selezionare un appello
+     */
     @FXML
     private ComboBox<Appello> appelliCB;
+    /**
+     * Appello selezionato
+     */
     private Appello mSelectedAppello;
 
+    /**
+     * Menù per selezionare ora di apertura del verbale
+     */
     @FXML
     private ComboBox<LocalTime> oraAperturaCB;
+    /**
+     * Ora selezionata
+     */
     private LocalTime mSelectedOraApertura;
 
+    /**
+     * Button per importare gli iscritti
+     */
     @FXML
     private Button importaIscrittiButton;
+    /**
+     * Variabile per gestire l'importazione degli studenti iscritti
+     */
     private boolean mStudentiImportati = false;
 
+    /**
+     * Button per confermare l'inizializzazione
+     */
     @FXML
     private Button inizializzaButton;
 
+    /**
+     * Button per il logout
+     */
     @FXML
     private Button logoutButton;
 
+    /**
+     * Button per tornare al portale docente
+     */
     @FXML
     private Button homeButton;
 
+    /**
+     * Control che gestisce la comunicazione con il database
+     */
     private InizializzaVerbaleCtrl mInizializzaVerbaleCtrl = new InizializzaVerbaleCtrl();
 
+    /**
+     * Informazioni del docente
+     */
     private DocenteClass mDocente;
 
+    /**
+     * inizializza la finestra di compilazione, riempiendo il menù delle scuole e quello per l'ora di apertura
+     */
     public void init() {
         riempiScuoleCB();
         initOraAperturaCB();
     }
 
+    /**
+     * Ritorna le informazioni del docente
+     * @return informazioni docente
+     */
     public DocenteClass getDocente() {
         return mDocente;
     }
 
+    /**
+     * Setta le informazioni del docente
+     * @param docente info docente
+     */
     public void setDocente(DocenteClass docente) {
         mDocente = docente;
     }
 
+    /**
+     * Conferma l'inizializzazione del verbale e inizia la compilazione
+     */
     public void clickInizializza() {
         if (wereStudentsImported() && mSelectedOraApertura != null) {
             VerbaleComplessivo verbaleComplessivo = new VerbaleComplessivo(mSelectedCorsoDiLaurea, mSelectedScuola,
@@ -85,6 +153,9 @@ public class InizializzaVerbaleForm {
     }
 
 
+    /**
+     * Inserisce le scuole nel combobox
+     */
     public void riempiScuoleCB() {
         scuoleCB.getItems().clear();
         scuoleCB.setItems(mInizializzaVerbaleCtrl.getScuole(mDocente));
@@ -98,6 +169,10 @@ public class InizializzaVerbaleForm {
         });
     }
 
+    /**
+     * Inserisce i corsi di laurea della scuola selezionata nel combobox relativo
+     * @param pScuola scuola selezionata
+     */
     public void riempiCdlsCB(Scuola pScuola) {
         cdlsCB.getItems().clear();
         cdlsCB.setItems(mInizializzaVerbaleCtrl.getCDLs(pScuola, mDocente));
@@ -111,6 +186,10 @@ public class InizializzaVerbaleForm {
         });
     }
 
+    /**
+     * Inserisce le materia del cdl selezionato nel combobox relativo
+     * @param pCorsoDiLaurea cdl selezionato
+     */
     public void riempiMaterieCB(CorsoDiLaurea pCorsoDiLaurea) {
         materieCB.getItems().clear();
         materieCB.setItems(mInizializzaVerbaleCtrl.getMaterie(mSelectedCorsoDiLaurea, mDocente));
@@ -124,6 +203,9 @@ public class InizializzaVerbaleForm {
         });
     }
 
+    /**
+     * Inserisce gli appelli della materia selezionata nel relativo combobox
+     */
     public void riempiAppelliCB() {
         appelliCB.getItems().clear();
         appelliCB.setItems(mInizializzaVerbaleCtrl.getAppelli(mSelectedMateria, mDocente));
@@ -137,6 +219,9 @@ public class InizializzaVerbaleForm {
         });
     }
 
+    /**
+     * Logout docente
+     */
     public void clickLogout() {
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();
@@ -156,6 +241,9 @@ public class InizializzaVerbaleForm {
         }
     }
 
+    /**
+     * Torna al portale docente
+     */
     public void clickHome() {
 
         try {
@@ -179,6 +267,10 @@ public class InizializzaVerbaleForm {
 
     }
 
+    /**
+     * Importa gli iscritti dell'appello selezionato
+     * @param actionEvent
+     */
     public void clickImportaIscritti(ActionEvent actionEvent) {
         if (mSelectedAppello != null) {
             mSelectedAppello.setStudentiIscritti(mInizializzaVerbaleCtrl.getIscrittiAppello(mSelectedAppello));
@@ -190,10 +282,18 @@ public class InizializzaVerbaleForm {
         }
     }
 
+    /**
+     * Ritorna il valore di mStudentiImportati
+     * @return mStudentiImportati
+     */
     private boolean wereStudentsImported() {
         return mStudentiImportati;
     }
 
+    /**
+     * Inizia compilazione verbale
+     * @param pVerbaleComplessivo informazioni verbale
+     */
     private void startCompilazioneVerbale(VerbaleComplessivo pVerbaleComplessivo) {
         try {
             Stage stage = (Stage) inizializzaButton.getScene().getWindow();
@@ -215,6 +315,9 @@ public class InizializzaVerbaleForm {
         }
     }
 
+    /**
+     * Inserisce ora di apertura possibili nel relativo combobox
+     */
     public void initOraAperturaCB() {
         ObservableList<LocalTime> orariPossibiliAppelli = FXCollections.observableArrayList();
         for (int i = 8; i <= 17; i++) {
@@ -231,6 +334,10 @@ public class InizializzaVerbaleForm {
         });
     }
 
+    /**
+     * Invia i dati per inserire un nuovo verbale nel database
+     * @return
+     */
     private int insertNewVerbale() {
         LocalDate currentDate = LocalDate.now();
         LocalDateTime appelloLocalDateTime = LocalDateTime.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth(),

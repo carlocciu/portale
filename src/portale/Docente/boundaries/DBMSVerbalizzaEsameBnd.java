@@ -7,25 +7,41 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Classe che gestisce la comunicazione con il database per
+ * Classe che gestisce la comunicazione con il database per la verbalizzazione di un esame
  */
 public class DBMSVerbalizzaEsameBnd {
 
-    /* Connection data */
+    /**
+     * Connection data
+     */
     private final String DBMS_URL = "jdbc:mysql://localhost:3306/PortaleStudenti";
+    /**
+     * Connection data
+     */
     private final String DBM_USER = "root";
+    /**
+     * Connection data
+     */
     private final String DBMS_PASS = "apswpa";
 
 
-    /* SQL */
+    /**
+     * Query insert esame sostenuto
+     */
     private final String INSERT_ESAME_SOSTENUTO = "INSERT INTO `EsameVerbalizzato`(Ref_Studente, Ref_Verbale, Esito, Voto, DataEsame, Domande) \n" +
             "            VALUES (?, ?, ?, ?, ?, ?);\n";
 
+    /**
+     * Query update piano di studi dello studente (voto)
+     */
     private final String UPDATE_PIANO_DI_STUDI1 = "UPDATE PianoDiStudi\n" +
             "SET PianoDiStudi.Ref_Voto = ?\n" +
             "WHERE PianoDiStudi.Ref_Materia = ?\n" +
             "\tAND PianoDiStudi.Ref_Studente = ?;";
 
+    /**
+     * Query update piano di studi dello studente (data)
+     */
     private final String UPDATE_PIANO_DI_STUDI2 = "UPDATE PianoDiStudi\n" +
             "SET PianoDiStudi.DataEsame = ?\n" +
             "WHERE PianoDiStudi.Ref_Materia = ?\n" +
@@ -33,10 +49,21 @@ public class DBMSVerbalizzaEsameBnd {
             "    \n" +
             "    ";
 
+    /**
+     * Query esami verbalizzati di un appello
+     */
     private final String ESAMI_VERBALIZZATI = "SELECT * FROM EsameVerbalizzato as E, Studente as S WHERE E.Ref_Verbale = ? and E.Ref_Studente = S.Matricola";
 
+    /**
+     * Query chiusura verbale
+     */
     private final String CLOSE_VERBALE = "UPDATE Verbale SET Ora_Chiusura = ? WHERE Id_Verbale = ?";
 
+    /**
+     * Inserisce ora di chiusura (ora corrente) del verbale nel database
+     * @param pVerbaleComplessivo informazioni verbale
+     * @throws Exception
+     */
     public void chiudiVerbale(VerbaleComplessivo pVerbaleComplessivo) throws Exception {
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
 
@@ -60,6 +87,15 @@ public class DBMSVerbalizzaEsameBnd {
 
     }
 
+    /**
+     * Inserisce esame sostenuto nel database
+     * @param pStudente informazioni studente
+     * @param pVerbaleComplessivo informazioni verbale
+     * @param pEsito esito
+     * @param pVoto voto
+     * @param pDomande domande
+     * @throws SQLException
+     */
     public void insertEsameSostenuto(StudenteClass pStudente, VerbaleComplessivo pVerbaleComplessivo,
                                      CompilazioneVerbaleForm.Esito pEsito, String pVoto, String pDomande) throws SQLException {
 
@@ -88,6 +124,14 @@ public class DBMSVerbalizzaEsameBnd {
 
     }
 
+    /**
+     * Aggiorna piano di studi dello studente
+     * @param pStudente informazioni studente
+     * @param pVerbaleComplessivo informazioni verbale
+     * @param pEsito esito
+     * @param pVoto voto
+     * @throws SQLException
+     */
     public void updatePianoDiStudi(StudenteClass pStudente, VerbaleComplessivo pVerbaleComplessivo,
                                    CompilazioneVerbaleForm.Esito pEsito, String pVoto) throws SQLException {
 
@@ -124,6 +168,12 @@ public class DBMSVerbalizzaEsameBnd {
             dBConnection.close();
     }
 
+    /**
+     * Ritorna la lista degli esami verbalizzati
+     * @param pVerbaleComplessivo informazioni verbale
+     * @return lista di esami verbalizzati
+     * @throws Exception
+     */
     public ArrayList<EsameVerbalizzato> getEsamiVerbalizzati(VerbaleComplessivo pVerbaleComplessivo) throws Exception {
 
         Connection dBConnection = DriverManager.getConnection(DBMS_URL, DBM_USER, DBMS_PASS);
