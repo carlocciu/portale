@@ -6,6 +6,9 @@ import portale.common.DisplayPianoDiStudi;
 
 import java.sql.*;
 
+/**
+ * Classe Boundary che gestisce la comunicazione con il database per il login dello studente
+ */
 public class DBMSLoginStudenteBnd {
 
     /**

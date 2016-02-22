@@ -8,17 +8,33 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import portale.Studente.controls.AutenticazioneStudenteCtrl;
 
+/**
+ * Classe boundary che gestisce la finestra di login per lo studente
+ */
 public class LoginFormStudente {
 
+    /**
+     * Campo di testo per la matricola
+     */
     @FXML
     private TextField matricolaTF;
 
+    /**
+     * Campo di testo per la password
+     */
     @FXML
     private PasswordField passPF;
 
+    /**
+     * Button per confermare il login
+     */
     @FXML
     private Button loginButton;
 
+
+    /**
+     * Control che gestisce il login
+     */
     private AutenticazioneStudenteCtrl mAutenticazioneStudenteCtrl = new AutenticazioneStudenteCtrl();
 
 

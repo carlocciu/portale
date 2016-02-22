@@ -20,18 +20,33 @@ import portale.common.DisplayPianoDiStudi;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Classe Boundary che gestisce la finestra di prenotazione ad un esame
+ */
 public class PianoDiStudiForm {
 
 
+    /**
+     * Tabella che mostra il piano di studi di uno studente
+     */
     @FXML
     private TableView<DisplayPianoDiStudi> pianoDiStudiTV;
 
+    /**
+     * Tabella che mostra gli appelli di una materia
+     */
     @FXML
     private TableView<DisplayAppello> appelliTV;
 
+    /**
+     * Button per il logout
+     */
     @FXML
     private Button logoutButton;
 
+    /**
+     * Control che gestisce l'iscrizione ad un esame
+     */
     private IscrizioneEsameCtrl mIscrizioneEsameCtrl = new IscrizioneEsameCtrl();
 
     /**

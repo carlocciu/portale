@@ -32,7 +32,7 @@ public class LoginFormDocente {
     private Button loginButton;
 
     /**
-     * Control che gestisce la comunicazione con il database
+     * Control che gestisce l'autenticazione del docente
      */
     private AutenticazioneDocenteCtrl mAutenticazioneDocenteCtrl = new AutenticazioneDocenteCtrl();
 

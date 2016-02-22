@@ -83,7 +83,7 @@ public class CompilazioneVerbaleForm {
      */
     private VerbaleComplessivo mVerbaleComplessivo;
     /**
-     * Control che gestisce la comunicazione con il database
+     * Control che gestisce la compilazione
      */
     private CompilazioneVerbaleCtrl mCompilazioneVerbaleCtrl = new CompilazioneVerbaleCtrl();
 

@@ -6,6 +6,9 @@ import portale.common.DisplayAppello;
 
 import java.sql.*;
 
+/**
+ * Classe Boundary che gestisce la comunicazione con il database per la prenotazione ad un esame
+ */
 public class DBMSIscrizioneEsameBnd {
 
     /**

@@ -54,7 +54,7 @@ public class VerbaleFrame {
     private DocenteClass docente;
 
     /**
-     * Control che gestisce la comunicazione con il database
+     * Control che gestisce i verbali
      */
     private VerbaleCtrl mVerbaleCtrl = new VerbaleCtrl(docente);
 

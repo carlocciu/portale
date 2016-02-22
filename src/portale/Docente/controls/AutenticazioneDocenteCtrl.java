@@ -40,21 +40,35 @@ public class AutenticazioneDocenteCtrl {
     /**
      * Genera un oggetto AutenticazioneDocenteCtrl
      * @param matricolaDocente matricola
-     * @param passwordDocente docente
+     * @param passwordDocente password
      */
     public AutenticazioneDocenteCtrl(String matricolaDocente, String passwordDocente) {
         this.matricolaDocente = matricolaDocente;
         this.passwordDocente = passwordDocente;
     }
 
+    /**
+     * Setta la matricola del docente
+     * @param matricolaDocente matricola docente
+     */
     public void setMatricolaDocente(String matricolaDocente) {
         this.matricolaDocente = matricolaDocente;
     }
 
+    /**
+     * Setta la password del docente
+     * @param passwordDocente password docente
+     */
     public void setPasswordDocente(String passwordDocente) {
         this.passwordDocente = passwordDocente;
     }
 
+    /**
+     * Controlla se i dati inseriti sono corretti; in caso di esito positivo, inoltra l'utente nella pagina principale
+     * del portale, altrimenti visualizza un messaggio d'errore
+     * @param s stage corrente
+     * @throws Exception
+     */
     public void checkLogin(Stage s) throws Exception {
         if (mDBMSLoginDocenteBnd.isPresentUser(matricolaDocente, passwordDocente)) {
             DocenteClass doc = new DocenteClass(matricolaDocente, mDBMSLoginDocenteBnd.getNome(), mDBMSLoginDocenteBnd.getCognome());

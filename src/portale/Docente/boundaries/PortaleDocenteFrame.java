@@ -40,7 +40,7 @@ public class PortaleDocenteFrame extends Stage {
     private DocenteClass currDocente;
 
     /**
-     * Control che gestisce la comunicazione con il database
+     * Control che gestisce il portale docente
      */
     private PortaleDocenteCtrl mPortaleDocenteCtrl = new PortaleDocenteCtrl();
 

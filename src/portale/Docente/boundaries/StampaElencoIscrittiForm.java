@@ -79,7 +79,7 @@ public class StampaElencoIscrittiForm {
 
 
     /**
-     * Control che gestisce la comunicazione con il database
+     * Control che gestisce l'esportazione degli iscritti ad un appello
      */
     private StampaElencoIscrittiCtrl mStampaElencoIscrittiCtrl = new StampaElencoIscrittiCtrl();
 

@@ -11,10 +11,21 @@ import portale.common.DisplayAppello;
 
 import java.util.Optional;
 
+/**
+ * Classe control che gestisce l'iscrizione ad un esame
+ */
 public class IscrizioneEsameCtrl {
 
+    /**
+     * Boundary che gestisce la comunicazione con il database per l'iscrizione ad un esame
+     */
     private DBMSIscrizioneEsameBnd mDBMSIscrizioneEsameBnd = new DBMSIscrizioneEsameBnd();
 
+    /**
+     * Inoltra richiesta di prenotazione al database
+     * @param matricola matricola studente
+     * @param appello appello
+     */
     public void insertPrenotazione(String matricola, String appello) {
 
         String[] dataToConfirm = createDialog();
@@ -54,6 +65,10 @@ public class IscrizioneEsameCtrl {
 
     }
 
+    /**
+     * Mostra dialog per confermare prenotazione
+     * @return email e recapito inseriti
+     */
     public String[] createDialog() {
 
         String[] dataToConfirm = new String[2];
@@ -113,6 +128,11 @@ public class IscrizioneEsameCtrl {
         return dataToConfirm;
     }
 
+    /**
+     * Ritorna la lista degli appelli di una materia
+     * @param idMateria id materia
+     * @return lista di appelli
+     */
     public ObservableList<DisplayAppello> getAppelli(String idMateria) {
         return mDBMSIscrizioneEsameBnd.getAppelli(idMateria);
     }

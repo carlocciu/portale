@@ -105,7 +105,7 @@ public class InizializzaVerbaleForm {
     private Button homeButton;
 
     /**
-     * Control che gestisce la comunicazione con il database
+     * Control che gestisce l'inizializzazione
      */
     private InizializzaVerbaleCtrl mInizializzaVerbaleCtrl = new InizializzaVerbaleCtrl();
 
