@@ -44,28 +44,48 @@ public class DocenteClass {
 
     /**
      * Ritorna il nome del docente
-     * @return
+     * @return nome docente
      */
     public String getNomeDocente() {
         return nomeDocente;
     }
 
+    /**
+     * Setta il nome del docente
+     * @param nomeDocente nome docente
+     */
     public void setNomeDocente(String nomeDocente) {
         this.nomeDocente = nomeDocente;
     }
 
+    /**
+     * Ritorna il cognome del docente
+     * @return cognome docente
+     */
     public String getCognomeDocente() {
         return cognomeDocente;
     }
 
+    /**
+     * Setta il cognome del docente
+     * @param cognomeDocente cognome docente
+     */
     public void setCognomeDocente(String cognomeDocente) {
         this.cognomeDocente = cognomeDocente;
     }
 
+    /**
+     * Ritorna la matricola del docente
+     * @return matricola docente
+     */
     public String getMatricolaDocente() {
         return matricolaDocente;
     }
 
+    /**
+     * Setta la matricola del docente
+     * @param matricolaDocente matricola docente
+     */
     public void setMatricolaDocente(String matricolaDocente) {
         this.matricolaDocente = matricolaDocente;
     }
