@@ -15,10 +15,21 @@ import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Classe control che gestisce l'esportazione degli studenti iscritti ad un appello
+ */
 public class StampaElencoIscrittiCtrl {
 
+    /**
+     * Boundary che gestisce la comunicazione con il database per stampare gli iscritti ad un appello
+     */
     private DBMSStampaElencoIscrittiBnd mDBMSStampaIscrittiBnd = new DBMSStampaElencoIscrittiBnd();
 
+    /**
+     * Ritorna la lista delle scuole in cui il docente insegna
+     * @param mDocente informazioni docente
+     * @return lista scuole
+     */
     public ObservableList<Scuola> getScuole(DocenteClass mDocente) {
 
         try {
@@ -29,6 +40,12 @@ public class StampaElencoIscrittiCtrl {
         }
     }
 
+    /**
+     * Ritorna la lista dei corsi di laurea di una scuola selezionata in cui insegna il docente
+     * @param pScuola informazioni scuola
+     * @param pDocente informazioni docente
+     * @return lista di corsi di laurea
+     */
     public ObservableList<CorsoDiLaurea> getCDLs(Scuola pScuola, DocenteClass pDocente) {
         try {
             return mDBMSStampaIscrittiBnd.getCDLs(pScuola, pDocente);
@@ -38,6 +55,12 @@ public class StampaElencoIscrittiCtrl {
         }
     }
 
+    /**
+     * Ritorna la lista delle materie insegnate dal docente in un corso di laurea selezionato
+     * @param mSelectedCorsoDiLaurea informazioni corso di laurea
+     * @param pDocente informazioni docente
+     * @return lista di materie
+     */
     public ObservableList<Materia> getMaterie(CorsoDiLaurea mSelectedCorsoDiLaurea, DocenteClass pDocente) {
         try {
             return mDBMSStampaIscrittiBnd.getMaterie(mSelectedCorsoDiLaurea, pDocente);
@@ -47,6 +70,12 @@ public class StampaElencoIscrittiCtrl {
         }
     }
 
+    /**
+     * Ritorna la lista degli appelli di una materia selezionata
+     * @param pMateria informazioni materia
+     * @param pDocente informazioni docente
+     * @return lista di appelli
+     */
     public ObservableList<Appello> getAppelli(Materia pMateria, DocenteClass pDocente) {
         try {
             return mDBMSStampaIscrittiBnd.getAppelli(pMateria, pDocente);
@@ -56,6 +85,11 @@ public class StampaElencoIscrittiCtrl {
         }
     }
 
+    /**
+     * Ritorna la lista degli studenti iscritti ad un appello
+     * @param pAppello appello
+     * @return lista di studenti iscritti
+     */
     public ArrayList<StudenteClass> getIscrittiAppello(Appello pAppello) {
         try {
             return mDBMSStampaIscrittiBnd.getIscrittiAppello(pAppello);
@@ -65,6 +99,11 @@ public class StampaElencoIscrittiCtrl {
         }
     }
 
+    /**
+     * Genera un pdf che contiene la lista di tutti gli studenti iscritti ad un appello
+     * @param pAppello informazioni appello
+     * @throws Exception
+     */
     public void createDocument(Appello pAppello) throws Exception {
         Document document = new Document();
         ArrayList<StudenteClass> listaIscritti = mDBMSStampaIscrittiBnd.getIscrittiAppello(pAppello);

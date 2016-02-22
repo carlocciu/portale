@@ -23,16 +23,36 @@ import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Classe control che gestisce la compilazione del verbale
+ */
 public class CompilazioneVerbaleCtrl {
 
+    /**
+     * Boundary che comunica con il database per l'inizializzazione del verbale
+     */
     DBMSInizializzaVerbaleBnd mDBMSInizializzaVerbaleBnd = new DBMSInizializzaVerbaleBnd();
+    /**
+     * Boundary che comunica con il database per la compilazione del verbale
+     */
     DBMSVerbalizzaEsameBnd mDBMSVerbalizzaEsameBnd = new DBMSVerbalizzaEsameBnd();
 
+    /**
+     * Verifica la firma digitale dello studente
+     * @param pStudente informazioni studente
+     * @param pPassword password inserita
+     * @return true se la firma è corretta, altrimenti false
+     */
     public boolean isValidUserPassword(StudenteClass pStudente, String pPassword) {
         DBMSLoginStudenteBnd dbmsLoginStudenteBnd = new DBMSLoginStudenteBnd();
         return dbmsLoginStudenteBnd.isPresenteUser(pStudente.getMatricolaStudente(), pPassword);
     }
 
+    /**
+     * Chiude verbale e mostra pdf generato
+     * @param pVerbale
+     * @throws Exception
+     */
     public void chiudiVerbale(VerbaleComplessivo pVerbale) throws Exception {
         try {
             mDBMSVerbalizzaEsameBnd.chiudiVerbale(pVerbale);
@@ -42,6 +62,14 @@ public class CompilazioneVerbaleCtrl {
         }
     }
 
+    /**
+     * Conferma verbalizzazione di un esame
+     * @param pStudente informazioni studente
+     * @param pVerbaleComplessivo informazioni verbale
+     * @param pEsito esito
+     * @param pVoto voto
+     * @param pDomande domande
+     */
     public void verbalizzaEsame(StudenteClass pStudente, VerbaleComplessivo pVerbaleComplessivo,
                                 CompilazioneVerbaleForm.Esito pEsito, String pVoto, String pDomande) {
 
@@ -54,6 +82,11 @@ public class CompilazioneVerbaleCtrl {
 
     }
 
+    /**
+     * Ritorna la lista degli studenti iscritti da esaminare
+     * @param pAppello appello
+     * @return lista di studenti da esaminare
+     */
     public ObservableList<StudenteClass> getStudentiDaEsaminare(Appello pAppello) {
 
         try {
@@ -69,6 +102,11 @@ public class CompilazioneVerbaleCtrl {
         }
     }
 
+    /**
+     * Genera un pdf con tutte le informazioni del verbale e la lista degli studenti esaminati
+     * @param pVerbaleComplessivo informazioni verbale
+     * @throws Exception
+     */
     public void showPDF(VerbaleComplessivo pVerbaleComplessivo) throws Exception {
         Document document = new Document();
         ArrayList<EsameVerbalizzato> esamiSostenuti = mDBMSVerbalizzaEsameBnd.getEsamiVerbalizzati(pVerbaleComplessivo);
