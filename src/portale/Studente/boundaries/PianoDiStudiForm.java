@@ -59,7 +59,7 @@ public class PianoDiStudiForm {
 
         Stage stage = (Stage) logoutButton.getScene().getWindow();
 
-        FXMLLoader page = new FXMLLoader(getClass().getResource("../../../res/LoginFormStudente.fxml"));
+        FXMLLoader page = new FXMLLoader(getClass().getResource("/res/LoginFormStudente.fxml"));
 
         Parent root = null;
 
@@ -234,7 +234,12 @@ public class PianoDiStudiForm {
                                 if (empty) {
                                     setGraphic(null);
                                     setText(null);
-                                } else {
+                                }
+                                else if (!(mIscrizioneEsameCtrl.checkIscrizione(matricola, getTableView().getItems().get(getIndex()).getIdAppello()))) {
+                                    setGraphic(null);
+                                    setText("Prenotato");
+                                }
+                                else {
                                     btn.setOnAction((ActionEvent event) ->
                                     {
                                         DisplayAppello appello = getTableView().getItems().get(getIndex());

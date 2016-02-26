@@ -11,6 +11,38 @@ import java.sql.*;
  */
 public class DBMSIscrizioneEsameBnd {
 
+
+    public boolean checkIscrizione (String pMatricola, String pCodiceMateria){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
+        try {
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/PortaleStudenti", "root", "apswpa");
+
+            //bada che manca l'aula nel Db --> fixare
+            String query = "SELECT * FROM Prenotazione WHERE Ref_Studente = ? and Ref_Appello = ?";
+            statement = connection.prepareStatement(query);
+
+            statement.setString(1, pMatricola);
+            statement.setString(2, pCodiceMateria);
+
+            result = statement.executeQuery();
+
+            if (result.next()){
+                return false;
+            }
+            else
+                return true;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /**
      * Ritorna un boolean per informarci se l'iscrizione ad un appello
      * è andata a buon fine. Viene utilizzata per evitare che uno studente si iscriva

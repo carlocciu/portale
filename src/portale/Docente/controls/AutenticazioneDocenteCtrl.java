@@ -73,7 +73,7 @@ public class AutenticazioneDocenteCtrl {
         if (mDBMSLoginDocenteBnd.isPresentUser(matricolaDocente, passwordDocente)) {
             DocenteClass doc = new DocenteClass(matricolaDocente, mDBMSLoginDocenteBnd.getNome(), mDBMSLoginDocenteBnd.getCognome());
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/PortaleDocenteFrame.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/PortaleDocenteFrame.fxml"));
             Parent root = (Parent) fxmlLoader.load();
 
             PortaleDocenteFrame controller = fxmlLoader.getController();

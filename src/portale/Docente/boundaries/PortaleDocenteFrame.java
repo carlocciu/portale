@@ -61,7 +61,7 @@ public class PortaleDocenteFrame extends Stage {
 
         Stage primaryStage = (Stage) verbaleButton.getScene().getWindow();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/VerbaleFrame.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/VerbaleFrame.fxml"));
         Parent root = fxmlLoader.load();
 
         VerbaleFrame controller = fxmlLoader.getController();
@@ -85,7 +85,7 @@ public class PortaleDocenteFrame extends Stage {
         try {
             Stage stage = (Stage) stampaIscrittiButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/StampaElencoIscrittiForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/StampaElencoIscrittiForm.fxml"));
             Parent parent = fxmlLoader.load();
 
             /* Pass Docente to StampaElencoIscrittiForm */
@@ -112,7 +112,7 @@ public class PortaleDocenteFrame extends Stage {
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/LoginFormDocente.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/LoginFormDocente.fxml"));
 
             Parent parent = fxmlLoader.load();
 

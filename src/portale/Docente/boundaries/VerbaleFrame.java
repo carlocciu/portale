@@ -120,7 +120,7 @@ public class VerbaleFrame {
                                         try {
                                             Stage stage = (Stage) btn.getScene().getWindow();
 
-                                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../res/CompilazioneVerbaleForm.fxml"));
+                                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/CompilazioneVerbaleForm.fxml"));
                                             Parent parent = fxmlLoader.load();
 
                                             CompilazioneVerbaleForm compilazioneVerbaleForm = fxmlLoader.getController();
@@ -181,7 +181,7 @@ public class VerbaleFrame {
         try {
             Stage stage = (Stage) nuovoVerbaleButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/InizializzaVerbaleForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/InizializzaVerbaleForm.fxml"));
             Parent parent = fxmlLoader.load();
 
             /* Pass Docente to InizializzaVerbaleForm */
@@ -208,7 +208,7 @@ public class VerbaleFrame {
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/LoginFormDocente.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/LoginFormDocente.fxml"));
 
             Parent parent = (Parent) fxmlLoader.load();
 
@@ -231,7 +231,7 @@ public class VerbaleFrame {
         try {
             Stage stage = (Stage) homeButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/PortaleDocenteFrame.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/PortaleDocenteFrame.fxml"));
             Parent parent = fxmlLoader.load();
 
             PortaleDocenteFrame portaleDocenteFrame = fxmlLoader.getController();

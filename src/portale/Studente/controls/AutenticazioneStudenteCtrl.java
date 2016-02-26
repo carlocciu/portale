@@ -90,7 +90,7 @@ public class AutenticazioneStudenteCtrl {
 
         if (mDBMSLoginStudenteBnd.isPresenteUser(matricola, password)) {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/PianoDiStudiForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/PianoDiStudiForm.fxml"));
 
             Parent root = (Parent) fxmlLoader.load();
 

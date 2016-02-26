@@ -21,6 +21,10 @@ public class IscrizioneEsameCtrl {
      */
     private DBMSIscrizioneEsameBnd mDBMSIscrizioneEsameBnd = new DBMSIscrizioneEsameBnd();
 
+    public boolean checkIscrizione (String matricola, String appello){
+        return mDBMSIscrizioneEsameBnd.checkIscrizione(matricola, appello);
+    }
+
     /**
      * Inoltra richiesta di prenotazione al database
      * @param matricola matricola studente

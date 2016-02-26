@@ -184,7 +184,7 @@ public class StampaElencoIscrittiForm {
         try {
             Stage stage = (Stage) logoutButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/LoginFormDocente.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/LoginFormDocente.fxml"));
 
             Parent parent = (Parent) fxmlLoader.load();
 
@@ -207,7 +207,7 @@ public class StampaElencoIscrittiForm {
         try {
             Stage stage = (Stage) homeButton.getScene().getWindow();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../../res/PortaleDocenteFrame.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/res/PortaleDocenteFrame.fxml"));
             Parent parent = fxmlLoader.load();
 
             PortaleDocenteFrame portaleDocenteFrame = fxmlLoader.getController();
