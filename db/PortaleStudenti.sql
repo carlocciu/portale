@@ -322,7 +322,7 @@ CREATE TABLE `Studente` (
 
 LOCK TABLES `Studente` WRITE;
 /*!40000 ALTER TABLE `Studente` DISABLE KEYS */;
-INSERT INTO `Studente` VALUES ('000001','Enrico','Casella','ciao','1234567890','cslnrc@gmail.com'),('000002','Carlo','Nuccio','ciao','1234567890','carlonuccio91@gmail.com'),('000003','Riccardo','Musmeci','ciao','1234567890','musmex92@gmail.com'),('000004','Fabrizio','Cacicia','ciao','1234567890','fabryx92@gmail.com');
+INSERT INTO `Studente` VALUES ('000001','Enrico','Casella','ciao','1234567890','aaa@gmail.com'),('000002','Carlo','Nuccio','ciao','1234567890','bbb@gmail.com'),('000003','Riccardo','Musmeci','ciao','1234567890','ccc@gmail.com'),('000004','Fabrizio','Cacicia','ciao','1234567890','ddd@gmail.com');
 /*!40000 ALTER TABLE `Studente` ENABLE KEYS */;
 UNLOCK TABLES;
 
